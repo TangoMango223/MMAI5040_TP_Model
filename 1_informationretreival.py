@@ -25,6 +25,8 @@ import html2text
 import PyPDF2
 import time
 import re
+from datetime import datetime
+import pytz
 
 # FireCrawl App:
 from firecrawl import FirecrawlApp
@@ -53,7 +55,7 @@ def check_and_install_requirements():
         subprocess.check_call([sys.executable, '-m', 'pip', 'install', '-r', requirements_path], stdout=subprocess.DEVNULL)
         print("Installation complete.")
 
-check_and_install_requirements()
+#check_and_install_requirements()
 
 
 # ------ Connect to Google Sheets again ------
@@ -114,10 +116,44 @@ crawl_params = {
     'userAgent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64)',  # Mimic a common browser user agent
 }
 
+def extract_wait_time(error_message):
+    """Extract wait time from FireCrawl error message"""
+    wait_time_match = re.search(r'retry after (\d+)s', str(error_message))
+    if wait_time_match:
+        return int(wait_time_match.group(1))
+    return 60  # default wait time if we can't parse the message
+
+def crawl_with_retry(app, link, max_retries=3):
+    """
+    Attempt to crawl a URL with retry logic for rate limiting
+    Uses the exact wait time specified in the error message
+    """
+    for attempt in range(max_retries):
+        try:
+            result = app.crawl_url(link)
+            print(f"Successfully crawled: {link}")
+            return result
+            
+        except Exception as e:
+            if "429" in str(e):  # Rate limit exceeded
+                if attempt < max_retries - 1:
+                    wait_time = extract_wait_time(str(e))
+                    print(f"Rate limit hit. Waiting {wait_time} seconds before retry {attempt + 1}/{max_retries}")
+                    print(f"Error details: {str(e)}")
+                    time.sleep(wait_time + 5)  # Add 5 seconds buffer to be safe
+                else:
+                    print(f"Failed to crawl {link} after {max_retries} attempts")
+                    return None
+            else:
+                print(f"Error crawling {link}: {str(e)}")
+                return None
+
+# Replace the crawling loop with this:
 for link in resources:
-    new_result = app.crawl_url(link)
-    crawl_results.append(new_result)
-    print(f"Crawled: {link}")  # Optional: print just the URL being crawled
+    result = crawl_with_retry(app, link)
+    if result is not None:
+        crawl_results.append(result)
+    time.sleep(5)  # Add a small delay between successful crawls
 
 # ------ Part 3: Write to JSON file  ------
 # Save the crawl results to a JSON file
