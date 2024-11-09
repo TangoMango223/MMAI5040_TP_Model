@@ -1,0 +1,103 @@
+# Python Requirements file.
+
+# Other stuff for controlling virtual environment.
+# python-dotenv
+
+# streamlit==1.31.0
+# langchain==0.1.0
+# langchain-openai==0.0.2
+# langchain-pinecone==0.0.1
+# pinecone-client==3.0.0
+# openai==1.10.0
+# python-dotenv==1.0.0
+
+
+# ----- LangChain and LangGraph -----
+langchain
+langchain-openai
+langchain-pinecone 
+langchain-community
+langgraph
+langchainhub
+langchain
+unstructured
+
+# PDF handling and retrieval
+pypdf
+# faiss-cpu # only need CPU, creates local vector store
+PyPDF2
+PyPDF4
+reportlab
+letter
+pdfkit
+html2text
+setuptools
+
+
+# For AI assistant project in section 3_NewAssistant
+beautifulsoup4
+black
+tiktoken
+# openai
+unstructured
+nltk
+fastapi
+jinja2
+uvicorn
+tqdm
+isort
+langchainhub
+firecrawl-py
+langchain
+# langchain-openai
+langchain-community
+langsmith
+# pinecone
+pillow
+langsmith
+
+# ---- Streamlit stuff ---- 
+
+# Unique ID for Streamlit
+uuid
+
+# # Needed to fix bugs like clearing entire VecStore
+google.api
+gcloud
+google-api-python-client
+# protoc-gen-openapiv2
+grpcio
+grpcio-tools
+
+# For Streamlit:
+# streamlit
+protobuf<=3.20.1
+# streamlit-chat
+watchdog
+
+# FireCrawler
+firecrawl-py
+
+# Google API:
+gspread
+oauth2client
+selenium
+pandas
+gspread_dataframe
+bs4
+python-dotenv
+google-auth 
+google-auth-oauthlib 
+google-auth-httplib2 
+google-api-python-client 
+requests 
+beautifulsoup4 
+pdfkit
+
+# Intrepret as images
+pdfplumber
+unstructured
+pdfminer
+chardet
+python-dotenv
+pdfminer.six
