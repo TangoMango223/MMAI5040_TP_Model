@@ -67,6 +67,10 @@ def text_splitter(documents):
 
 def main():
     """Main function to process documents and load into Pinecone."""
+    # Debug: Print environment variables
+    logger.info(f"Environment variables loaded: {os.environ.keys()}")
+    logger.info(f"PINECONE_INDEX_NAME value: {os.getenv('PINECONE_INDEX_NAME')}")
+    
     # Initialize Pinecone
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
     
@@ -78,16 +82,19 @@ def main():
     # Load documents from JSON
     documents = load_json_data('torontopublicsafetycorpus.json')
     
-    # Split for storage later
+    # Split text into chunks
     text_split_chunks = text_splitter(documents)
     
-    if is_index_empty(os.environ["INDEX_NAME"]):
-        logger.info("Ingesting documents into vector store...")
-        embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-        PineconeVectorStore.from_documents(text_split_chunks, embeddings, index_name=os.environ["INDEX_NAME"])
-        logger.info("Document ingestion complete.")
-    else:
-        logger.info("Vector store already contains documents. Skipping ingestion.")
+    logger.info("Ingesting documents into vector store...")
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+    
+    # Create vector store
+    vector_store = PineconeVectorStore.from_documents(
+        documents=text_split_chunks, 
+        embedding=embeddings, 
+        index_name=index_name
+    )
+    logger.info("Document ingestion complete.")
 
 if __name__ == "__main__":
     main()
