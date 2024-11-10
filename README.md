@@ -1,4 +1,4 @@
-# Toronto Police - LLM Model Project for MMAI 5040 Code
+# 🇨🇦 Toronto Police - LLM Model Project
 
 Components:
 * Information Retrieval Process via Firecrawl
