@@ -14,7 +14,7 @@ import logging
 from pinecone import Pinecone
 
 # Load environment variables
-load_dotenv()
+load_dotenv(dotenv_path=".env", override= True)
 
 # Set up logging
 logging.basicConfig(level=logging.INFO, format='%(message)s')
@@ -69,15 +69,18 @@ def main():
     """Main function to process documents and load into Pinecone."""
     # Debug: Print environment variables
     logger.info(f"Environment variables loaded: {os.environ.keys()}")
-    logger.info(f"PINECONE_INDEX_NAME value: {os.getenv('PINECONE_INDEX_NAME')}")
+    
+    # Check for OpenAI API key
+    if not os.getenv("OPENAI_API_KEY"):
+        raise ValueError("OPENAI_API_KEY not found in environment variables")
+    
+    # logger.info(f"PINECONE_INDEX_NAME value: {os.getenv('PINECONE_INDEX_NAME')}")
     
     # Initialize Pinecone
     pc = Pinecone(api_key=os.getenv("PINECONE_API_KEY"))
     
     # Get index name from environment
     index_name = os.getenv("PINECONE_INDEX_NAME")
-    if not index_name:
-        raise ValueError("PINECONE_INDEX_NAME not found in environment variables")
     
     # Load documents from JSON
     documents = load_json_data('torontopublicsafetycorpus.json')
@@ -92,7 +95,7 @@ def main():
     vector_store = PineconeVectorStore.from_documents(
         documents=text_split_chunks, 
         embedding=embeddings, 
-        index_name=index_name
+        index_name="torontopolice1"
     )
     logger.info("Document ingestion complete.")
 
