@@ -82,19 +82,16 @@ def main():
     # Load documents from JSON
     documents = load_json_data('torontopublicsafetycorpus.json')
     
-    # Split text into chunks
+    # Text Split
     text_split_chunks = text_splitter(documents)
     
-    logger.info("Ingesting documents into vector store...")
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    
-    # Create vector store
-    vector_store = PineconeVectorStore.from_documents(
-        documents=text_split_chunks, 
-        embedding=embeddings, 
-        index_name=index_name
-    )
-    logger.info("Document ingestion complete.")
+    if is_index_empty(os.getenv("PINECONE_INDEX_NAME")):
+        logger.info("Ingesting documents into vector store...")
+        embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+        PineconeVectorStore.from_documents(text_split_chunks, embeddings, index_name=os.environ["INDEX_NAME"])
+        logger.info("Document ingestion complete.")
+    else:
+        logger.info("Vector store already contains documents. Skipping ingestion.")
 
 if __name__ == "__main__":
     main()
