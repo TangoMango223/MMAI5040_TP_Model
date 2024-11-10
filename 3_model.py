@@ -32,7 +32,7 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 
 # Load environment variables
 from dotenv import load_dotenv
-load_dotenv()
+load_dotenv(".env", override=True)
 
 
 
@@ -88,13 +88,13 @@ This care plan is based on the information provided and is intended to guide car
 
 # --------- Function to Generate Care Plan ---------
 
-def generate_safety_plan():
+def generate_safety_plan(user_input: str):
     # Initialize OpenAI Embeddings
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
     # Connect to PineCone vector store
     vectorstore = PineconeVectorStore(
-        index_name=os.environ["INDEX_NAME"],
+        index_name=os.environ["PINECONE_INDEX_NAME"],
         embedding=embeddings
     )
 
@@ -125,67 +125,67 @@ def generate_safety_plan():
     Note: Ensure the advice is supportive, reassuring, and encourages proactive safety measures. 
     If you do not know the answer, say so and do not make up information. Stay within an advisory role, and do not provide definitive policing or public safety advice.""")
 
-    second_invocation_prompt = PromptTemplate.from_template("""
-    You are an expert chatbot focused on frailty care, tasked with creating a comprehensive, personalized care plan. Your goal is to synthesize the provided analysis into an actionable, tailored care plan that supports both the caretaker and the frailty patient.
+    # second_invocation_prompt = PromptTemplate.from_template("""
+    # You are an expert chatbot focused on frailty care, tasked with creating a comprehensive, personalized care plan. Your goal is to synthesize the provided analysis into an actionable, tailored care plan that supports both the caretaker and the frailty patient.
 
-    You avoid humor or casual language due to the seriousness of the topic.
+    # You avoid humor or casual language due to the seriousness of the topic.
 
-    You are provided the following information and analysis of the patient's condition.
-    Patient's PRISMA-7 Responses, and Gait and TUG Test results:
-    <input>
-    {input}
-    </input>
+    # You are provided the following information and analysis of the patient's condition.
+    # Patient's PRISMA-7 Responses, and Gait and TUG Test results:
+    # <input>
+    # {input}
+    # </input>
 
-    I have conducted the following analysis of the patient's condition:
-    <analysis>
-    {analysis}
-    </analysis>
+    # I have conducted the following analysis of the patient's condition:
+    # <analysis>
+    # {analysis}
+    # </analysis>
 
-    Based on this analysis, create a comprehensive care plan that addresses the specific needs and circumstances of this frailty patient. 
+    # Based on this analysis, create a comprehensive care plan that addresses the specific needs and circumstances of this frailty patient. 
 
-    First, you must begin your care plan by summarizing all the responses from the PRISMA-7 survey, and the Gait and TUG test results.
-    Next, continue by saying "As a caretaker, you should consider the following:".
-    Then, the care plan should:
+    # First, you must begin your care plan by summarizing all the responses from the PRISMA-7 survey, and the Gait and TUG test results.
+    # Next, continue by saying "As a caretaker, you should consider the following:".
+    # Then, the care plan should:
 
-    1. Provide a concise summary of the patient's overall frailty status, highlighting key areas of concern.
+    # 1. Provide a concise summary of the patient's overall frailty status, highlighting key areas of concern.
 
-    2. Outline 4-5 key care recommendations. For each recommendation:
-       a) Clearly state the recommendation
-       b) Explain the rationale behind it, citing specific aspects of the patient's condition
-       c) Provide detailed, practical steps for implementation
-       d) Identify potential challenges and suggest strategies to overcome them
+    # 2. Outline 4-5 key care recommendations. For each recommendation:
+    #    a) Clearly state the recommendation
+    #    b) Explain the rationale behind it, citing specific aspects of the patient's condition
+    #    c) Provide detailed, practical steps for implementation
+    #    d) Identify potential challenges and suggest strategies to overcome them
 
-    3. Address safety considerations specific to this patient's situation, including both home safety and broader health and wellbeing measures.
+    # 3. Address safety considerations specific to this patient's situation, including both home safety and broader health and wellbeing measures.
 
-    4. Suggest a monitoring and evaluation plan to track the patient's progress and adjust care as needed.
+    # 4. Suggest a monitoring and evaluation plan to track the patient's progress and adjust care as needed.
 
-    5. Recommend specific resources or support services that would be particularly beneficial for this patient.
+    # 5. Recommend specific resources or support services that would be particularly beneficial for this patient.
 
-    6. Identify any areas where additional assessment or professional consultation might be necessary, explaining why.
+    # 6. Identify any areas where additional assessment or professional consultation might be necessary, explaining why.
 
-    Throughout your care plan:
-    - Ensure each recommendation is clearly linked to specific aspects of the patient's condition.
-    - Prioritize interventions that address the most critical aspects of the patient's frailty status.
-    - Consider the interplay between physical, cognitive, and social aspects of the patient's health.
-    - Include both short-term interventions for immediate concerns and long-term strategies for ongoing care.
-    - Provide clear, actionable guidance that can be readily implemented by caregivers.
+    # Throughout your care plan:
+    # - Ensure each recommendation is clearly linked to specific aspects of the patient's condition.
+    # - Prioritize interventions that address the most critical aspects of the patient's frailty status.
+    # - Consider the interplay between physical, cognitive, and social aspects of the patient's health.
+    # - Include both short-term interventions for immediate concerns and long-term strategies for ongoing care.
+    # - Provide clear, actionable guidance that can be readily implemented by caregivers.
 
-    Your care plan should be comprehensive, practical, and tailored to both the patient's needs and the caretaker's ability to implement it.
+    # Your care plan should be comprehensive, practical, and tailored to both the patient's needs and the caretaker's ability to implement it.
 
-    If there are any uncertainties or gaps in your knowledge, please say so and do not make up information. Clearly state what additional information or next steps would be required from healthcare providers.
+    # If there are any uncertainties or gaps in your knowledge, please say so and do not make up information. Clearly state what additional information or next steps would be required from healthcare providers.
 
-    Your care plan should be comprehensive yet practical, providing clear guidance that can be readily implemented by caregivers while also serving as a valuable resource for healthcare professionals involved in the patient's care.
+    # Your care plan should be comprehensive yet practical, providing clear guidance that can be readily implemented by caregivers while also serving as a valuable resource for healthcare professionals involved in the patient's care.
 
-    Remember, your plan should be tailored to the patient's needs, and also meaningful to help caretakers as well.
+    # Remember, your plan should be tailored to the patient's needs, and also meaningful to help caretakers as well.
 
-    While knowledgeable about frailty care, you stay within your role of developing a care plan to support the caretaker and frailty patient, without providing definitive medical advice. Should there be any uncertainty, you should state this, and suggest the user to speak with a licensed healthcare professional.
+    # While knowledgeable about frailty care, you stay within your role of developing a care plan to support the caretaker and frailty patient, without providing definitive medical advice. Should there be any uncertainty, you should state this, and suggest the user to speak with a licensed healthcare professional.
     
-    Here is an example format of a care plan:
-    <example>
-    {example}
-    </example>
+    # Here is an example format of a care plan:
+    # <example>
+    # {example}
+    # </example>
     
-    """)
+    # """)
 
     # Create the chains
     stuff_documents_chain = create_stuff_documents_chain(chat, first_invocation_prompt)
@@ -193,48 +193,32 @@ def generate_safety_plan():
 
     # Prepare the input data
     input_data = {
-        
+        "input": user_input,
     }
 
     # Run the first invocation
     first_result = qa.invoke(input={"input": str(input_data)})
 
-    # Run the second invocation
-    final_care_plan = chat.invoke(second_invocation_prompt.format(
-        input=str(input_data),
-        analysis=first_result["answer"],
-        example=example_care_plan
-    ))
+    # # Run the second invocation
+    # final_care_plan = chat.invoke(second_invocation_prompt.format(
+    #     input=str(input_data),
+    #     analysis=first_result["answer"],
+    #     example=example_care_plan
+    # ))
 
     # Format the care plan as a big string
-    care_plan_string = f"""
-Care Plan:
-{final_care_plan.content}
+    plan_string = f"""
+Suggested Safety Plan:
+{first_result["answer"]}
 
-Sources used:
+Resources Used:
 {chr(10).join(f"{i+1}. {source}" for i, source in enumerate(sorted(set(doc.metadata["source"] for doc in first_result["context"]))))}
 """
 
-    return care_plan_string
+    return plan_string
 
 # Example usage:
 if __name__ == "__main__":
-    result = generate_frailty_care_plan(
-        first_gait_test_speed=6.349205195858935,
-        first_gait_test_time=230,
-        first_tug_test_time=300,
-        gait_speed_test_risk="High",
-        second_gait_test_speed=5.633802514207732,
-        second_gait_test_time=200,
-        second_tug_test_time=300,
-        tug_test_risk="High",
-        older_than_85=False,
-        is_male=True,
-        has_limiting_health_problems=True,
-        needs_regular_help=False,
-        has_homebound_health_problems=False,
-        has_close_help=False,
-        uses_mobility_aid=True
-    )
+    result = generate_safety_plan("What safety precautions should I take when walking alone at night in the downtown core near Union Station?")
 
     print(result)  # This will print the entire care plan string
