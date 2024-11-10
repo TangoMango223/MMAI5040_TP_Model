@@ -1,6 +1,6 @@
 """
 3_model.py
-Goal: Using LangChain to create the LLM Model
+Goal: Using LangChain to create the LLM Model for Toronto Safety Plan Generation.
 """
 
 # Import statements
@@ -199,7 +199,7 @@ def generate_safety_plan(user_input: str):
     # Run the first invocation
     first_result = qa.invoke(input={"input": str(input_data)})
 
-    # # Run the second invocation
+    # # Run the second invocation - Consider more layers later...
     # final_care_plan = chat.invoke(second_invocation_prompt.format(
     #     input=str(input_data),
     #     analysis=first_result["answer"],
@@ -208,12 +208,12 @@ def generate_safety_plan(user_input: str):
 
     # Format the care plan as a big string
     plan_string = f"""
-Suggested Safety Plan:
-{first_result["answer"]}
+    Suggested Safety Plan:
+    {first_result["answer"]}
 
-Resources Used:
-{chr(10).join(f"{i+1}. {source}" for i, source in enumerate(sorted(set(doc.metadata["source"] for doc in first_result["context"]))))}
-"""
+    Resources Used:
+    {chr(10).join(f"{i+1}. {source}" for i, source in enumerate(sorted(set(doc.metadata["source"] for doc in first_result["context"]))))}
+    """
 
     return plan_string
 
@@ -221,4 +221,5 @@ Resources Used:
 if __name__ == "__main__":
     result = generate_safety_plan("What safety precautions should I take when walking alone at night in the downtown core near Union Station?")
 
-    print(result)  # This will print the entire care plan string
+   # Show plan:
+    print(result)
