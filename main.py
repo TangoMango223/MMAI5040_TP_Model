@@ -34,6 +34,10 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
 
+# Add these to your imports
+from typing import List, Dict
+from langchain_core.documents import Document
+
 
 
 
@@ -88,7 +92,7 @@ This care plan is based on the information provided and is intended to guide car
 
 # --------- Function to Generate Care Plan ---------
 
-def generate_safety_plan(user_input: str):
+def generate_safety_plan(user_input: str, return_all: bool = False):
     # Initialize OpenAI Embeddings
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
 
@@ -102,7 +106,7 @@ def generate_safety_plan(user_input: str):
     retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 10})
 
     # Create the chat model
-    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
+    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
 
     # Create the prompts
     first_invocation_prompt = PromptTemplate.from_template("""
@@ -191,28 +195,27 @@ def generate_safety_plan(user_input: str):
     stuff_documents_chain = create_stuff_documents_chain(chat, first_invocation_prompt)
     qa = create_retrieval_chain(retriever=retriever, combine_docs_chain=stuff_documents_chain)
 
-    # Prepare the input data
-    input_data = {
-        "input": user_input,
-    }
+    # Fix the input data formatting
+    input_data = user_input  # Remove the dictionary wrapping
 
     # Run the first invocation
-    first_result = qa.invoke(input={"input": str(input_data)})
+    first_result = qa.invoke(input={"input": input_data})  # Don't convert to string
 
-    # # Run the second invocation - Consider more layers later...
-    # final_care_plan = chat.invoke(second_invocation_prompt.format(
-    #     input=str(input_data),
-    #     analysis=first_result["answer"],
-    #     example=example_care_plan
-    # ))
-
+    if return_all:
+        return {
+            "answer": first_result["answer"],
+            "contexts": first_result["context"],  # These are the retrieved documents
+            "question": user_input
+        }
+    
     # Format the care plan as a big string
     plan_string = f"""
     Suggested Safety Plan:
     {first_result["answer"]}
 
     Resources Used:
-    {chr(10).join(f"{i+1}. {source}" for i, source in enumerate(sorted(set(doc.metadata["source"] for doc in first_result["context"]))))}
+    {chr(10).join(f"{i+1}. {doc.metadata.get('title', 'Untitled')} - {doc.metadata['source']}" 
+                  for i, doc in enumerate(first_result["context"]))}
     """
 
     return plan_string

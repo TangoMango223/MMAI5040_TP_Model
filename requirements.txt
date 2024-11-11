@@ -101,3 +101,28 @@ pdfminer
 chardet
 python-dotenv
 pdfminer.six
+
+# Add these to your existing requirements
+ragas
+datasets
+pandas
+matplotlib
+
+# RAGAS and Evaluate
+ragas
+evaluate
+torch
+
+# Core dependencies
+langchain>=0.1.0
+langchain-openai>=0.0.2
+pinecone-client>=2.2.4
+python-dotenv>=1.0.0
+
+# RAGAS and its dependencies
+ragas[all]==0.0.22
+openai>=1.0.0
+datasets>=2.16.1
+pandas>=1.5.0
+numpy>=1.24.0
+evaluate>=0.4.0
