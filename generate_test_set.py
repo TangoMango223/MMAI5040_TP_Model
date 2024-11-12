@@ -1,6 +1,9 @@
 """
 generate_test_set.py
-Goal: Generate and store test questions using OpenAI API to align with RAGAS evaluation format
+Goal: Generate and store test questions using OpenAI API to align with RAGAS evaluation format.
+The test set will be used as part of the evaluation of our LLM + RAG model for Toronto Police Project.
+
+Note: The test set is generated using GPT-4o, which is a powerful model that can generate a wide variety of questions and answers. However, our team checked for accuracy (human evaluation) for this test set to reduce hallucinations.
 """
 
 import json
@@ -33,7 +36,11 @@ Each question should include:
 3. The necessary context information that would be needed to answer this question accurately
 4. The type of question (factual, procedural, conditional, location_based, or emergency)
 
-Make sure all information is specific to Toronto and based on official safety guidelines and best practices."""
+Make sure all information is specific to Toronto and based on official safety guidelines and best practices.
+Remember, the safety plan's target audience is the general public for the City of Toronto, so ensure all information is relevant and applicable to this audience.
+
+Remember, stay within your role as a public safety expert for advisory purposes. Do not provide any legal, medical, or other professional advice. 
+"""
 
 def generate_questions(question_type: str, num_questions: int = 5) -> List[Dict]:
     """Generate questions with ground truth answers and contexts for a specific type"""

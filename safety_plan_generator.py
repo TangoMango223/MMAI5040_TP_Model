@@ -28,7 +28,7 @@ Neighbourhood: {neighbourhood}
 Primary Crime Concerns: {crime_concerns}
 Additional Context: {user_context}
 
-RELEVANT TORONTO POLICE RESOURCES:
+RELEVANT TORONTO POLICE, CITY OF TORONTO AND CANADA RESOURCES:
 {context}
 
 Based on the provided information, create a detailed safety plan that includes:
@@ -67,7 +67,7 @@ Guidelines for your response:
 
 If certain information is not available in the knowledge base, acknowledge this and provide general best practices while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance.
 
-Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
+Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety. Your role is to provide advisory information, do not provide any legal, medical, or other professional advice.
 """)
 
 def generate_safety_plan(

@@ -41,13 +41,7 @@ EVAL_QUESTIONS = [
     "What are the best practices for protecting myself from phone scams in Toronto?",
 ]
 
-# Update EVAL_QUESTIONS if test set exists
-try:
-    test_questions = load_test_set()
-    EVAL_QUESTIONS = [q["question"] for q in test_questions]
-except FileNotFoundError:
-    print("No test set found, using default questions")
-
+# Might delete, this doesn't really make sense.
 def evaluate_embeddings(questions: List[str]):
     """Evaluate embedding quality using cosine similarity"""
     print("\nEvaluating Embeddings...")
@@ -202,7 +196,17 @@ def load_test_set(filename: str = "latest_test_set.json"):
         test_set = json.load(f)
     return test_set["questions"]
 
+
 if __name__ == "__main__":
+    
+    # Update EVAL_QUESTIONS if test set exists
+    try:
+        test_questions = load_test_set()
+        EVAL_QUESTIONS = [q["question"] for q in test_questions]
+    except FileNotFoundError:
+        print("No test set found, using default questions")
+        
+
     print("Starting Comprehensive Evaluation Pipeline")
     print("=======================================")
     

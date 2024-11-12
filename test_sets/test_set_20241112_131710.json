@@ -1,0 +1,348 @@
+{
+  "metadata": {
+    "generated_at": "2024-11-12T13:17:10.127964",
+    "model": "gpt-4",
+    "total_questions": 25,
+    "question_types": [
+      "factual",
+      "procedural",
+      "conditional",
+      "location_based",
+      "emergency"
+    ]
+  },
+  "questions": [
+    {
+      "question": "What is the number to call for non-emergency police assistance in Toronto?",
+      "ground_truth_context": [
+        "In Toronto, there is a specific phone number for non-emergency police assistance."
+      ],
+      "ground_truth": [
+        "The number to call for non-emergency police assistance in Toronto is 416-808-2222."
+      ],
+      "question_type": "factual",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:13:43.915256"
+    },
+    {
+      "question": "What should Toronto residents do during a power outage?",
+      "ground_truth_context": [
+        "The City of Toronto provides guidelines for what residents should do during a power outage."
+      ],
+      "ground_truth": [
+        "During a power outage, Toronto residents should check the Toronto Hydro website or call 416-542-8000 for information, turn off all tools, appliances and electronic equipment, and never use charcoal or gas barbecues, camping heating equipment, or home generators indoors."
+      ],
+      "question_type": "factual",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:13:43.915264"
+    },
+    {
+      "question": "What is the purpose of Toronto's Alert Ready system?",
+      "ground_truth_context": [
+        "Toronto has a system called Alert Ready that plays a role in public safety."
+      ],
+      "ground_truth": [
+        "The purpose of Toronto's Alert Ready system is to deliver critical and potentially life-saving alerts to Canadians through television, radio and LTE-connected and compatible wireless devices."
+      ],
+      "question_type": "factual",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:13:43.915266"
+    },
+    {
+      "question": "What are the designated cooling centres in Toronto during extreme heat?",
+      "ground_truth_context": [
+        "The City of Toronto designates specific locations as cooling centres during periods of extreme heat."
+      ],
+      "ground_truth": [
+        "The designated cooling centres in Toronto during extreme heat are typically community centres, pools, and libraries. The exact locations can vary and are made available on the City of Toronto website during heat alerts."
+      ],
+      "question_type": "factual",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:13:43.915268"
+    },
+    {
+      "question": "What is the SafeTO program in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto has initiated a program called SafeTO."
+      ],
+      "ground_truth": [
+        "SafeTO is a program in Toronto aimed at reforming the response to community safety in the city. It proposes a new model of community safety by focusing on a public health approach, which prioritizes prevention and intervention, while ensuring that police are focused on core policing responsibilities where their specific skills and training are absolutely necessary."
+      ],
+      "question_type": "factual",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:13:43.915269"
+    },
+    {
+      "question": "How can I get a fire safety inspection for my home in Toronto?",
+      "ground_truth_context": [
+        "The Toronto Fire Services offers home safety inspections.",
+        "To request an inspection, you can call the Fire Prevention Division directly.",
+        "You can also fill out an online request form on the official Toronto Fire Services website."
+      ],
+      "ground_truth": [
+        "You can request a fire safety inspection for your home in Toronto by either calling the Fire Prevention Division directly or filling out an online request form on the official Toronto Fire Services website."
+      ],
+      "question_type": "procedural",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:14:34.721803"
+    },
+    {
+      "question": "What steps should I take to report a safety hazard on a Toronto street?",
+      "ground_truth_context": [
+        "The City of Toronto's 311 service handles reports of safety hazards.",
+        "You can contact 311 by phone or online through the official city website.",
+        "You should be ready to provide specific details about the hazard, including location and nature of the hazard."
+      ],
+      "ground_truth": [
+        "To report a safety hazard on a Toronto street, contact the City of Toronto's 311 service. This can be done by phone or online through the official city website. Be prepared to provide specific details about the hazard, including its location and nature."
+      ],
+      "question_type": "procedural",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:14:34.721813"
+    },
+    {
+      "question": "How can I prepare for a flood in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto provides flood safety advice on its official website.",
+        "The advice includes steps such as creating a 72-hour emergency kit, making a family safety plan, and understanding your home's flood risk."
+      ],
+      "ground_truth": [
+        "To prepare for a flood in Toronto, follow the advice provided by the City of Toronto on its official website. This includes creating a 72-hour emergency kit, making a family safety plan, and understanding your home's flood risk."
+      ],
+      "question_type": "procedural",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:14:34.721816"
+    },
+    {
+      "question": "How can I safely dispose of hazardous waste in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto runs Environment Days where residents can drop off their hazardous waste.",
+        "These events happen across the city and schedule can be found on the official city website.",
+        "There are also permanent drop-off depots that accept hazardous waste."
+      ],
+      "ground_truth": [
+        "To safely dispose of hazardous waste in Toronto, you can bring it to one of the City's Environment Days, which are held across the city. The schedule for these events can be found on the official city website. Alternatively, there are permanent drop-off depots that accept hazardous waste."
+      ],
+      "question_type": "procedural",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:14:34.721819"
+    },
+    {
+      "question": "What should I do if I see a coyote in my neighborhood in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto provides advice on what to do when encountering wildlife, including coyotes.",
+        "The advice includes not approaching the animal, not feeding it, and reporting the sighting to the city's animal services."
+      ],
+      "ground_truth": [
+        "If you see a coyote in your neighborhood in Toronto, do not approach or feed the animal. Instead, report the sighting to the city's animal services. This advice is provided by the City of Toronto for encounters with wildlife."
+      ],
+      "question_type": "procedural",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:14:34.721822"
+    },
+    {
+      "question": "What should I do if I see a suspicious package in a public place in Toronto?",
+      "ground_truth_context": [
+        "The Toronto Police Service advises to not touch any suspicious items.",
+        "Call 9-1-1 immediately and provide as much information as possible about the suspicious package, including its location, size, shape, colour, and any noticeable markings or wires."
+      ],
+      "ground_truth": [
+        "If you see a suspicious package in a public place in Toronto, do not touch it. Immediately call 9-1-1 and provide as much information as possible about the package, such as its location, size, shape, colour, and any noticeable markings or wires."
+      ],
+      "question_type": "conditional",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:15:27.863111"
+    },
+    {
+      "question": "What should I do if I encounter a bear while hiking in the Toronto area?",
+      "ground_truth_context": [
+        "Although bear sightings are rare in Toronto, they can occur in more rural areas outside the city.",
+        "The Ontario Ministry of Natural Resources and Forestry advises to speak to the bear in a calm, assertive voice, back away slowly, and avoid direct eye contact, which the bear may perceive as a threat."
+      ],
+      "ground_truth": [
+        "If you encounter a bear while hiking in the Toronto area, speak to the bear in a calm, assertive voice, back away slowly, and avoid direct eye contact, which the bear may perceive as a threat. Remember that bear sightings are rare in Toronto, but more common in rural areas outside the city."
+      ],
+      "question_type": "conditional",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:15:27.863120"
+    },
+    {
+      "question": "What should I do if I'm stuck in an elevator in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto advises to remain calm and not to force open the doors.",
+        "Use the emergency phone or button to call for help."
+      ],
+      "ground_truth": [
+        "If you're stuck in an elevator in Toronto, remain calm and do not try to force open the doors. Use the emergency phone or button to call for help."
+      ],
+      "question_type": "conditional",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:15:27.863122"
+    },
+    {
+      "question": "What should I do if I witness a car crash in Toronto?",
+      "ground_truth_context": [
+        "Toronto Police advises to ensure your safety first, do not put yourself in danger.",
+        "Call 9-1-1 and provide details about the accident, including the number of vehicles involved, the condition of the crash victims, and the exact location."
+      ],
+      "ground_truth": [
+        "If you witness a car crash in Toronto, first ensure your own safety and do not put yourself in danger. Call 9-1-1 and provide them with details about the accident, including the number of vehicles involved, the condition of the crash victims, and the exact location."
+      ],
+      "question_type": "conditional",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:15:27.863124"
+    },
+    {
+      "question": "What should I do if I smell gas in my Toronto home?",
+      "ground_truth_context": [
+        "Enbridge Gas advises to immediately leave the area if you smell gas.",
+        "Do not use any electrical devices, including light switches and phones, as they can create a spark.",
+        "Once you're safe, call Enbridge Gas or 9-1-1."
+      ],
+      "ground_truth": [
+        "If you smell gas in your Toronto home, Enbridge Gas advises to immediately leave the area. Do not use any electrical devices, including light switches and phones, as they can create a spark. Once you're in a safe location, call Enbridge Gas or 9-1-1."
+      ],
+      "question_type": "conditional",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:15:27.863127"
+    },
+    {
+      "question": "Where are the emergency exits located at the Toronto Pearson International Airport?",
+      "ground_truth_context": [
+        "Emergency exits at the Toronto Pearson International Airport are clearly marked with illuminated signs.",
+        "The airport's layout includes several emergency exits throughout all terminals."
+      ],
+      "ground_truth": [
+        "Emergency exits at the Toronto Pearson International Airport are located throughout all terminals and are clearly marked with illuminated signs."
+      ],
+      "question_type": "location_based",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:16:15.924995"
+    },
+    {
+      "question": "Where can I find the list of fire stations in Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto's official website provides a comprehensive list of all fire stations in the city.",
+        "The list includes the location, contact information, and district of each fire station."
+      ],
+      "ground_truth": [
+        "You can find the list of fire stations in Toronto on the City of Toronto's official website, which includes the location, contact information, and district of each fire station."
+      ],
+      "question_type": "location_based",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:16:15.925001"
+    },
+    {
+      "question": "Where are the designated safe areas during a severe weather event in Toronto?",
+      "ground_truth_context": [
+        "Designated safe areas during a severe weather event in Toronto can be different depending on the nature of the event.",
+        "In general, sheltering in a small, windowless interior room on the lowest level of your home is recommended during severe weather events.",
+        "For specific emergencies, the City of Toronto's Emergency Management Office provides guidelines on their website."
+      ],
+      "ground_truth": [
+        "Designated safe areas during a severe weather event in Toronto can vary depending on the nature of the event. In general, it is recommended to shelter in a small, windowless interior room on the lowest level of your home. For specific emergencies, check the guidelines provided by the City of Toronto's Emergency Management Office on their website."
+      ],
+      "question_type": "location_based",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:16:15.925002"
+    },
+    {
+      "question": "Where can I find the nearest AED (Automated External Defibrillator) in Toronto?",
+      "ground_truth_context": [
+        "AEDs in Toronto are located in a variety of public places such as community centres, libraries, and subway stations.",
+        "The City of Toronto's official website provides a map of AED locations."
+      ],
+      "ground_truth": [
+        "You can find the nearest AED in Toronto at various public places such as community centres, libraries, and subway stations. You can also check the City of Toronto's official website, which provides a map of AED locations."
+      ],
+      "question_type": "location_based",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:16:15.925003"
+    },
+    {
+      "question": "Where is the nearest evacuation centre in Toronto in case of a city-wide emergency?",
+      "ground_truth_context": [
+        "The City of Toronto has multiple evacuation centres spread throughout the city.",
+        "The specific evacuation centre you should go to depends on your location and the nature of the emergency.",
+        "The City of Toronto's Emergency Management Office provides information about evacuation centres during emergencies."
+      ],
+      "ground_truth": [
+        "The nearest evacuation centre in Toronto in case of a city-wide emergency would depend on your location and the nature of the emergency. The City of Toronto has multiple evacuation centres spread throughout the city. For current and accurate information during emergencies, refer to the City of Toronto's Emergency Management Office."
+      ],
+      "question_type": "location_based",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:16:15.925004"
+    },
+    {
+      "question": "What should I do if I see a fire in a building in downtown Toronto?",
+      "ground_truth_context": [
+        "The City of Toronto advises that if you see a fire, you should not attempt to put it out yourself unless it's very small and you have the appropriate equipment.",
+        "It's important to alert others in the building as quickly as possible and leave the building immediately, using the stairs rather than the elevator.",
+        "Once you're outside, call 911 and report the fire."
+      ],
+      "ground_truth": [
+        "If you see a fire in a building, do not attempt to put it out unless it's very small and you have the appropriate equipment. Alert others in the building, leave immediately using the stairs, not the elevator. Once you're safely outside, call 911 to report the fire."
+      ],
+      "question_type": "emergency",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:17:10.125907"
+    },
+    {
+      "question": "What should I do if I witness a car accident in Toronto?",
+      "ground_truth_context": [
+        "If you witness a car accident in Toronto, your safety is paramount.",
+        "If it's safe to do so, stop and offer help.",
+        "You should call 911 and provide as much detail about the accident as possible.",
+        "The City of Toronto advises against moving any injured person as it may cause more harm."
+      ],
+      "ground_truth": [
+        "If you witness a car accident, your safety comes first. If it's safe, stop and offer help. Call 911 and provide as many details as you can. However, avoid moving any injured persons as it could lead to more harm."
+      ],
+      "question_type": "emergency",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:17:10.125921"
+    },
+    {
+      "question": "What should I do if I see someone fall onto the subway tracks at a TTC station?",
+      "ground_truth_context": [
+        "If you see someone fall onto the subway tracks at a TTC station, do not attempt to rescue them yourself.",
+        "Use the Emergency Alarm on the nearest subway platform to notify TTC staff.",
+        "They have the necessary training and equipment to handle such situations."
+      ],
+      "ground_truth": [
+        "If you see someone fall onto the subway tracks at a TTC station, do not attempt to rescue them yourself. Instead, use the Emergency Alarm located on the nearest subway platform to alert TTC staff who are trained and equipped to handle such situations."
+      ],
+      "question_type": "emergency",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:17:10.125925"
+    },
+    {
+      "question": "What should I do if I smell gas in my home in Toronto?",
+      "ground_truth_context": [
+        "If you smell gas in your home, you should leave immediately and call 911 from a safe distance.",
+        "Do not use any electrical appliances, light switches or phones as they could ignite the gas.",
+        "Once you've left the home, do not re-enter until it has been declared safe by a professional."
+      ],
+      "ground_truth": [
+        "If you smell gas in your home, leave immediately and call 911 from a safe distance. Avoid using any electrical appliances, light switches, or phones, as these could ignite the gas. Do not re-enter your home until it's been declared safe by a professional."
+      ],
+      "question_type": "emergency",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:17:10.125927"
+    },
+    {
+      "question": "What should I do if I find a suspicious package in Toronto?",
+      "ground_truth_context": [
+        "If you find a suspicious package or item, do not touch it, move it, or try to open it.",
+        "Move away from the package, and do not use cell phones or radios within 100 metres of it.",
+        "You should call 911 and provide as much detail about the package as possible."
+      ],
+      "ground_truth": [
+        "If you find a suspicious package or item, do not touch, move, or open it. Move away from the package and avoid using cell phones or radios within 100 metres of it. Call 911 and provide as many details about the package as possible."
+      ],
+      "question_type": "emergency",
+      "episode_done": false,
+      "generated_at": "2024-11-12T13:17:10.125930"
+    }
+  ]
+}
