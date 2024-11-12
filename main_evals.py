@@ -10,8 +10,8 @@ from ragas import evaluate
 from ragas.metrics import (
     faithfulness,
     answer_relevancy,
-    retrieval_precision,
-    retrieval_recall,
+    context_precision,
+    context_recall,
 )
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from sklearn.metrics.pairwise import cosine_similarity
@@ -21,6 +21,8 @@ from rag_tracker import RAGTracker
 from datetime import datetime
 import os
 from dotenv import load_dotenv
+import json
+from pathlib import Path
 
 # Load environment variables
 load_dotenv(".env", override=True)
@@ -78,14 +80,14 @@ def run_rag_evaluation():
     eval_data = Dataset.from_pandas(pd.DataFrame(results))
     
     print("\nRunning RAGAS evaluation...")
-    # Run RAGAS evaluation with updated metrics
+    # Run RAGAS evaluation with correct metric names
     result = evaluate(
         eval_data,
         metrics=[
             faithfulness,
             answer_relevancy,
-            retrieval_precision,  # Updated metric name
-            retrieval_recall,     # Updated metric name
+            context_precision,  # Updated metric name
+            context_recall,     # Updated metric name
         ]
     )
     
@@ -149,19 +151,25 @@ def analyze_rag_quality(results_df):
                 print("Suggestion: Consider adjusting prompt to stay closer to context")
             elif metric == 'answer_relevancy':
                 print("Suggestion: Refine prompt to focus more on question")
-            elif metric == 'retrieval_precision':
+            elif metric == 'context_precision':  # Updated metric name
                 print("Suggestion: Adjust retrieval strategy or expand knowledge base")
-            elif metric == 'retrieval_recall':
+            elif metric == 'context_recall':     # Updated metric name
                 print("Suggestion: Modify prompt to better utilize context")
 
-# Sample evaluation questions
-EVAL_QUESTIONS = [
-    "What safety precautions should I take when walking alone at night in downtown Toronto?",
-    "How can I protect my home from break-ins while I'm away on vacation?",
-    "What should I do if I witness a crime in progress in Toronto?",
-    "How can I stay safe while using the TTC late at night?",
-    "What are the best practices for protecting myself from phone scams in Toronto?",
-]
+def load_test_set(filename: str = "latest_test_set.json"):
+    """Load test questions from JSON file"""
+    test_sets_dir = Path("test_sets")
+    if not filename:
+        # Get the most recent test set
+        test_sets = list(test_sets_dir.glob("test_set_*.json"))
+        if not test_sets:
+            raise FileNotFoundError("No test sets found")
+        latest_test_set = max(test_sets, key=lambda x: x.stat().st_mtime)
+        filename = latest_test_set.name
+    
+    with open(test_sets_dir / filename) as f:
+        test_set = json.load(f)
+    return test_set["questions"]
 
 if __name__ == "__main__":
     print("Starting Comprehensive Evaluation Pipeline")
@@ -172,6 +180,17 @@ if __name__ == "__main__":
     
     # 1. Evaluate embeddings
     print("\nEvaluating Embeddings...")
+    try:
+        EVAL_QUESTIONS = [q["question"] for q in load_test_set()]
+    except FileNotFoundError:
+        print("No test set found, using default questions")
+        EVAL_QUESTIONS = [
+            "What safety precautions should I take when walking alone at night in downtown Toronto?",
+            "How can I protect my home from break-ins while I'm away on vacation?",
+            "What should I do if I witness a crime in progress in Toronto?",
+            "How can I stay safe while using the TTC late at night?",
+            "What are the best practices for protecting myself from phone scams in Toronto?",
+        ]
     embedding_results = evaluate_embeddings(EVAL_QUESTIONS)
     embedding_analysis = analyze_embedding_quality(embedding_results)
     
