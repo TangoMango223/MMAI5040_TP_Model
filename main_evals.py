@@ -1,6 +1,6 @@
 """
 main_evals.py
-Goal: Evaluate both RAG pipeline and embeddings using RAGAS and custom metrics
+Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics
 """
 
 from typing import List, Dict
@@ -14,6 +14,7 @@ from ragas.metrics import (
     context_recall,
 )
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
+from langchain_pinecone import PineconeVectorStore
 from sklearn.metrics.pairwise import cosine_similarity
 import numpy as np
 from main import generate_safety_plan
@@ -29,6 +30,23 @@ load_dotenv(".env", override=True)
 
 # Configure OpenAI API key
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+
+# Add after environment setup, before the functions
+# Default evaluation questions in case no test set is found
+EVAL_QUESTIONS = [
+    "What safety precautions should I take when walking alone at night in downtown Toronto?",
+    "How can I protect my home from break-ins while I'm away on vacation?",
+    "What should I do if I witness a crime in progress in Toronto?",
+    "How can I stay safe while using the TTC late at night?",
+    "What are the best practices for protecting myself from phone scams in Toronto?",
+]
+
+# Update EVAL_QUESTIONS if test set exists
+try:
+    test_questions = load_test_set()
+    EVAL_QUESTIONS = [q["question"] for q in test_questions]
+except FileNotFoundError:
+    print("No test set found, using default questions")
 
 def evaluate_embeddings(questions: List[str]):
     """Evaluate embedding quality using cosine similarity"""
@@ -61,16 +79,29 @@ def run_rag_evaluation():
     print("Starting RAG evaluation...")
     print(f"Testing {len(EVAL_QUESTIONS)} questions...")
     
+    # Initialize vector store for retrieval
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+    vectorstore = PineconeVectorStore(
+        index_name=os.environ["PINECONE_INDEX_NAME"],
+        embedding=embeddings
+    )
+    retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+    
     # Generate responses for all questions
     results = []
     for i, question in enumerate(EVAL_QUESTIONS, 1):
         print(f"Processing question {i}/{len(EVAL_QUESTIONS)}")
         try:
+            # Retrieve relevant documents
+            retrieved_docs = retriever.get_relevant_documents(question)
+            
+            # Generate answer using the safety plan function
             result = generate_safety_plan(question, return_all=True)
+            
             results.append({
                 'question': question,
                 'answer': result['answer'],
-                'contexts': [doc.page_content for doc in result['contexts']],
+                'contexts': [doc.page_content for doc in retrieved_docs],
                 'ground_truths': [""]  # Required by RAGAS but can be empty
             })
         except Exception as e:
@@ -80,14 +111,14 @@ def run_rag_evaluation():
     eval_data = Dataset.from_pandas(pd.DataFrame(results))
     
     print("\nRunning RAGAS evaluation...")
-    # Run RAGAS evaluation with correct metric names
+    # Run RAGAS evaluation
     result = evaluate(
         eval_data,
         metrics=[
             faithfulness,
             answer_relevancy,
-            context_precision,  # Updated metric name
-            context_recall,     # Updated metric name
+            context_precision,
+            context_recall,
         ]
     )
     
@@ -151,9 +182,9 @@ def analyze_rag_quality(results_df):
                 print("Suggestion: Consider adjusting prompt to stay closer to context")
             elif metric == 'answer_relevancy':
                 print("Suggestion: Refine prompt to focus more on question")
-            elif metric == 'context_precision':  # Updated metric name
+            elif metric == 'context_precision':
                 print("Suggestion: Adjust retrieval strategy or expand knowledge base")
-            elif metric == 'context_recall':     # Updated metric name
+            elif metric == 'context_recall':
                 print("Suggestion: Modify prompt to better utilize context")
 
 def load_test_set(filename: str = "latest_test_set.json"):
@@ -202,7 +233,7 @@ if __name__ == "__main__":
     # 3. Log results with tracker
     config = {
         'embedding_model': "text-embedding-3-large",
-        'retriever_k': 10,
+        'retriever_k': 5,
         'model_name': "gpt-4",
         'changes_made': "Comprehensive evaluation",
     }
