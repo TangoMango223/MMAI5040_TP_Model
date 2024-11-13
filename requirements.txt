@@ -121,9 +121,15 @@ pinecone-client>=2.2.4
 python-dotenv>=1.0.0
 
 # RAGAS and its dependencies
-ragas[all]==0.0.22
-openai>=1.0.0
-datasets>=2.16.1
-pandas>=1.5.0
-numpy>=1.24.0
-evaluate>=0.4.0
+ragas
+openai
+datasets
+pandas
+numpy
+evaluate
+# ragas[all]==0.0.22
+# openai>=1.0.0
+# datasets>=2.16.1
+# pandas>=1.5.0
+# numpy>=1.24.0
+# evaluate>=0.4.0

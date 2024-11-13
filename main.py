@@ -15,6 +15,8 @@ from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
 
+# Using LangSmith Key to track project in the backend.
+
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
@@ -34,13 +36,13 @@ load_dotenv(".env", override=True)
 
 # Define the prompt template
 SAFETY_PLAN_PROMPT = PromptTemplate.from_template("""
-You are a Toronto Police Service safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
+You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
 Your role is to provide practical, evidence-based safety recommendations.
 
 USER REQUEST:
 {input}
 
-RELEVANT TORONTO POLICE RESOURCES:
+RELEVANT TORONTO POLICE, CITY OF TORONTO, AND GOVERNMENT RESOURCES:
 {context}
 
 Based on the provided information, create a detailed safety plan that includes:
@@ -77,7 +79,9 @@ Guidelines for your response:
 - Prioritize recommendations based on the specific crime patterns
 - Include relevant contact numbers and resources
 
-If certain information is not available in the knowledge base, acknowledge this and provide general best practices while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance.
+If certain information is not available in the knowledge base, acknowledge this and provide general best practices, while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance. 
+
+Refrain from providing legal, medical, financial or personal or professional advice, stay within the scope of a safety plan and a role as a safety advisor.
 
 Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
 """)
@@ -132,7 +136,7 @@ def generate_safety_plan(
     SAFETY CONCERNS:
     - {formatted_crime_concerns}
     
-    ADDITIONAL CONTEXT:
+    ADDITIONAL USER CONTEXT:
     {formatted_context}
     """
     
@@ -164,7 +168,6 @@ def generate_safety_plan(
     """
     
     return plan_string
-
 
 
 # Main Control to run function:

@@ -1,9 +1,7 @@
 """
 generate_test_set.py
-Goal: Generate and store test questions using OpenAI API to align with RAGAS evaluation format.
-The test set will be used as part of the evaluation of our LLM + RAG model for Toronto Police Project.
-
-Note: The test set is generated using GPT-4o, which is a powerful model that can generate a wide variety of questions and answers. However, our team checked for accuracy (human evaluation) for this test set to reduce hallucinations.
+Goal: Generate and store test questions using OpenAI API to align with the safety plan generator's input format.
+The test set will be used to evaluate our LLM + RAG model for the Toronto Police Project.
 """
 
 import json
@@ -11,86 +9,124 @@ from datetime import datetime
 import os
 from pathlib import Path
 from dotenv import load_dotenv
-from langchain_openai import ChatOpenAI
+from langchain_openai import ChatOpenAI, OpenAIEmbeddings
+from langchain_pinecone import PineconeVectorStore
 from typing import List, Dict
 
 # Load environment variables
 load_dotenv(".env", override=True)
 
-# Types of questions to generate
-QUESTION_TYPES = [
-    "factual",          # Direct questions about safety procedures
-    "procedural",       # Step-by-step safety instructions
-    "conditional",      # "What if" or scenario-based questions
-    "location_based",   # Questions about specific Toronto locations
-    "emergency"         # Emergency response questions
+# Update the categories to focus on safety plan scenarios
+SCENARIO_TYPES = [
+    "property_theft",
+    # "personal_safety",      # Individual safety concerns
+    # "property_security",    # Home/business security
+    # "transit_safety",       # Public transportation & commuting
+    # "neighborhood_watch",   # Community safety and awareness
+    # "emergency_prep"        # Emergency preparedness
 ]
 
-# System Instructions
-SYSTEM_PROMPT = """You are a Toronto public safety expert. 
-Generate safety-related questions and their corresponding ground truth answers and contexts.
+def generate_test_case(scenario_type: str) -> Dict:
+    """Generate a single test case in RAGAS format"""
+    
+    # Initialize OpenAI
+    chat = ChatOpenAI(model="gpt-4o", temperature=0.2)
+    
+    # Initialize Pinecone components
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
+    vectorstore = PineconeVectorStore(
+        index_name=os.environ["PINECONE_INDEX_NAME"],
+        embedding=embeddings
+    )
+    
+    # First, generate a basic query to retrieve relevant contexts
+    base_query_prompt = f"""Generate a brief safety-related query for Toronto focusing on {scenario_type}.
+    Include a specific neighborhood and 2-3 specific safety concerns."""
+    
+    base_query = chat.invoke([{"role": "user", "content": base_query_prompt}]).content
+    
+    # Retrieve relevant contexts using the base query
+    retrieved_docs = vectorstore.similarity_search(
+        base_query,
+        k=5
+    )
+    
+    # Extract contexts
+    contexts = [doc.page_content for doc in retrieved_docs]
+    
+    # Generate the user question/request
+    question_prompt = f"""Generate a safety plan request for Toronto with this format:
 
-Each question should include:
-1. The question itself
-2. The ideal ground truth answer
-3. The necessary context information that would be needed to answer this question accurately
-4. The type of question (factual, procedural, conditional, location_based, or emergency)
+    LOCATION: [specific Toronto neighborhood]
+    
+    SAFETY CONCERNS: [2-3 specific concerns]
+    
+    ADDITIONAL USER CONTEXT:
+    Q: How often do you [relevant activity]?
+    A: [contextual response]
+    
+    Q: [relevant follow-up question]?
+    A: [contextual response]
+    
+    Q: [specific safety measure question]?
+    A: [contextual response]
 
-Make sure all information is specific to Toronto and based on official safety guidelines and best practices.
-Remember, the safety plan's target audience is the general public for the City of Toronto, so ensure all information is relevant and applicable to this audience.
+    Focus on {scenario_type} and use these verified Toronto safety resources:
+    {chr(10).join(f'- {context}' for context in contexts)}"""
+    
+    question = chat.invoke([{"role": "user", "content": question_prompt}]).content
+    
+    # Generate ground truth safety plan using the same contexts
+    ground_truth_prompt = f"""Create a comprehensive safety plan following this structure:
 
-Remember, stay within your role as a public safety expert for advisory purposes. Do not provide any legal, medical, or other professional advice. 
-"""
+    1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT
+    2. TARGETED SAFETY RECOMMENDATIONS
+    3. PERSONAL SAFETY PROTOCOL
+    4. PREVENTIVE MEASURES
 
-def generate_questions(question_type: str, num_questions: int = 5) -> List[Dict]:
-    """Generate questions with ground truth answers and contexts for a specific type"""
-    
-    chat = ChatOpenAI(model="gpt-4", temperature=0.7)
-    
-    prompt = f"""Generate {num_questions} {question_type} safety-related questions for Toronto residents.
-    
-    For each question, provide:
-    1. The question text
-    2. A list of relevant context information needed to answer the question accurately
-    3. The complete ground truth answer
-    
-    Format each as a JSON object with these fields:
-    - question: the actual question
-    - ground_truth_context: list of relevant context information (each item should be a complete, informative sentence)
-    - ground_truth: list containing the complete, accurate answer
-    - question_type: "{question_type}"
-    - episode_done: false
-    
-    The ground truth answer should be comprehensive and based on the context information.
-    The context should contain all information needed to construct the answer.
-    
-    Return the response as a JSON array of these objects."""
-    
-    response = chat.invoke([
-        {"role": "system", "content": SYSTEM_PROMPT},
-        {"role": "user", "content": prompt}
-    ])
-    
-    try:
-        questions = json.loads(response.content)
-        for q in questions:
-            # Ensure ground_truth is a list
-            if isinstance(q["ground_truth"], str):
-                q["ground_truth"] = [q["ground_truth"]]
-            # Ensure ground_truth_context is a list
-            if isinstance(q["ground_truth_context"], str):
-                q["ground_truth_context"] = [q["ground_truth_context"]]
-            # Add generation timestamp
-            q["generated_at"] = datetime.now().isoformat()
-            # Ensure episode_done is false
-            q["episode_done"] = False
-    except json.JSONDecodeError:
-        print(f"Error parsing response for {question_type}")
-        questions = []
-    
-    return questions
+    Base the plan on:
+    USER REQUEST:
+    {question}
 
-def save_test_set(questions: List[Dict], filename: str = None):
+    VERIFIED RESOURCES:
+    {chr(10).join(f'- {context}' for context in contexts)}
+
+    Guidelines for your response:
+    - Provide specific, actionable advice that can be implemented immediately
+    - Include both preventive measures and emergency response protocols
+    - Reference relevant Toronto Police Service programs or initiatives when applicable
+    - Maintain a supportive and empowering tone while being clear about risks
+    - Prioritize recommendations based on the specific crime patterns
+    - Include relevant contact numbers and resources"""
+    
+    ground_truth = chat.invoke([{"role": "user", "content": ground_truth_prompt}]).content
+    
+    # Format in RAGAS structure
+    test_case = {
+        "question": question.strip(),
+        "ground_truth_context": contexts,
+        "ground_truth": [ground_truth.strip()],  # RAGAS expects a list
+        "question_type": scenario_type,
+        "episode_done": False
+    }
+    
+    return test_case
+
+def generate_test_set(cases_per_type: int = 3) -> List[Dict]:
+    """Generate a complete test set with all scenario types"""
+    test_cases = []
+    
+    for scenario_type in SCENARIO_TYPES:
+        print(f"Generating {scenario_type} scenarios...")
+        for _ in range(cases_per_type):
+            test_case = generate_test_case(scenario_type)
+            if test_case:
+                test_cases.append(test_case)
+        print(f"Generated {cases_per_type} cases for {scenario_type}")
+    
+    return test_cases
+
+def save_test_set(test_cases: List[Dict], filename: str = None):
     """Save the generated test set to a JSON file"""
     if filename is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
@@ -105,10 +141,10 @@ def save_test_set(questions: List[Dict], filename: str = None):
         "metadata": {
             "generated_at": datetime.now().isoformat(),
             "model": "gpt-4",
-            "total_questions": len(questions),
-            "question_types": QUESTION_TYPES
+            "total_cases": len(test_cases),
+            "scenario_types": SCENARIO_TYPES
         },
-        "questions": questions
+        "questions": test_cases  # RAGAS expects "questions" key
     }
     
     with open(output_path, "w") as f:
@@ -121,20 +157,8 @@ def save_test_set(questions: List[Dict], filename: str = None):
     print(f"Test set saved to {output_path}")
     print(f"Also saved as latest_test_set.json")
 
-def generate_full_test_set(questions_per_type: int = 5):
-    """Generate a complete test set with all question types"""
-    all_questions = []
-    
-    for question_type in QUESTION_TYPES:
-        print(f"Generating {question_type} questions...")
-        questions = generate_questions(question_type, questions_per_type)
-        all_questions.extend(questions)
-        print(f"Generated {len(questions)} questions for {question_type}")
-    
-    save_test_set(all_questions)
-    return all_questions
-
 if __name__ == "__main__":
     print("Generating comprehensive test set...")
-    questions = generate_full_test_set(questions_per_type=5)
-    print(f"Generated total of {len(questions)} questions")
+    test_cases = generate_test_set(cases_per_type=1)
+    save_test_set(test_cases)
+    print(f"Generated total of {len(test_cases)} test cases")

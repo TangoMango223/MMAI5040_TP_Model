@@ -23,12 +23,16 @@ import os
 from dotenv import load_dotenv
 import json
 from pathlib import Path
+from langchain.embeddings import OpenAIEmbeddings
+from langchain.llms import OpenAI
+from ragas.llms import LangchainLLMWrapper
+from ragas.embeddings import LangchainEmbeddingsWrapper
+from ragas.metrics import answer_correctness
 
 # Load environment variables
 load_dotenv(".env", override=True)
 
-# Configure OpenAI API key
-os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
+# Specify
 
 # Initialize Pinecone
 pinecone.init(
@@ -48,38 +52,67 @@ EVAL_QUESTIONS = [
 def run_rag_evaluation():
     """Run RAGAS evaluation on the RAG pipeline"""
     print("Starting RAG evaluation...")
-    print(f"Testing {len(EVAL_QUESTIONS)} questions...")
+    
+    # Load test cases
+    test_cases = load_test_set()
+    print(f"Testing {len(test_cases)} questions...")
+    
+    # Initialize OpenAI components with wrappers
+    openai_embeddings = OpenAIEmbeddings(
+        model="text-embedding-ada-002",  # Use ada-002 as shown in example
+        openai_api_key=os.getenv("OPENAI_API_KEY")
+    )
+    openai_llm = OpenAI(
+        model_name="gpt-4o",
+        openai_api_key=os.getenv("OPENAI_API_KEY")
+    )
+    
+    # Wrap them with RAGAS wrappers
+    wrapped_embeddings = LangchainEmbeddingsWrapper(openai_embeddings)
+    wrapped_llm = LangchainLLMWrapper(openai_llm)
     
     # Initialize vector store for retrieval
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
     vectorstore = Pinecone.from_existing_index(
         index_name=os.environ["PINECONE_INDEX_NAME"],
-        embedding=embeddings
+        embedding=openai_embeddings
     )
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     
-    # Generate responses for all questions
+    # Prepare results in RAGAS format
     results = []
-    for i, question in enumerate(EVAL_QUESTIONS, 1):
-        print(f"Processing question {i}/{len(EVAL_QUESTIONS)}")
+    for i, test_case in enumerate(test_cases, 1):
+        print(f"Processing question {i}/{len(test_cases)}")
         try:
-            # Generate answer using the safety plan function
-            result = generate_safety_plan(question, return_all=True)
+            # Get the question text
+            question = test_case["question"]
+            
+            # Get the ground truth and contexts
+            ground_truths = test_case.get("ground_truths", [""])
+            contexts = test_case.get("contexts", [])
+            
+            # Generate new answer using the safety plan function
+            result = generate_safety_plan(
+                neighbourhood="Toronto",  # Default value
+                crime_concerns=["General Safety"],  # Default value
+                user_context={"Question": question}  # Pass the question as context
+            )
             
             results.append({
-                'question': question,
-                'answer': result['answer'],
-                'contexts': [doc.page_content for doc in result['contexts']],
-                'ground_truths': [""]  # Required by RAGAS but can be empty
+                "question": question,
+                "answer": result,
+                "contexts": contexts,
+                "ground_truths": ground_truths
             })
+            
         except Exception as e:
             print(f"Error processing question {i}: {str(e)}")
+            continue
     
     # Convert to RAGAS dataset format
     eval_data = Dataset.from_pandas(pd.DataFrame(results))
     
     print("\nRunning RAGAS evaluation...")
-    # Run RAGAS evaluation
+    # Run RAGAS evaluation with specified LLM and embeddings
     result = evaluate(
         eval_data,
         metrics=[
@@ -87,7 +120,9 @@ def run_rag_evaluation():
             answer_relevancy,
             context_precision,
             context_recall,
-        ]
+        ],
+        llm=wrapped_llm,
+        embeddings=wrapped_embeddings
     )
     
     return result.to_pandas()
