@@ -13,7 +13,6 @@
 
 
 # ----- LangChain and LangGraph -----
-langchain
 langchain-openai
 langchain-pinecone 
 langchain-community
@@ -39,7 +38,6 @@ setuptools
 beautifulsoup4
 black
 tiktoken
-# openai
 unstructured
 nltk
 fastapi
@@ -50,7 +48,6 @@ isort
 langchainhub
 firecrawl-py
 langchain
-# langchain-openai
 langchain-community
 langsmith
 # pinecone
@@ -115,18 +112,26 @@ evaluate
 torch
 
 # Core dependencies
-langchain>=0.1.0
+# langchain>=0.1.0
 langchain-openai>=0.0.2
 pinecone-client>=2.2.4
 python-dotenv>=1.0.0
 
 # RAGAS and its dependencies
-openai
-datasets
-pandas
-numpy
-evaluate
-# ragas[all]==0.0.22
+# openai
+# datasets
+# pandas
+# numpy
+# evaluate
+# ragas==0.0.22
+# # llama-index==0.6.9
+
+# # llama-index-llms-llama-cpp
+# # llama-index-embeddings-huggingface
+
+
+
+# # ragas[all]==0.0.22
 # openai>=1.0.0
 # datasets>=2.16.1
 # pandas>=1.5.0
@@ -134,4 +139,11 @@ evaluate
 # evaluate>=0.4.0
 
 
-ragas==0.0.18
+langchain==0.1.1
+langchain-community==0.0.13
+langchainhub==0.1.14
+anthropic==0.14.0
+cohere==4.45
+pinecone-client==3.1.0
+datasets==2.16.1
+ragas==0.1.0

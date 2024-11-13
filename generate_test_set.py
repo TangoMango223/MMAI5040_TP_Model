@@ -29,8 +29,8 @@ SCENARIO_TYPES = [
 def generate_test_case(scenario_type: str) -> Dict:
     """Generate a single test case in RAGAS format"""
     
-    # Initialize OpenAI
-    chat = ChatOpenAI(model="gpt-4o", temperature=0.2)
+    # Initialize OpenAI with higher temperature for more variety
+    chat = ChatOpenAI(model="gpt-4", temperature=0.7)
     
     # Initialize Pinecone components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
@@ -40,8 +40,12 @@ def generate_test_case(scenario_type: str) -> Dict:
     )
     
     # First, generate a basic query to retrieve relevant contexts
-    base_query_prompt = f"""Generate a brief safety-related query for Toronto focusing on {scenario_type}.
-    Include a specific neighborhood and 2-3 specific safety concerns."""
+    base_query_prompt = f"""Generate a complex safety-related query for Toronto focusing on {scenario_type}.
+    Include:
+    - A specific Toronto neighborhood
+    - 2-3 interconnected safety concerns
+    - Make the scenario challenging and realistic
+    - Include specific details that would require precise recommendations"""
     
     base_query = chat.invoke([{"role": "user", "content": base_query_prompt}]).content
     
@@ -112,7 +116,7 @@ def generate_test_case(scenario_type: str) -> Dict:
     
     return test_case
 
-def generate_test_set(cases_per_type: int = 3) -> List[Dict]:
+def generate_test_set(cases_per_type: int = 5) -> List[Dict]:
     """Generate a complete test set with all scenario types"""
     test_cases = []
     

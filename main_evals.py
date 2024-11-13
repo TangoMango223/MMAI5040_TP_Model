@@ -6,16 +6,20 @@ Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics
 from typing import List, Dict
 import pandas as pd
 from datasets import Dataset
-import ragas
+
+# RAGAS imports
+from ragas import evaluate
 from ragas.metrics import (
     faithfulness,
     answer_relevancy,
     context_precision,
     context_recall
 )
+
+# LangChain imports
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain.vectorstores.pinecone import Pinecone
-import pinecone
+
+# Other imports
 from main import generate_safety_plan
 from rag_tracker import RAGTracker
 from datetime import datetime
@@ -26,94 +30,6 @@ from pathlib import Path
 
 # Load environment variables
 load_dotenv(".env", override=True)
-
-# Initialize Pinecone
-pinecone.init(
-    api_key=os.getenv("PINECONE_API_KEY"),
-    environment=os.getenv("PINECONE_ENVIRONMENT")
-)
-
-def run_rag_evaluation():
-    """Run RAGAS evaluation on the RAG pipeline"""
-    print("Starting RAG evaluation...")
-    
-    # Load test cases
-    test_cases = load_test_set()
-    print(f"Testing {len(test_cases)} questions...")
-    
-    # Initialize vector store for retrieval
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    vectorstore = Pinecone.from_existing_index(
-        index_name=os.environ["PINECONE_INDEX_NAME"],
-        embedding=embeddings
-    )
-    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
-    
-    # Prepare results in RAGAS format
-    results = []
-    for i, test_case in enumerate(test_cases, 1):
-        print(f"Processing question {i}/{len(test_cases)}")
-        try:
-            # Get the question text
-            question = test_case["question"]
-            
-            # Get the ground truth and contexts
-            ground_truths = test_case.get("ground_truths", [""])
-            contexts = test_case.get("contexts", [])
-            
-            # Generate new answer using the safety plan function
-            result = generate_safety_plan(
-                neighbourhood="Toronto",  # Default value
-                crime_concerns=["General Safety"],  # Default value
-                user_context={"Question": question}  # Pass the question as context
-            )
-            
-            results.append({
-                "question": question,
-                "answer": result,
-                "contexts": contexts,
-                "ground_truths": ground_truths
-            })
-            
-        except Exception as e:
-            print(f"Error processing question {i}: {str(e)}")
-            continue
-    
-    # Convert to RAGAS dataset format
-    eval_data = Dataset.from_pandas(pd.DataFrame(results))
-    
-    print("\nRunning RAGAS evaluation...")
-    # Run RAGAS evaluation
-    scores = ragas.evaluate(
-        eval_data,
-        metrics=[
-            faithfulness,
-            answer_relevancy,
-            context_precision,
-            context_recall,
-        ]
-    )
-    
-    return scores.to_pandas()
-
-def analyze_rag_quality(results_df):
-    """Analyze RAG quality and provide recommendations"""
-    print("\nRAG Quality Analysis:")
-    print("===================")
-    
-    for metric in results_df.columns:
-        score = results_df[metric].mean()
-        print(f"{metric}: {score:.3f}")
-        
-        if score < 0.7:
-            if metric == 'faithfulness':
-                print("Suggestion: Consider adjusting prompt to stay closer to context")
-            elif metric == 'answer_relevancy':
-                print("Suggestion: Refine prompt to focus more on question")
-            elif metric == 'context_precision':
-                print("Suggestion: Adjust retrieval strategy or expand knowledge base")
-            elif metric == 'context_recall':
-                print("Suggestion: Modify prompt to better utilize context")
 
 def load_test_set(filename: str = "latest_test_set.json"):
     """Load test questions from JSON file"""
@@ -129,6 +45,179 @@ def load_test_set(filename: str = "latest_test_set.json"):
     with open(test_sets_dir / filename) as f:
         test_set = json.load(f)
     return test_set["questions"]
+
+def run_rag_evaluation():
+    """Run RAGAS evaluation on the RAG pipeline"""
+    print("Starting RAG evaluation...")
+    
+    # Load test cases
+    test_cases = load_test_set()
+    print(f"Testing {len(test_cases)} questions...")
+    
+    # Prepare results in RAGAS format
+    results = {
+        "question": [],
+        "answer": [],
+        "contexts": [],
+        "ground_truths": []
+    }
+    
+    for i, test_case in enumerate(test_cases, 1):
+        print(f"\nProcessing question {i}/{len(test_cases)}")
+        try:
+            # Get the question text - extract just the actual question part
+            full_question = test_case["question"]
+            
+            # Parse location and concerns for generate_safety_plan
+            location_start = full_question.find("LOCATION:") + 9
+            concerns_start = full_question.find("SAFETY CONCERNS:") + 16
+            context_start = full_question.find("ADDITIONAL USER CONTEXT:")
+            
+            location = full_question[location_start:concerns_start].strip()
+            concerns = full_question[concerns_start:context_start].strip().split('\n')
+            concerns = [c.strip().strip('123.') for c in concerns if c.strip()]
+            
+            # Create a simpler question format
+            actual_question = f"Please provide a safety plan for {location} addressing these concerns: {', '.join(concerns)}"
+            
+            # Generate answer
+            result = generate_safety_plan(
+                neighbourhood=location,
+                crime_concerns=concerns,
+                user_context={"full_context": full_question}
+            )
+            
+            # Format the answer
+            if isinstance(result, dict):
+                answer = str(result.get('answer', result))
+            else:
+                answer = str(result)
+            
+            # Get contexts and ground truth
+            contexts = test_case.get("ground_truth_context", [])
+            if isinstance(contexts, str):
+                contexts = [contexts]
+            if not contexts:
+                contexts = ["No context available"]
+                
+            # Clean up contexts - remove any HTML or special formatting
+            contexts = [c.replace('\n', ' ').strip() for c in contexts]
+            contexts = [c for c in contexts if c and not c.startswith('[![') and not c.startswith('###')]
+            
+            ground_truths = test_case.get("ground_truth", [""])
+            if isinstance(ground_truths, str):
+                ground_truths = [ground_truths]
+            
+            # Debug print
+            print("\nSample data for question", i)
+            print("Question:", actual_question)
+            print("\nAnswer preview:", answer[:200])
+            print("\nContext sample:", contexts[0][:200] if contexts else "No context")
+            print("\nGround truth sample:", ground_truths[0][:200] if ground_truths else "No ground truth")
+            print("\nNumber of contexts:", len(contexts))
+            print("Number of ground truths:", len(ground_truths))
+            
+            # Append to results
+            results["question"].append(actual_question)
+            results["answer"].append(answer)
+            results["contexts"].append(contexts)
+            results["ground_truths"].append(ground_truths)
+            
+        except Exception as e:
+            print(f"Error processing question {i}: {str(e)}")
+            continue
+    
+    print("\nCreating dataset...")
+    # Create dataset directly from dictionary
+    eval_data = Dataset.from_dict(results)
+    
+    print("\nSample evaluation data:")
+    print("First row:")
+    for key, value in results.items():
+        if value:
+            print(f"\n{key}:")
+            if isinstance(value[0], list):
+                print(f"First item (list of {len(value[0])} items):", value[0][0][:200])
+            else:
+                print("First item:", value[0][:200])
+    
+    print("\nRunning RAGAS evaluation...")
+    try:
+        # Run RAGAS evaluation
+        scores = evaluate(
+            eval_data,
+            metrics=[
+                faithfulness,
+                answer_relevancy,
+                context_precision,
+                context_recall,
+            ]
+        )
+        return scores.to_pandas()
+    except Exception as e:
+        print(f"Error during RAGAS evaluation: {str(e)}")
+        print("Dataset structure:", eval_data)
+        raise
+
+def analyze_rag_quality(results_df):
+    """Analyze RAG quality and provide recommendations"""
+    print("\nRAG Quality Analysis:")
+    print("===================")
+    
+    try:
+        if isinstance(results_df, pd.Series):
+            results_df = results_df.to_frame().T
+            
+        metric_columns = [
+            'faithfulness',
+            'answer_relevancy',
+            'context_precision',
+            'context_recall'
+        ]
+        
+        print("Detailed Metrics Analysis:")
+        print("------------------------")
+        for metric in metric_columns:
+            if metric in results_df.columns:
+                score = float(results_df[metric].iloc[0])
+                print(f"\n{metric}:")
+                print(f"Score: {score:.3f}")
+                
+                # Add interpretation
+                if score > 0.9:
+                    print("⚠️ Warning: Score might be suspiciously high")
+                    print("Consider:")
+                    print("- Generating more diverse test cases")
+                    print("- Adding edge cases to the test set")
+                    print("- Including more complex scenarios")
+                
+                if score < 0.7:
+                    if metric == 'faithfulness':
+                        print("Suggestion: Consider adjusting prompt to stay closer to context")
+                    elif metric == 'answer_relevancy':
+                        print("Suggestion: Refine prompt to focus more on question")
+                    elif metric == 'context_precision':
+                        print("Suggestion: Adjust retrieval strategy or expand knowledge base")
+                    elif metric == 'context_recall':
+                        print("Suggestion: Modify prompt to better utilize context")
+            else:
+                print(f"{metric}: Not available")
+        
+        print("\nOverall Assessment:")
+        print("------------------")
+        avg_score = results_df[metric_columns].mean().mean()
+        print(f"Average Score: {avg_score:.3f}")
+        if avg_score > 0.9:
+            print("\nNote: High scores across all metrics suggest we should:")
+            print("1. Increase test set size and variety")
+            print("2. Include more challenging scenarios")
+            print("3. Add edge cases to better stress-test the system")
+    
+    except Exception as e:
+        print(f"Error in analysis: {str(e)}")
+        print("Results structure:", results_df)
+        print("Results type:", type(results_df))
+
 
 if __name__ == "__main__":
     print("Starting Comprehensive Evaluation Pipeline")
