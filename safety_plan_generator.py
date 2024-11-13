@@ -6,11 +6,10 @@ Goal: Generate personalized safety plans for Toronto residents based on neighbor
 # Import statements
 import os
 from typing import List, Dict
-import pinecone
 
 # LangChain Imports
 from langchain_openai import OpenAIEmbeddings
-from langchain.vectorstores.pinecone import Pinecone
+from langchain_pinecone import PineconeVectorStore
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -19,12 +18,6 @@ from langchain.chains.retrieval import create_retrieval_chain
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
-
-# Initialize Pinecone
-pinecone.init(
-    api_key=os.getenv("PINECONE_API_KEY"),
-    environment=os.getenv("PINECONE_ENVIRONMENT")
-)
 
 # Define the prompt template
 SAFETY_PLAN_PROMPT = PromptTemplate.from_template("""
@@ -103,11 +96,8 @@ def generate_safety_plan(
     
     # Initialize components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    
-    # Updated vectorstore initialization
-    index_name = os.environ["PINECONE_INDEX_NAME"]
-    vectorstore = Pinecone.from_existing_index(
-        index_name=index_name,
+    vectorstore = PineconeVectorStore(
+        index_name=os.environ["PINECONE_INDEX_NAME"],
         embedding=embeddings
     )
     
@@ -137,7 +127,7 @@ def generate_safety_plan(
     
     # Format the final safety plan
     plan_string = f"""
-    TORONTO POLICE SERVICE SAFETY PLAN
+    TORONTO SERVICE SAFETY PLAN
     Neighbourhood: {neighbourhood}
     Primary Concerns: {formatted_crime_concerns}
 
@@ -148,7 +138,7 @@ def generate_safety_plan(
                   for doc in result["context"])}
     
     Note: This safety plan is generated based on Toronto Police Service resources and general 
-    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
+    safety guidelines. For emergencies, always call 911. For non-emergency police matters for city of Toronto, 
     call 416-808-2222.
     """
     
@@ -164,9 +154,9 @@ if __name__ == "__main__":
             "Break and Enter"
         ],
         "user_context": {
-            "When are peak crime hours?": "I often work late and leave the office around 11 PM",
-            "Are there safe walking routes?": "I need to walk to Union Station",
-            "What security measures exist?": "Looking for information about surveillance and police presence"
+            "How often do you walk around this area?": "I work around this area, and I often work late and leave the office around 11 PM.",
+            "Are you looking to find safe walking routes?": "Yes, I need to walk to Union Station to catch my GO train.",
+            "Are you looking for what security measures exist?": "Yes, I would like to know what information exists about surveillance and police presence"
         }
     }
     
