@@ -1,229 +1,7 @@
 """
 3_model.py
 Goal: Using LangChain to create the LLM Model for Toronto Safety Plan Generation.
-"""
-
-# Import statements
-import os
-
-# LangChain Imports necessary for RAG
-from langchain_openai import OpenAIEmbeddings # handle word embeddings
-from langchain_pinecone import PineconeVectorStore
-from langchain_core.prompts import PromptTemplate
-from langchain_openai import ChatOpenAI
-import langchain_core.prompts.chat
-
-# Chain Extractors:
-from langchain.retrievers.document_compressors.chain_extract import LLMChainExtractor
-from langchain.retrievers.contextual_compression import ContextualCompressionRetriever
-
-# New imports
-from langchain import hub
-
-# New imports for creating document chains + retrieval
-from langchain.chains.combine_documents import create_stuff_documents_chain
-from langchain.chains.retrieval import create_retrieval_chain
-
-# Runnable PassThrough - node connections with no ops
-from langchain_core.runnables import RunnablePassthrough
-
-# Combine or stuffing chain
-from langchain.chains.combine_documents import create_stuff_documents_chain
-
-# Load environment variables
-from dotenv import load_dotenv
-load_dotenv(".env", override=True)
-
-# Add these to your imports
-from typing import List, Dict
-from langchain_core.documents import Document
-
-from safety_plan_generator import generate_safety_plan
-
-
-
-
-# --------- Example ---------
-
-# One-Shot example:
-
-# Previous example care of plan:
-example_care_plan = """
-Patient Summary:
-The patient is over 85 years old, female, and uses a mobility aid regularly. She does not report any health problems that limit her activities or require her to stay at home, and she does not need regular help from others. However, she does not have a reliable person to count on when help is needed. Her Gait and TUG test results indicate high risk, with gait speeds of 6.349 m/s and 5.634 m/s, and TUG test times of 10 and 30 seconds. Her standing pose is reported as not stable.
-
-Frailty Status:
-The patient's frailty status is mixed. She maintains some independence and does not report health problems that limit her activities. However, her age, use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose all indicate potential frailty. The key areas of concern are her mobility and balance, which increase her risk of falls and injuries.
-
-Care Recommendations:
-
-1. Physical Therapy:
-   - Rationale: The patient's mobility and balance issues, as indicated by her use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose, suggest a need for physical therapy.
-   - Implementation: Arrange for a physical therapist to assess the patient's needs and develop a personalized exercise program. This could include strength training, balance exercises, and gait training.
-   - Challenges: The patient may resist physical therapy due to fear of falls or discomfort. Encourage her to participate by explaining the benefits and ensuring the exercises are safe and appropriate for her abilities.
-
-2. Home Safety Assessment:
-   - Rationale: The patient's mobility and balance issues increase her risk of falls at home.
-   - Implementation: Arrange for a home safety assessment by a professional. They can recommend modifications such as installing grab bars, removing tripping hazards, and improving lighting.
-   - Challenges: The patient may resist changes to her home. Explain the benefits and involve her in the decision-making process to increase her acceptance.
-
-3. Social Support:
-   - Rationale: The patient does not have a reliable person to count on when help is needed, which could pose a risk in emergencies.
-   - Implementation: Explore options for social support, such as community programs, volunteer services, or professional caregiving services. Consider a personal emergency response system for added safety.
-   - Challenges: The patient may resist accepting help from others. Encourage her to accept support by explaining the benefits and ensuring her privacy and independence are respected.
-
-4. Mobility Aid Adjustment:
-   - Rationale: The patient's use of a mobility aid and her high-risk gait speed suggest that her current mobility aid may not be optimal.
-   - Implementation: Arrange for a professional to assess the patient's mobility aid and make necessary adjustments or recommend a different aid.
-   - Challenges: The patient may resist changes to her mobility aid. Explain the benefits and involve her in the decision-making process to increase her acceptance.
-
-Safety Considerations:
-Ensure the patient's home is safe for her mobility and balance issues. This includes removing tripping hazards, improving lighting, and installing safety features such as grab bars and non-slip mats. Encourage the patient to use her mobility aid at all times and to wear non-slip shoes.
-
-Monitoring and Evaluation:
-Regularly monitor the patient's mobility, balance, and overall health. This could include regular physical therapy assessments, home safety checks, and health check-ups. Adjust the care plan as needed based on these assessments.
-
-Resources and Support Services:
-Consider resources such as community programs, volunteer services, professional caregiving services, and personal emergency response systems. These can provide social support, help with daily activities, and emergency assistance.
-
-Additional Assessments:
-Further assessments may be needed to fully understand the patient's frailty status. This could include cognitive function, nutrition, and social support assessments. Consult with healthcare professionals as needed.
-
-This care plan is based on the information provided and is intended to guide caregivers in supporting the patient. It is not a substitute for professional medical advice. Always consult with healthcare professionals for a comprehensive assessment and personalized care plan.
-"""
-
-# --------- Function to Generate Care Plan ---------
-
-# Update the prompt template
-first_invocation_prompt = PromptTemplate.from_template("""
-You are a Toronto Police Service safety advisor specializing in crime prevention and public safety in Toronto, Ontario. Your role is to provide practical, evidence-based safety recommendations tailored to specific neighborhoods and crime concerns.
-
-USER PROFILE:
-Neighbourhood: {neighbourhood}
-Primary Crime Concerns: {crime_concerns}
-Additional Context: {user_context}
-
-RELEVANT TORONTO POLICE RESOURCES:
-{context}
-
-Based on the provided information, create a detailed safety plan that includes:
-
-1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
-- Current safety landscape of {neighbourhood}
-- Known risk factors and patterns
-- Specific areas or times that require extra caution
-
-2. TARGETED SAFETY RECOMMENDATIONS:
-For each crime concern ({crime_concerns}):
-- Specific prevention strategies
-- Warning signs to watch for
-- Immediate actions to take if encountered
-- Available community resources
-
-3. PERSONAL SAFETY PROTOCOL:
-- Daily safety habits to develop
-- Essential safety tools or resources to have
-- Emergency contact information and procedures
-- Community support services available
-
-4. PREVENTIVE MEASURES:
-- Home/property security recommendations
-- Personal safety technology suggestions
-- Community engagement opportunities
-- Reporting procedures and important contacts
-
-Guidelines for your response:
-- Provide specific, actionable advice that can be implemented immediately
-- Include both preventive measures and emergency response protocols
-- Reference relevant Toronto Police Service programs or initiatives when applicable
-- Maintain a supportive and empowering tone while being clear about risks
-- Prioritize recommendations based on the neighbourhood's specific crime patterns
-- Include relevant contact numbers and resources
-
-If certain information is not available in the knowledge base, acknowledge this and provide general best practices while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance.
-
-Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
-""")
-
-def generate_safety_plan(
-    neighbourhood: str,
-    crime_concerns: List[str],
-    user_context: Dict[str, str],
-    return_all: bool = False
-):
-    """
-    Generate a safety plan based on specific neighbourhood and crime concerns.
-    
-    Args:
-        neighbourhood (str): Toronto neighbourhood name
-        crime_concerns (List[str]): List of top 3 crime concerns
-        user_context (Dict[str, str]): Additional context from user questions
-        return_all (bool): Whether to return full context and retrieved documents
-    """
-    # Format the crime concerns for the prompt
-    formatted_crime_concerns = ", ".join(crime_concerns)
-    
-    # Format user context into a readable string
-    formatted_context = "\n".join([f"Q: {q}\nA: {a}" for q, a in user_context.items()])
-    
-    # Initialize components (your existing initialization code)
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    vectorstore = PineconeVectorStore(
-        index_name=os.environ["PINECONE_INDEX_NAME"],
-        embedding=embeddings
-    )
-    retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0.2, model="gpt-4")  # Slightly increased temperature for more natural responses
-    
-    # Create the chains
-    stuff_documents_chain = create_stuff_documents_chain(chat, first_invocation_prompt)
-    qa = create_retrieval_chain(retriever=retriever, combine_docs_chain=stuff_documents_chain)
-    
-    # Prepare input data
-    input_data = {
-        "neighbourhood": neighbourhood,
-        "crime_concerns": formatted_crime_concerns,
-        "user_context": formatted_context
-    }
-    
-    # Generate the safety plan
-    result = qa.invoke(input=input_data)
-    
-    if return_all:
-        return {
-            "answer": result["answer"],
-            "contexts": result["context"],
-            "input_data": input_data
-        }
-    
-    # Format the final safety plan
-    plan_string = f"""
-    TORONTO POLICE SERVICE SAFETY PLAN
-    Neighbourhood: {neighbourhood}
-    Primary Concerns: {formatted_crime_concerns}
-
-    {result["answer"]}
-
-    Sources Consulted:
-    {chr(10).join(f"- {doc.metadata.get('title', 'Untitled')} ({doc.metadata['source']})" 
-                  for doc in result["context"])}
-    
-    Note: This safety plan is generated based on Toronto Police Service resources and general 
-    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
-    call 416-808-2222.
-    """
-    
-    return plan_string
-
-# Example usage:
-if __name__ == "__main__":
-    result = generate_safety_plan("What safety precautions should I take when walking alone at night in the downtown core near Union Station?")
-
-   # Show plan:
-    print(result)
-"""
-3_model.py
-Goal: Using LangChain to create the LLM Model for Toronto Safety Plan Generation.
+V2 Fix - working version.
 """
 
 # Import statements
@@ -269,49 +47,49 @@ from langchain_core.documents import Document
 # One-Shot example:
 
 # Previous example care of plan:
-example_care_plan = """
-Patient Summary:
-The patient is over 85 years old, female, and uses a mobility aid regularly. She does not report any health problems that limit her activities or require her to stay at home, and she does not need regular help from others. However, she does not have a reliable person to count on when help is needed. Her Gait and TUG test results indicate high risk, with gait speeds of 6.349 m/s and 5.634 m/s, and TUG test times of 10 and 30 seconds. Her standing pose is reported as not stable.
+# example_care_plan = """
+# Patient Summary:
+# The patient is over 85 years old, female, and uses a mobility aid regularly. She does not report any health problems that limit her activities or require her to stay at home, and she does not need regular help from others. However, she does not have a reliable person to count on when help is needed. Her Gait and TUG test results indicate high risk, with gait speeds of 6.349 m/s and 5.634 m/s, and TUG test times of 10 and 30 seconds. Her standing pose is reported as not stable.
 
-Frailty Status:
-The patient's frailty status is mixed. She maintains some independence and does not report health problems that limit her activities. However, her age, use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose all indicate potential frailty. The key areas of concern are her mobility and balance, which increase her risk of falls and injuries.
+# Frailty Status:
+# The patient's frailty status is mixed. She maintains some independence and does not report health problems that limit her activities. However, her age, use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose all indicate potential frailty. The key areas of concern are her mobility and balance, which increase her risk of falls and injuries.
 
-Care Recommendations:
+# Care Recommendations:
 
-1. Physical Therapy:
-   - Rationale: The patient's mobility and balance issues, as indicated by her use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose, suggest a need for physical therapy.
-   - Implementation: Arrange for a physical therapist to assess the patient's needs and develop a personalized exercise program. This could include strength training, balance exercises, and gait training.
-   - Challenges: The patient may resist physical therapy due to fear of falls or discomfort. Encourage her to participate by explaining the benefits and ensuring the exercises are safe and appropriate for her abilities.
+# 1. Physical Therapy:
+#    - Rationale: The patient's mobility and balance issues, as indicated by her use of a mobility aid, high-risk gait speed, prolonged TUG test times, and unstable standing pose, suggest a need for physical therapy.
+#    - Implementation: Arrange for a physical therapist to assess the patient's needs and develop a personalized exercise program. This could include strength training, balance exercises, and gait training.
+#    - Challenges: The patient may resist physical therapy due to fear of falls or discomfort. Encourage her to participate by explaining the benefits and ensuring the exercises are safe and appropriate for her abilities.
 
-2. Home Safety Assessment:
-   - Rationale: The patient's mobility and balance issues increase her risk of falls at home.
-   - Implementation: Arrange for a home safety assessment by a professional. They can recommend modifications such as installing grab bars, removing tripping hazards, and improving lighting.
-   - Challenges: The patient may resist changes to her home. Explain the benefits and involve her in the decision-making process to increase her acceptance.
+# 2. Home Safety Assessment:
+#    - Rationale: The patient's mobility and balance issues increase her risk of falls at home.
+#    - Implementation: Arrange for a home safety assessment by a professional. They can recommend modifications such as installing grab bars, removing tripping hazards, and improving lighting.
+#    - Challenges: The patient may resist changes to her home. Explain the benefits and involve her in the decision-making process to increase her acceptance.
 
-3. Social Support:
-   - Rationale: The patient does not have a reliable person to count on when help is needed, which could pose a risk in emergencies.
-   - Implementation: Explore options for social support, such as community programs, volunteer services, or professional caregiving services. Consider a personal emergency response system for added safety.
-   - Challenges: The patient may resist accepting help from others. Encourage her to accept support by explaining the benefits and ensuring her privacy and independence are respected.
+# 3. Social Support:
+#    - Rationale: The patient does not have a reliable person to count on when help is needed, which could pose a risk in emergencies.
+#    - Implementation: Explore options for social support, such as community programs, volunteer services, or professional caregiving services. Consider a personal emergency response system for added safety.
+#    - Challenges: The patient may resist accepting help from others. Encourage her to accept support by explaining the benefits and ensuring her privacy and independence are respected.
 
-4. Mobility Aid Adjustment:
-   - Rationale: The patient's use of a mobility aid and her high-risk gait speed suggest that her current mobility aid may not be optimal.
-   - Implementation: Arrange for a professional to assess the patient's mobility aid and make necessary adjustments or recommend a different aid.
-   - Challenges: The patient may resist changes to her mobility aid. Explain the benefits and involve her in the decision-making process to increase her acceptance.
+# 4. Mobility Aid Adjustment:
+#    - Rationale: The patient's use of a mobility aid and her high-risk gait speed suggest that her current mobility aid may not be optimal.
+#    - Implementation: Arrange for a professional to assess the patient's mobility aid and make necessary adjustments or recommend a different aid.
+#    - Challenges: The patient may resist changes to her mobility aid. Explain the benefits and involve her in the decision-making process to increase her acceptance.
 
-Safety Considerations:
-Ensure the patient's home is safe for her mobility and balance issues. This includes removing tripping hazards, improving lighting, and installing safety features such as grab bars and non-slip mats. Encourage the patient to use her mobility aid at all times and to wear non-slip shoes.
+# Safety Considerations:
+# Ensure the patient's home is safe for her mobility and balance issues. This includes removing tripping hazards, improving lighting, and installing safety features such as grab bars and non-slip mats. Encourage the patient to use her mobility aid at all times and to wear non-slip shoes.
 
-Monitoring and Evaluation:
-Regularly monitor the patient's mobility, balance, and overall health. This could include regular physical therapy assessments, home safety checks, and health check-ups. Adjust the care plan as needed based on these assessments.
+# Monitoring and Evaluation:
+# Regularly monitor the patient's mobility, balance, and overall health. This could include regular physical therapy assessments, home safety checks, and health check-ups. Adjust the care plan as needed based on these assessments.
 
-Resources and Support Services:
-Consider resources such as community programs, volunteer services, professional caregiving services, and personal emergency response systems. These can provide social support, help with daily activities, and emergency assistance.
+# Resources and Support Services:
+# Consider resources such as community programs, volunteer services, professional caregiving services, and personal emergency response systems. These can provide social support, help with daily activities, and emergency assistance.
 
-Additional Assessments:
-Further assessments may be needed to fully understand the patient's frailty status. This could include cognitive function, nutrition, and social support assessments. Consult with healthcare professionals as needed.
+# Additional Assessments:
+# Further assessments may be needed to fully understand the patient's frailty status. This could include cognitive function, nutrition, and social support assessments. Consult with healthcare professionals as needed.
 
-This care plan is based on the information provided and is intended to guide caregivers in supporting the patient. It is not a substitute for professional medical advice. Always consult with healthcare professionals for a comprehensive assessment and personalized care plan.
-"""
+# This care plan is based on the information provided and is intended to guide caregivers in supporting the patient. It is not a substitute for professional medical advice. Always consult with healthcare professionals for a comprehensive assessment and personalized care plan.
+# """
 
 # --------- Function to Generate Care Plan ---------
 

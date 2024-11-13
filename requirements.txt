@@ -21,6 +21,7 @@ langgraph
 langchainhub
 langchain
 unstructured
+langchain-core
 
 # PDF handling and retrieval
 pypdf

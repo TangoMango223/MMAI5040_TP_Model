@@ -6,10 +6,11 @@ Goal: Generate personalized safety plans for Toronto residents based on neighbor
 # Import statements
 import os
 from typing import List, Dict
+import pinecone
 
 # LangChain Imports
 from langchain_openai import OpenAIEmbeddings
-from langchain_pinecone import PineconeVectorStore
+from langchain.vectorstores.pinecone import Pinecone
 from langchain_core.prompts import PromptTemplate
 from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -18,6 +19,12 @@ from langchain.chains.retrieval import create_retrieval_chain
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
+
+# Initialize Pinecone
+pinecone.init(
+    api_key=os.getenv("PINECONE_API_KEY"),
+    environment=os.getenv("PINECONE_ENVIRONMENT")
+)
 
 # Define the prompt template
 SAFETY_PLAN_PROMPT = PromptTemplate.from_template("""
@@ -96,11 +103,15 @@ def generate_safety_plan(
     
     # Initialize components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    vectorstore = PineconeVectorStore(
-        index_name=os.environ["PINECONE_INDEX_NAME"],
+    
+    # Updated vectorstore initialization
+    index_name = os.environ["PINECONE_INDEX_NAME"]
+    vectorstore = Pinecone.from_existing_index(
+        index_name=index_name,
         embedding=embeddings
     )
-    retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 10})
+    
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
     chat = ChatOpenAI(verbose=True, temperature=0.2, model="gpt-4")
     
     # Create the chains

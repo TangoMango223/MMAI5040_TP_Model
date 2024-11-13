@@ -14,9 +14,8 @@ from ragas.metrics import (
     context_recall,
 )
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
-from langchain_pinecone import PineconeVectorStore
-from sklearn.metrics.pairwise import cosine_similarity
-import numpy as np
+from langchain.vectorstores.pinecone import Pinecone
+import pinecone
 from main import generate_safety_plan
 from rag_tracker import RAGTracker
 from datetime import datetime
@@ -31,42 +30,20 @@ load_dotenv(".env", override=True)
 # Configure OpenAI API key
 os.environ["OPENAI_API_KEY"] = os.getenv("OPENAI_API_KEY")
 
-# Add after environment setup, before the functions
-# Default evaluation questions in case no test set is found
+# Initialize Pinecone
+pinecone.init(
+    api_key=os.getenv("PINECONE_API_KEY"),
+    environment=os.getenv("PINECONE_ENVIRONMENT")
+)
+
+# Default evaluation questions
 EVAL_QUESTIONS = [
     "What safety precautions should I take when walking alone at night in downtown Toronto?",
-    "How can I protect my home from break-ins while I'm away on vacation?",
-    "What should I do if I witness a crime in progress in Toronto?",
-    "How can I stay safe while using the TTC late at night?",
-    "What are the best practices for protecting myself from phone scams in Toronto?",
+    # "How can I protect my home from break-ins while I'm away on vacation?",
+    # "What should I do if I witness a crime in progress in Toronto?",
+    # "How can I stay safe while using the TTC late at night?",
+    # "What are the best practices for protecting myself from phone scams in Toronto?",
 ]
-
-# Might delete, this doesn't really make sense.
-def evaluate_embeddings(questions: List[str]):
-    """Evaluate embedding quality using cosine similarity"""
-    print("\nEvaluating Embeddings...")
-    
-    # Initialize embeddings
-    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    
-    # Get embeddings for all questions
-    embedded_questions = embeddings.embed_documents(questions)
-    
-    # Calculate similarity matrix
-    similarity_matrix = cosine_similarity(embedded_questions)
-    
-    # Calculate metrics
-    avg_similarity = np.mean(similarity_matrix[np.triu_indices(len(similarity_matrix), k=1)])
-    max_similarity = np.max(similarity_matrix[np.triu_indices(len(similarity_matrix), k=1)])
-    min_similarity = np.min(similarity_matrix[np.triu_indices(len(similarity_matrix), k=1)])
-    
-    return {
-        'avg_similarity': avg_similarity,
-        'max_similarity': max_similarity,
-        'min_similarity': min_similarity,
-        'similarity_matrix': similarity_matrix,
-        'questions': questions
-    }
 
 def run_rag_evaluation():
     """Run RAGAS evaluation on the RAG pipeline"""
@@ -75,27 +52,24 @@ def run_rag_evaluation():
     
     # Initialize vector store for retrieval
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
-    vectorstore = PineconeVectorStore(
+    vectorstore = Pinecone.from_existing_index(
         index_name=os.environ["PINECONE_INDEX_NAME"],
         embedding=embeddings
     )
-    retriever = vectorstore.as_retriever(search_type="similarity", search_kwargs={"k": 5})
+    retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     
     # Generate responses for all questions
     results = []
     for i, question in enumerate(EVAL_QUESTIONS, 1):
         print(f"Processing question {i}/{len(EVAL_QUESTIONS)}")
         try:
-            # Retrieve relevant documents
-            retrieved_docs = retriever.get_relevant_documents(question)
-            
             # Generate answer using the safety plan function
             result = generate_safety_plan(question, return_all=True)
             
             results.append({
                 'question': question,
                 'answer': result['answer'],
-                'contexts': [doc.page_content for doc in retrieved_docs],
+                'contexts': [doc.page_content for doc in result['contexts']],
                 'ground_truths': [""]  # Required by RAGAS but can be empty
             })
         except Exception as e:
@@ -117,50 +91,6 @@ def run_rag_evaluation():
     )
     
     return result.to_pandas()
-
-def analyze_embedding_quality(embedding_results):
-    """Analyze embedding quality and provide recommendations"""
-    print("\nEmbedding Analysis:")
-    print("==================")
-    print(f"Average Similarity: {embedding_results['avg_similarity']:.3f}")
-    print(f"Max Similarity: {embedding_results['max_similarity']:.3f}")
-    print(f"Min Similarity: {embedding_results['min_similarity']:.3f}")
-    
-    # Find most and least similar pairs
-    similarity_matrix = embedding_results['similarity_matrix']
-    questions = embedding_results['questions']
-    n = len(questions)
-    most_similar_pair = None
-    least_similar_pair = None
-    max_sim = -1
-    min_sim = 2
-    
-    for i in range(n):
-        for j in range(i+1, n):
-            sim = similarity_matrix[i][j]
-            if sim > max_sim:
-                max_sim = sim
-                most_similar_pair = (questions[i], questions[j])
-            if sim < min_sim:
-                min_sim = sim
-                least_similar_pair = (questions[i], questions[j])
-    
-    print("\nMost Similar Questions:")
-    print(f"1. {most_similar_pair[0]}")
-    print(f"2. {most_similar_pair[1]}")
-    print(f"Similarity: {max_sim:.3f}")
-    
-    print("\nLeast Similar Questions:")
-    print(f"1. {least_similar_pair[0]}")
-    print(f"2. {least_similar_pair[1]}")
-    print(f"Similarity: {min_sim:.3f}")
-    
-    return {
-        'most_similar_pair': most_similar_pair,
-        'least_similar_pair': least_similar_pair,
-        'max_sim': max_sim,
-        'min_sim': min_sim
-    }
 
 def analyze_rag_quality(results_df):
     """Analyze RAG quality and provide recommendations"""
@@ -196,45 +126,26 @@ def load_test_set(filename: str = "latest_test_set.json"):
         test_set = json.load(f)
     return test_set["questions"]
 
-
 if __name__ == "__main__":
-    
-    # Update EVAL_QUESTIONS if test set exists
-    try:
-        test_questions = load_test_set()
-        EVAL_QUESTIONS = [q["question"] for q in test_questions]
-    except FileNotFoundError:
-        print("No test set found, using default questions")
-        
-
     print("Starting Comprehensive Evaluation Pipeline")
     print("=======================================")
     
     # Track evaluation with RAGTracker
     tracker = RAGTracker("toronto_safety_rag")
     
-    # 1. Evaluate embeddings
-    print("\nEvaluating Embeddings...")
+    # Try to load test questions, fall back to defaults if not found
     try:
-        EVAL_QUESTIONS = [q["question"] for q in load_test_set()]
+        test_questions = load_test_set()
+        EVAL_QUESTIONS = [q["question"] for q in test_questions]
     except FileNotFoundError:
         print("No test set found, using default questions")
-        EVAL_QUESTIONS = [
-            "What safety precautions should I take when walking alone at night in downtown Toronto?",
-            "How can I protect my home from break-ins while I'm away on vacation?",
-            "What should I do if I witness a crime in progress in Toronto?",
-            "How can I stay safe while using the TTC late at night?",
-            "What are the best practices for protecting myself from phone scams in Toronto?",
-        ]
-    embedding_results = evaluate_embeddings(EVAL_QUESTIONS)
-    embedding_analysis = analyze_embedding_quality(embedding_results)
     
-    # 2. Evaluate RAG pipeline
+    # Evaluate RAG pipeline
     print("\nEvaluating RAG Pipeline...")
     rag_results = run_rag_evaluation()
     analyze_rag_quality(rag_results)
     
-    # 3. Log results with tracker
+    # Log results with tracker
     config = {
         'embedding_model': "text-embedding-3-large",
         'retriever_k': 5,
@@ -245,7 +156,7 @@ if __name__ == "__main__":
     tracker.log_experiment(
         rag_results,
         config,
-        notes=f"Embedding avg similarity: {embedding_results['avg_similarity']:.3f}"
+        notes="Updated evaluation pipeline"
     )
     
     # Plot metrics trends
