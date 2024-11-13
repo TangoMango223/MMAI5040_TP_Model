@@ -6,12 +6,12 @@ Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics
 from typing import List, Dict
 import pandas as pd
 from datasets import Dataset
-from ragas import evaluate
+import ragas
 from ragas.metrics import (
     faithfulness,
     answer_relevancy,
     context_precision,
-    context_recall,
+    context_recall
 )
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 from langchain.vectorstores.pinecone import Pinecone
@@ -23,31 +23,15 @@ import os
 from dotenv import load_dotenv
 import json
 from pathlib import Path
-from langchain.embeddings import OpenAIEmbeddings
-from langchain.llms import OpenAI
-from ragas.llms import LangchainLLMWrapper
-from ragas.embeddings import LangchainEmbeddingsWrapper
-from ragas.metrics import answer_correctness
 
 # Load environment variables
 load_dotenv(".env", override=True)
-
-# Specify
 
 # Initialize Pinecone
 pinecone.init(
     api_key=os.getenv("PINECONE_API_KEY"),
     environment=os.getenv("PINECONE_ENVIRONMENT")
 )
-
-# Default evaluation questions
-EVAL_QUESTIONS = [
-    "What safety precautions should I take when walking alone at night in downtown Toronto?",
-    # "How can I protect my home from break-ins while I'm away on vacation?",
-    # "What should I do if I witness a crime in progress in Toronto?",
-    # "How can I stay safe while using the TTC late at night?",
-    # "What are the best practices for protecting myself from phone scams in Toronto?",
-]
 
 def run_rag_evaluation():
     """Run RAGAS evaluation on the RAG pipeline"""
@@ -57,24 +41,11 @@ def run_rag_evaluation():
     test_cases = load_test_set()
     print(f"Testing {len(test_cases)} questions...")
     
-    # Initialize OpenAI components with wrappers
-    openai_embeddings = OpenAIEmbeddings(
-        model="text-embedding-ada-002",  # Use ada-002 as shown in example
-        openai_api_key=os.getenv("OPENAI_API_KEY")
-    )
-    openai_llm = OpenAI(
-        model_name="gpt-4o",
-        openai_api_key=os.getenv("OPENAI_API_KEY")
-    )
-    
-    # Wrap them with RAGAS wrappers
-    wrapped_embeddings = LangchainEmbeddingsWrapper(openai_embeddings)
-    wrapped_llm = LangchainLLMWrapper(openai_llm)
-    
     # Initialize vector store for retrieval
+    embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
     vectorstore = Pinecone.from_existing_index(
         index_name=os.environ["PINECONE_INDEX_NAME"],
-        embedding=openai_embeddings
+        embedding=embeddings
     )
     retriever = vectorstore.as_retriever(search_kwargs={"k": 5})
     
@@ -112,20 +83,18 @@ def run_rag_evaluation():
     eval_data = Dataset.from_pandas(pd.DataFrame(results))
     
     print("\nRunning RAGAS evaluation...")
-    # Run RAGAS evaluation with specified LLM and embeddings
-    result = evaluate(
+    # Run RAGAS evaluation
+    scores = ragas.evaluate(
         eval_data,
         metrics=[
             faithfulness,
             answer_relevancy,
             context_precision,
             context_recall,
-        ],
-        llm=wrapped_llm,
-        embeddings=wrapped_embeddings
+        ]
     )
     
-    return result.to_pandas()
+    return scores.to_pandas()
 
 def analyze_rag_quality(results_df):
     """Analyze RAG quality and provide recommendations"""
@@ -167,13 +136,6 @@ if __name__ == "__main__":
     
     # Track evaluation with RAGTracker
     tracker = RAGTracker("toronto_safety_rag")
-    
-    # Try to load test questions, fall back to defaults if not found
-    try:
-        test_questions = load_test_set()
-        EVAL_QUESTIONS = [q["question"] for q in test_questions]
-    except FileNotFoundError:
-        print("No test set found, using default questions")
     
     # Evaluate RAG pipeline
     print("\nEvaluating RAG Pipeline...")
