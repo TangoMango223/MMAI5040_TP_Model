@@ -19,27 +19,39 @@ from langchain.chains.retrieval import create_retrieval_chain
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
 
+# -------------------------------------------------------------------------------------------------
+
+# Few Shot Prompting Examples - Best Safety Plans generated:    
+# Christine fill this out later with the group.
+
+
+
+
+
+
+# -------------------------------------------------------------------------------------------------
+
+
 # Define the prompt template
 SAFETY_PLAN_PROMPT = PromptTemplate.from_template("""
-You are a Toronto Police Service safety advisor specializing in crime prevention and public safety in Toronto, Ontario. Your role is to provide practical, evidence-based safety recommendations tailored to specific neighborhoods and crime concerns.
+You are a Toronto Police Service safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
+Your role is to provide practical, evidence-based safety recommendations.
 
-USER PROFILE:
-Neighbourhood: {neighbourhood}
-Primary Crime Concerns: {crime_concerns}
-Additional Context: {user_context}
+USER REQUEST:
+{input}
 
-RELEVANT TORONTO POLICE, CITY OF TORONTO AND CANADA RESOURCES:
+RELEVANT TORONTO POLICE RESOURCES:
 {context}
 
 Based on the provided information, create a detailed safety plan that includes:
 
 1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
-- Current safety landscape of {neighbourhood}
+- Current safety landscape of the specified neighbourhood
 - Known risk factors and patterns
 - Specific areas or times that require extra caution
 
 2. TARGETED SAFETY RECOMMENDATIONS:
-For each crime concern ({crime_concerns}):
+For each crime concern mentioned:
 - Specific prevention strategies
 - Warning signs to watch for
 - Immediate actions to take if encountered
@@ -62,31 +74,24 @@ Guidelines for your response:
 - Include both preventive measures and emergency response protocols
 - Reference relevant Toronto Police Service programs or initiatives when applicable
 - Maintain a supportive and empowering tone while being clear about risks
-- Prioritize recommendations based on the neighbourhood's specific crime patterns
+- Prioritize recommendations based on the specific crime patterns
 - Include relevant contact numbers and resources
 
 If certain information is not available in the knowledge base, acknowledge this and provide general best practices while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance.
 
-Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety. Your role is to provide advisory information, do not provide any legal, medical, or other professional advice.
+Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
 """)
+
+
+# -------------------------------------------------------------------------------------------------
 
 def generate_safety_plan(
     neighbourhood: str,
     crime_concerns: List[str],
     user_context: Dict[str, str],
-    return_all: bool = False
 ):
     """
     Generate a safety plan based on specific neighbourhood and crime concerns.
-    
-    Args:
-        neighbourhood (str): Toronto neighbourhood name
-        crime_concerns (List[str]): List of top 3 crime concerns
-        user_context (Dict[str, str]): Additional context from user questions
-        return_all (bool): Whether to return full context and retrieved documents
-    
-    Returns:
-        str or dict: Formatted safety plan string, or dictionary with full context if return_all=True
     """
     # Format the crime concerns for the prompt
     formatted_crime_concerns = ", ".join(crime_concerns)
@@ -101,44 +106,60 @@ def generate_safety_plan(
         embedding=embeddings
     )
     
+    # Initialize the LLM and the VectorStore retriever
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0.2, model="gpt-4")
+    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
     
     # Create the chains
-    stuff_documents_chain = create_stuff_documents_chain(chat, SAFETY_PLAN_PROMPT)
-    qa = create_retrieval_chain(retriever=retriever, combine_docs_chain=stuff_documents_chain)
+    stuff_documents_chain = create_stuff_documents_chain(
+        llm=chat,
+        prompt=SAFETY_PLAN_PROMPT
+    )
     
-    # Prepare input data
-    input_data = {
-        "neighbourhood": neighbourhood,
-        "crime_concerns": formatted_crime_concerns,
-        "user_context": formatted_context
+    # Create the retrieval chain
+    # https://api.python.langchain.com/en/latest/chains/langchain.chains.retrieval.create_retrieval_chain.html
+    # QA Chain only accepts two inputs, input and context.
+    qa = create_retrieval_chain(
+        retriever=retriever,
+        combine_docs_chain=stuff_documents_chain
+    )
+    
+    # Format the input as a structured string
+    # Need to combine into one string, "input" to QA Chain.
+    formatted_input = f"""
+    LOCATION: {neighbourhood}
+    
+    SAFETY CONCERNS:
+    - {formatted_crime_concerns}
+    
+    ADDITIONAL CONTEXT:
+    {formatted_context}
+    """
+    
+    # Run the chain with simplified input structure
+    result = qa.invoke({
+        "input": formatted_input
+    })
+    
+    # Get unique sources by creating a set of tuples containing title and source
+    unique_sources = {
+        (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
+        for doc in result["context"]
     }
     
-    # Generate the safety plan
-    result = qa.invoke(input=input_data)
-    
-    if return_all:
-        return {
-            "answer": result["answer"],
-            "contexts": result["context"],
-            "input_data": input_data
-        }
-    
-    # Format the final safety plan
+    # Format the final safety plan with unique sources
     plan_string = f"""
-    TORONTO SERVICE SAFETY PLAN
+    CITY OF TORONTO SERVICE SAFETY PLAN
     Neighbourhood: {neighbourhood}
     Primary Concerns: {formatted_crime_concerns}
 
-    {result["answer"]}
+    {result["answer"].split("Sources Consulted:")[0].strip()}
 
     Sources Consulted:
-    {chr(10).join(f"- {doc.metadata.get('title', 'Untitled')} ({doc.metadata['source']})" 
-                  for doc in result["context"])}
+    {chr(10).join(f"- {title} ({source})" for title, source in unique_sources)}
     
     Note: This safety plan is generated based on Toronto Police Service resources and general 
-    safety guidelines. For emergencies, always call 911. For non-emergency police matters for city of Toronto, 
+    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
     call 416-808-2222.
     """
     
@@ -146,17 +167,18 @@ def generate_safety_plan(
 
 # Example usage
 if __name__ == "__main__":
+    # Test Case
     sample_input = {
-        "neighbourhood": "Downtown Core - Union Station Area",
+        "neighbourhood": "York University - Keele Street",
         "crime_concerns": [
             "Theft",
             "Assault",
             "Break and Enter"
         ],
         "user_context": {
-            "How often do you walk around this area?": "I work around this area, and I often work late and leave the office around 11 PM.",
+            "How often do you walk around this area?": "I study in the area, and I often walk back to residence late.",
             "Are you looking to find safe walking routes?": "Yes, I need to walk to Union Station to catch my GO train.",
-            "Are you looking for what security measures exist?": "Yes, I would like to know what information exists about surveillance and police presence"
+            "Are you looking for what security measures exist?": "Yes, I would like to know what information exists about surveillance and police presence."
         }
     }
     
