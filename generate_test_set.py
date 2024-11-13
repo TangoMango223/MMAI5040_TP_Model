@@ -19,11 +19,10 @@ load_dotenv(".env", override=True)
 # Update the categories to focus on safety plan scenarios
 SCENARIO_TYPES = [
     "property_theft",
-    # "personal_safety",      # Individual safety concerns
-    # "property_security",    # Home/business security
-    # "transit_safety",       # Public transportation & commuting
-    # "neighborhood_watch",   # Community safety and awareness
-    # "emergency_prep"        # Emergency preparedness
+    "personal_safety",      # Individual safety concerns",
+    "transit_safety",       # Public transportation & commuting
+    "neighborhood_watch",   # Community safety and awareness
+    "emergency_prep"        # Emergency preparedness
 ]
 
 def generate_test_case(scenario_type: str) -> Dict:
@@ -163,6 +162,6 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
 
 if __name__ == "__main__":
     print("Generating comprehensive test set...")
-    test_cases = generate_test_set(cases_per_type=1)
+    test_cases = generate_test_set(cases_per_type=5)
     save_test_set(test_cases)
     print(f"Generated total of {len(test_cases)} test cases")
