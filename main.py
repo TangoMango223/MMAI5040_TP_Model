@@ -17,9 +17,12 @@ from typing import List, Dict
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnablePassthrough
+from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
+from operator import itemgetter
 
 # Load environment variables
 from dotenv import load_dotenv
@@ -174,49 +177,57 @@ def generate_safety_plan(
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
     chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
     
-    # Initialize the stuffing chain:
-    stuff_documents_chain = create_stuff_documents_chain(
-        llm=chat,
-        prompt=FIRST_SAFETY_PROMPT
-    )
-    
-    # Create Question-Answering Chain:
-    qa = create_retrieval_chain(
+    # Create the analysis chain
+    analysis_chain = create_retrieval_chain(
         retriever=retriever,
-        combine_docs_chain=stuff_documents_chain
+        combine_docs_chain=create_stuff_documents_chain(
+            llm=chat,
+            prompt=FIRST_SAFETY_PROMPT
+        )
     )
     
-    # Format the input as a structured string
-    formatted_user_input = f"""
-    LOCATION: {neighbourhood}
+    # Create the plan generation chain using LCEL
+    plan_prompt = SECOND_SAFETY_PROMPT
+    plan_chain = plan_prompt | chat | StrOutputParser()
     
-    SAFETY CONCERNS:
-    - {formatted_crime_concerns}
+    # Create a chain using LCEL syntax
+    safety_plan_chain = (
+        analysis_chain | 
+        {
+            "input": itemgetter("input"),
+            "analysis": itemgetter("answer"),
+            "example_safety_plan": lambda _: example_safety_plan,
+            "context": itemgetter("context")
+        } | 
+        {
+            "plan": plan_chain,
+            "context": itemgetter("context")
+        }
+    )
     
-    ADDITIONAL USER CONTEXT:
-    {formatted_context}
-    """
-    
-    # Run the first invocation = "Brainstorming" step
-    first_result = qa.invoke({
-        "input": formatted_user_input
-    })
-    
-    
-    # Run the second invocation = "Safety Plan" step
-    final_safety_plan = chat.invoke(SECOND_SAFETY_PROMPT.format(
-        input=formatted_user_input,
-        analysis=first_result["answer"],
-        example_safety_plan=example_safety_plan
-    ))
-    
-    # Get unique sources by creating a set of tuples containing title and source
-    unique_sources = {
-        (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
-        for doc in first_result["context"]
+    # Format the input
+    formatted_user_input = {
+        "input": f"""
+        LOCATION: {neighbourhood}
+        
+        SAFETY CONCERNS:
+        - {formatted_crime_concerns}
+        
+        ADDITIONAL USER CONTEXT:
+        {formatted_context}
+        """
     }
     
-    # Format the final safety plan with unique sources
+    # Run the chain with invoke()
+    chain_result = safety_plan_chain.invoke(formatted_user_input)
+    
+    # Get unique sources from the context
+    unique_sources = {
+        (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
+        for doc in chain_result["context"]
+    }
+    
+    # Format the final safety plan
     sources_list = [f"- {title} ({source})" for title, source in unique_sources]
     sources_text = "\n".join(sources_list)
     
@@ -225,17 +236,18 @@ def generate_safety_plan(
     Neighbourhood: {neighbourhood}
     Primary Concerns: {formatted_crime_concerns}
 
-    {final_safety_plan.content}
+    {chain_result["plan"]}
 
     Sources Consulted:
     {sources_text}
     
     ----
     
-    Note: This safety plan is generated based on resources from the Toronto Police Service, City of Toronto, and other government resources. For emergencies, always call 911. For non-emergency police matters, 
-    call 416-808-2222 (Toronto Police's Non-Emergency Line).
+    Note: This safety plan is generated based on Toronto Police Service resources and general 
+    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
+    call 416-808-2222.
     """
- 
+    
     return plan_string
 
 # -----------------
@@ -244,14 +256,14 @@ def generate_safety_plan(
 if __name__ == "__main__":
     # Test Case - sample input agreed upon with group
     sample_input = {
-        "neighbourhood": "Agincourt North (129)",
-        "crime_type": ["Assault: Low", "Auto Theft: Medium", "Break and Enter: Low", "Robbery: Medium"],
+        "neighbourhood": "Rexdale-Kipling(4)",
+        "crime_type": ["Assault: Low", "Auto Theft: High", "Break and Enter: Low", "Robbery: High"],
         "user_context": [
-            "Q: Preferred Parking Spot Lighting", 
+            "Q: What is your preferred parking spot?", 
             "A: Well-Lit Area", 
             "Q: Select Anti-Theft Devices for Your Car", 
-            "A: True", 
-            "Q: Select Home Security Measures", 
+            "A: False", 
+            "Q: Do you walk to your car during your commute?", 
             "A: True"
         ]
     }
