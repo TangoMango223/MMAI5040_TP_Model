@@ -26,6 +26,7 @@ from dotenv import load_dotenv
 load_dotenv(".env", override=True)
 
 # -----------------
+# Functions - Safety Plan Generation
 
 def generate_safety_plan(
     neighbourhood: str,
@@ -64,20 +65,19 @@ def generate_safety_plan(
     Enhance your home security by installing a security system and outdoor lighting. Consider using personal safety technology such as a personal alarm or a safety app on your phone. Engage with your community through neighbourhood watch programs. Report any suspicious activity to the police and keep their non-emergency number handy: 416-808-2222.
 
     Remember, your safety is a priority. Stay vigilant, be aware of your surroundings, and don't hesitate to report any suspicious activity. The Toronto Police Service is here to help and support you.
-
+    
     Sources Consulted:
     - Crime Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/)
     - Break & Enter Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/break-and-enter-prevention/)
     - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
     - Your Personal Safety Checklist – City of Toronto (https://www.toronto.ca/community-people/public-safety-alerts/safety-tips-prevention/posters-pamphlets-and-other-safety-resources/your-personal-safety-checklist/)
     - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
-        
+    
     ----
         
-    Note: This safety plan is generated based on Toronto Police Service resources and general 
-    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
-    call 416-808-2222.
-            
+    Note: This safety plan is generated based on resources from the Toronto Police Service, City of Toronto, and other government resources. For emergencies, always call 911. For non-emergency police matters, 
+    call 416-808-2222 (Toronto Police's Non-Emergency Line).
+  
     """
     
     
@@ -232,17 +232,17 @@ def generate_safety_plan(
     
     ----
     
-    Note: This safety plan is generated based on Toronto Police Service resources and general 
-    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
-    call 416-808-2222.
+    Note: This safety plan is generated based on resources from the Toronto Police Service, City of Toronto, and other government resources. For emergencies, always call 911. For non-emergency police matters, 
+    call 416-808-2222 (Toronto Police's Non-Emergency Line).
     """
-    
+ 
     return plan_string
 
+# -----------------
 
 # Main Control to run function:
 if __name__ == "__main__":
-    # Test Case
+    # Test Case - sample input agreed upon with group
     sample_input = {
         "neighbourhood": "Agincourt North (129)",
         "crime_type": ["Assault: Low", "Auto Theft: Medium", "Break and Enter: Low", "Robbery: Medium"],
@@ -256,9 +256,12 @@ if __name__ == "__main__":
         ]
     }
 
+    # Run the function with the sample input
     result = generate_safety_plan(
         neighbourhood=sample_input["neighbourhood"],
         crime_type=sample_input["crime_type"],
         user_context=sample_input["user_context"]
     )
-    print(result) 
+
+    # Print the result
+    print(result)
