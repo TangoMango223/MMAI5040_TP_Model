@@ -1,7 +1,11 @@
 """
 main.py
 PURPOSE: This script generates a safety plan for a given neighbourhood and crime concerns, using a LLM and a vector database.
+
+Last Updated: 2024-11-14
 """
+
+# -----------------
 
 # Import statements
 import os
