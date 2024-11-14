@@ -3,6 +3,8 @@ main.py
 PURPOSE: This script generates a safety plan for a given neighbourhood and crime concerns, using a LLM and a vector database.
 
 Last Updated: 2024-11-14
+Version: 2.0
+Written by: Christine Tang
 """
 
 # -----------------
@@ -39,78 +41,42 @@ def generate_safety_plan(
     
     # Example Safety Plan
     example_safety_plan = """
-    ### Safety Plan for York University - Keele Street Area
+    CITY OF TORONTO SERVICE SAFETY PLAN
+    Neighbourhood: Agincourt North (129)
+    Primary Concerns: Assault: Low, Auto Theft: Medium, Break and Enter: Low, Robbery: Medium
 
-    #### 1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT
+    1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
 
-    **Current Safety Landscape:**
-    - York University’s Keele campus is a large, bustling area with a mix of students, faculty, and visitors. While generally safe, it has experienced incidents of theft, assault, and break-ins, particularly in less populated areas and during late hours.
+    Agincourt North is generally a safe neighbourhood with low levels of assault and break and enter incidents. However, there are medium levels of auto theft and robbery. It's important to be vigilant, especially during late hours and in less crowded areas. Parking lots and streets with less foot traffic may be hotspots for auto theft. 
 
-    **Known Risk Factors and Patterns:**
-    - Theft and break-ins are more common in isolated areas, such as parking lots and less frequented pathways.
-    - Assaults have been reported during late hours, often targeting individuals walking alone.
+    2. TARGETED SAFETY RECOMMENDATIONS:
 
-    **Specific Areas or Times Requiring Extra Caution:**
-    - Isolated pathways and parking lots, especially after dark.
-    - Areas with limited lighting or natural surveillance.
+    - Assault and Break and Enter: Although these crimes are low in your area, it's important to stay vigilant. Keep your home well-lit, especially around entrances and exits. Install a peephole or doorbell camera to monitor who approaches your home. If you notice any suspicious activity, report it to the police immediately.
 
-    #### 2. TARGETED SAFETY RECOMMENDATIONS
+    - Auto Theft and Robbery: Always lock your car doors and keep windows rolled up. Check inside your car before entering, including the back seat. If you notice anyone loitering around parking areas, report it to the police. 
 
-    **Theft Prevention:**
-    - **Prevention Strategies:** Keep valuables out of sight and secure. Use lockers or secure storage for personal items.
-    - **Warning Signs:** Be cautious of individuals loitering or acting suspiciously near personal belongings.
-    - **Immediate Actions:** If you suspect theft, report it immediately to campus security or the Toronto Police.
-    - **Community Resources:** Utilize campus security escort services when traveling alone at night.
+    3. PERSONAL SAFETY PROTOCOL:
 
-    **Assault Prevention:**
-    - **Prevention Strategies:** Walk in groups, especially at night. Use well-lit and populated routes.
-    - **Warning Signs:** Be aware of individuals following you or behaving aggressively.
-    - **Immediate Actions:** If threatened, attract attention by shouting or using a personal alarm. Seek help from nearby people or buildings.
-    - **Community Resources:** Access emergency phones located throughout the campus for immediate assistance.
+    Develop daily safety habits such as locking all doors and windows when leaving home, and keeping your car keys ready when walking to your vehicle. Keep a list of emergency contacts in your phone and a physical copy at home. In case of an emergency, call 9-1-1. For non-emergencies, call the Toronto Police at 416-808-2222. 
 
-    **Break and Enter Prevention:**
-    - **Prevention Strategies:** Ensure doors and windows are locked when leaving your residence or office.
-    - **Warning Signs:** Unfamiliar individuals attempting to access buildings or rooms.
-    - **Immediate Actions:** Report suspicious activity to campus security or police.
-    - **Community Resources:** Participate in campus safety workshops to learn more about securing personal spaces.
+    4. PREVENTIVE MEASURES:
 
-    #### 3. PERSONAL SAFETY PROTOCOL
+    Enhance your home security by installing a security system and outdoor lighting. Consider using personal safety technology such as a personal alarm or a safety app on your phone. Engage with your community through neighbourhood watch programs. Report any suspicious activity to the police and keep their non-emergency number handy: 416-808-2222.
 
-    **Daily Safety Habits:**
-    - Plan your route and inform someone of your expected arrival time.
-    - Stay alert and avoid distractions like using your phone while walking.
+    Remember, your safety is a priority. Stay vigilant, be aware of your surroundings, and don't hesitate to report any suspicious activity. The Toronto Police Service is here to help and support you.
 
-    **Essential Safety Tools or Resources:**
-    - Carry a personal alarm or whistle.
-    - Use campus safety apps that provide real-time alerts and emergency contacts.
-
-    **Emergency Contact Information and Procedures:**
-    - Toronto Police Emergency: 9-1-1
-    - Toronto Police Non-Emergency: 416-808-2222
-    - York University Security Services: [Insert contact number]
-
-    **Community Support Services Available:**
-    - York University offers counseling and support services for students affected by crime.
-
-    #### 4. PREVENTIVE MEASURES
-
-    **Home/Property Security Recommendations:**
-    - Install additional locks or security devices on doors and windows.
-    - Use motion-sensor lighting around entrances.
-
-    **Personal Safety Technology Suggestions:**
-    - Download safety apps that provide location tracking and emergency alerts.
-    - Use smart home devices to monitor and secure your residence.
-
-    **Community Engagement Opportunities:**
-    - Join or form a neighborhood watch group with fellow students and residents.
-    - Participate in campus safety meetings and workshops.
-
-    **Reporting Procedures and Important Contacts:**
-    - Report crimes anonymously via Crime Stoppers at 1-800-222-8477 or [www.222tips.com](http://222tips.com).
-    - For immediate threats, contact campus security or call 9-1-1.
-
-    By following these guidelines and utilizing available resources, you can enhance your personal safety and contribute to a safer community environment. Stay informed, stay alert, and prioritize your well-being.
+        Sources Consulted:
+        - Crime Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/)
+    - Break & Enter Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/break-and-enter-prevention/)
+    - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
+    - Your Personal Safety Checklist – City of Toronto (https://www.toronto.ca/community-people/public-safety-alerts/safety-tips-prevention/posters-pamphlets-and-other-safety-resources/your-personal-safety-checklist/)
+    - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
+        
+        ----
+        
+        Note: This safety plan is generated based on Toronto Police Service resources and general 
+        safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
+        call 416-808-2222.
             
     """
     
@@ -206,7 +172,7 @@ def generate_safety_plan(
     
     # Initialize the LLM and the VectorStore retriever
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
+    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
     
     # Initialize the stuffing chain:
     stuff_documents_chain = create_stuff_documents_chain(
