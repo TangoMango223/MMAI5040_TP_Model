@@ -65,18 +65,18 @@ def generate_safety_plan(
 
     Remember, your safety is a priority. Stay vigilant, be aware of your surroundings, and don't hesitate to report any suspicious activity. The Toronto Police Service is here to help and support you.
 
-        Sources Consulted:
-        - Crime Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/)
+    Sources Consulted:
+    - Crime Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/)
     - Break & Enter Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/break-and-enter-prevention/)
     - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
     - Your Personal Safety Checklist – City of Toronto (https://www.toronto.ca/community-people/public-safety-alerts/safety-tips-prevention/posters-pamphlets-and-other-safety-resources/your-personal-safety-checklist/)
     - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
         
-        ----
+    ----
         
-        Note: This safety plan is generated based on Toronto Police Service resources and general 
-        safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
-        call 416-808-2222.
+    Note: This safety plan is generated based on Toronto Police Service resources and general 
+    safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
+    call 416-808-2222.
             
     """
     
