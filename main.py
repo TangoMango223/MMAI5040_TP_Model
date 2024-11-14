@@ -15,7 +15,6 @@ from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
 
-
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
@@ -25,7 +24,7 @@ load_dotenv(".env", override=True)
 def generate_safety_plan(
     neighbourhood: str,
     crime_type: List[str],
-    user_context: str,
+    user_context: List[str],
     ):
     
     """
@@ -38,78 +37,78 @@ def generate_safety_plan(
     example_safety_plan = """
     ### Safety Plan for York University - Keele Street Area
 
-#### 1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT
+    #### 1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT
 
-**Current Safety Landscape:**
-- York University’s Keele campus is a large, bustling area with a mix of students, faculty, and visitors. While generally safe, it has experienced incidents of theft, assault, and break-ins, particularly in less populated areas and during late hours.
+    **Current Safety Landscape:**
+    - York University’s Keele campus is a large, bustling area with a mix of students, faculty, and visitors. While generally safe, it has experienced incidents of theft, assault, and break-ins, particularly in less populated areas and during late hours.
 
-**Known Risk Factors and Patterns:**
-- Theft and break-ins are more common in isolated areas, such as parking lots and less frequented pathways.
-- Assaults have been reported during late hours, often targeting individuals walking alone.
+    **Known Risk Factors and Patterns:**
+    - Theft and break-ins are more common in isolated areas, such as parking lots and less frequented pathways.
+    - Assaults have been reported during late hours, often targeting individuals walking alone.
 
-**Specific Areas or Times Requiring Extra Caution:**
-- Isolated pathways and parking lots, especially after dark.
-- Areas with limited lighting or natural surveillance.
+    **Specific Areas or Times Requiring Extra Caution:**
+    - Isolated pathways and parking lots, especially after dark.
+    - Areas with limited lighting or natural surveillance.
 
-#### 2. TARGETED SAFETY RECOMMENDATIONS
+    #### 2. TARGETED SAFETY RECOMMENDATIONS
 
-**Theft Prevention:**
-- **Prevention Strategies:** Keep valuables out of sight and secure. Use lockers or secure storage for personal items.
-- **Warning Signs:** Be cautious of individuals loitering or acting suspiciously near personal belongings.
-- **Immediate Actions:** If you suspect theft, report it immediately to campus security or the Toronto Police.
-- **Community Resources:** Utilize campus security escort services when traveling alone at night.
+    **Theft Prevention:**
+    - **Prevention Strategies:** Keep valuables out of sight and secure. Use lockers or secure storage for personal items.
+    - **Warning Signs:** Be cautious of individuals loitering or acting suspiciously near personal belongings.
+    - **Immediate Actions:** If you suspect theft, report it immediately to campus security or the Toronto Police.
+    - **Community Resources:** Utilize campus security escort services when traveling alone at night.
 
-**Assault Prevention:**
-- **Prevention Strategies:** Walk in groups, especially at night. Use well-lit and populated routes.
-- **Warning Signs:** Be aware of individuals following you or behaving aggressively.
-- **Immediate Actions:** If threatened, attract attention by shouting or using a personal alarm. Seek help from nearby people or buildings.
-- **Community Resources:** Access emergency phones located throughout the campus for immediate assistance.
+    **Assault Prevention:**
+    - **Prevention Strategies:** Walk in groups, especially at night. Use well-lit and populated routes.
+    - **Warning Signs:** Be aware of individuals following you or behaving aggressively.
+    - **Immediate Actions:** If threatened, attract attention by shouting or using a personal alarm. Seek help from nearby people or buildings.
+    - **Community Resources:** Access emergency phones located throughout the campus for immediate assistance.
 
-**Break and Enter Prevention:**
-- **Prevention Strategies:** Ensure doors and windows are locked when leaving your residence or office.
-- **Warning Signs:** Unfamiliar individuals attempting to access buildings or rooms.
-- **Immediate Actions:** Report suspicious activity to campus security or police.
-- **Community Resources:** Participate in campus safety workshops to learn more about securing personal spaces.
+    **Break and Enter Prevention:**
+    - **Prevention Strategies:** Ensure doors and windows are locked when leaving your residence or office.
+    - **Warning Signs:** Unfamiliar individuals attempting to access buildings or rooms.
+    - **Immediate Actions:** Report suspicious activity to campus security or police.
+    - **Community Resources:** Participate in campus safety workshops to learn more about securing personal spaces.
 
-#### 3. PERSONAL SAFETY PROTOCOL
+    #### 3. PERSONAL SAFETY PROTOCOL
 
-**Daily Safety Habits:**
-- Plan your route and inform someone of your expected arrival time.
-- Stay alert and avoid distractions like using your phone while walking.
+    **Daily Safety Habits:**
+    - Plan your route and inform someone of your expected arrival time.
+    - Stay alert and avoid distractions like using your phone while walking.
 
-**Essential Safety Tools or Resources:**
-- Carry a personal alarm or whistle.
-- Use campus safety apps that provide real-time alerts and emergency contacts.
+    **Essential Safety Tools or Resources:**
+    - Carry a personal alarm or whistle.
+    - Use campus safety apps that provide real-time alerts and emergency contacts.
 
-**Emergency Contact Information and Procedures:**
-- Toronto Police Emergency: 9-1-1
-- Toronto Police Non-Emergency: 416-808-2222
-- York University Security Services: [Insert contact number]
+    **Emergency Contact Information and Procedures:**
+    - Toronto Police Emergency: 9-1-1
+    - Toronto Police Non-Emergency: 416-808-2222
+    - York University Security Services: [Insert contact number]
 
-**Community Support Services Available:**
-- York University offers counseling and support services for students affected by crime.
+    **Community Support Services Available:**
+    - York University offers counseling and support services for students affected by crime.
 
-#### 4. PREVENTIVE MEASURES
+    #### 4. PREVENTIVE MEASURES
 
-**Home/Property Security Recommendations:**
-- Install additional locks or security devices on doors and windows.
-- Use motion-sensor lighting around entrances.
+    **Home/Property Security Recommendations:**
+    - Install additional locks or security devices on doors and windows.
+    - Use motion-sensor lighting around entrances.
 
-**Personal Safety Technology Suggestions:**
-- Download safety apps that provide location tracking and emergency alerts.
-- Use smart home devices to monitor and secure your residence.
+    **Personal Safety Technology Suggestions:**
+    - Download safety apps that provide location tracking and emergency alerts.
+    - Use smart home devices to monitor and secure your residence.
 
-**Community Engagement Opportunities:**
-- Join or form a neighborhood watch group with fellow students and residents.
-- Participate in campus safety meetings and workshops.
+    **Community Engagement Opportunities:**
+    - Join or form a neighborhood watch group with fellow students and residents.
+    - Participate in campus safety meetings and workshops.
 
-**Reporting Procedures and Important Contacts:**
-- Report crimes anonymously via Crime Stoppers at 1-800-222-8477 or [www.222tips.com](http://222tips.com).
-- For immediate threats, contact campus security or call 9-1-1.
+    **Reporting Procedures and Important Contacts:**
+    - Report crimes anonymously via Crime Stoppers at 1-800-222-8477 or [www.222tips.com](http://222tips.com).
+    - For immediate threats, contact campus security or call 9-1-1.
 
-By following these guidelines and utilizing available resources, you can enhance your personal safety and contribute to a safer community environment. Stay informed, stay alert, and prioritize your well-being.
-        
-"""
+    By following these guidelines and utilizing available resources, you can enhance your personal safety and contribute to a safer community environment. Stay informed, stay alert, and prioritize your well-being.
+            
+    """
     
     
     # Define the prompt template
@@ -188,11 +187,11 @@ By following these guidelines and utilizing available resources, you can enhance
     Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
     """)
     
-    # Format the crime concerns for the prompt
-    formatted_crime_concerns = ", ".join(crime_type)
+    # Format the crime concerns for the prompt - remove any trailing semicolons
+    formatted_crime_concerns = ", ".join(crime_type).rstrip(';')
     
-    # Format user context into a readable string
-    formatted_context = "\n".join([f"Q: {q}\nA: {a}" for q, a in user_context.items()])
+    # Convert the list of Q&A strings into a formatted string
+    formatted_context = "\n".join(user_context)
     
     # Initialize components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
@@ -203,7 +202,7 @@ By following these guidelines and utilizing available resources, you can enhance
     
     # Initialize the LLM and the VectorStore retriever
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
+    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
     
     # Initialize the stuffing chain:
     stuff_documents_chain = create_stuff_documents_chain(
@@ -248,6 +247,9 @@ By following these guidelines and utilizing available resources, you can enhance
     }
     
     # Format the final safety plan with unique sources
+    sources_list = [f"- {title} ({source})" for title, source in unique_sources]
+    sources_text = "\n".join(sources_list)
+    
     plan_string = f"""
     CITY OF TORONTO SERVICE SAFETY PLAN
     Neighbourhood: {neighbourhood}
@@ -256,8 +258,7 @@ By following these guidelines and utilizing available resources, you can enhance
     {final_safety_plan.content}
 
     Sources Consulted:
-    {chr(10).join(f"- {title} ({source})" for title, source in unique_sources)}
-    
+    {sources_text}
     
     ----
     
@@ -274,16 +275,20 @@ if __name__ == "__main__":
     # Test Case
     sample_input = {
         "neighbourhood": "Agincourt North (129)",
-        'crime_type': ['Assault: Low', 'Auto Theft: Medium', 'Break and Enter: Low', 'Robbery: Medium;'], 
-        "user_context": {
-            ['Q: Preferred Parking Spot Lighting', 'A: Well-Lit Area', 'Q: Select Anti-Theft Devices for Your Car', 'A: True', 'Q: Select Home Security Measures', 'A: True']
-            }
+        "crime_type": ["Assault: Low", "Auto Theft: Medium", "Break and Enter: Low", "Robbery: Medium"],
+        "user_context": [
+            "Q: Preferred Parking Spot Lighting", 
+            "A: Well-Lit Area", 
+            "Q: Select Anti-Theft Devices for Your Car", 
+            "A: True", 
+            "Q: Select Home Security Measures", 
+            "A: True"
+        ]
     }
 
-    
     result = generate_safety_plan(
         neighbourhood=sample_input["neighbourhood"],
-        crime_concerns=sample_input["crime_type"],
+        crime_type=sample_input["crime_type"],
         user_context=sample_input["user_context"]
     )
     print(result) 
