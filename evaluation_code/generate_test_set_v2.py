@@ -1,6 +1,9 @@
 """
-generate_test_set.py
-Goal: Generate and store test questions using OpenAI API to align with the safety plan generator's input format.
+generate_test_set_v2.py
+Goal: Generate and store test questions using OpenAI API to align with both:
+1. The safety plan generator's structured input format
+2. RAGAS evaluation format requirements
+
 The test set will be used to evaluate our LLM + RAG model for the Toronto Police Project.
 """
 
@@ -19,14 +22,14 @@ load_dotenv(".env", override=True)
 # Update the categories to focus on safety plan scenarios
 SCENARIO_TYPES = [
     "property_theft",
-    "personal_safety",      # Individual safety concerns",
-    "transit_safety",       # Public transportation & commuting
-    "neighborhood_watch",   # Community safety and awareness
-    "emergency_prep"        # Emergency preparedness
+    "personal_safety",      # Individual safety concerns
+    # "transit_safety",       # Public transportation & commuting
+    # "neighborhood_watch",   # Community safety and awareness
+    # "emergency_prep"        # Emergency preparedness
 ]
 
 def generate_test_case(scenario_type: str) -> Dict:
-    """Generate a single test case in RAGAS format"""
+    """Generate a single test case that works with both RAGAS and the safety plan generator"""
     
     # Initialize OpenAI with higher temperature for more variety
     chat = ChatOpenAI(model="gpt-4", temperature=0.7)
@@ -113,7 +116,7 @@ def generate_test_case(scenario_type: str) -> Dict:
     
     ground_truth = chat.invoke([{"role": "user", "content": ground_truth_prompt}]).content
     
-    # Create test case in RAGAS format
+    # Create test case in RAGAS format with structured metadata
     test_case = {
         "question": formatted_question.strip(),
         "ground_truth_context": contexts,
@@ -132,7 +135,7 @@ def generate_test_case(scenario_type: str) -> Dict:
     
     return test_case
 
-def generate_test_set(cases_per_type: int = 5) -> List[Dict]:
+def generate_test_set(cases_per_type: int = 2) -> List[Dict]:
     """Generate a complete test set with all scenario types"""
     test_cases = []
     
@@ -150,7 +153,7 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
     """Save the generated test set to a JSON file"""
     if filename is None:
         timestamp = datetime.now().strftime("%Y%m%d_%H%M%S")
-        filename = f"test_set_{timestamp}.json"
+        filename = f"test_set_v2_{timestamp}.json"
     
     test_sets_dir = Path("test_sets")
     test_sets_dir.mkdir(exist_ok=True)
@@ -162,7 +165,8 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
             "generated_at": datetime.now().isoformat(),
             "model": "gpt-4",
             "total_cases": len(test_cases),
-            "scenario_types": SCENARIO_TYPES
+            "scenario_types": SCENARIO_TYPES,
+            "version": "v2"
         },
         "questions": test_cases  # RAGAS expects "questions" key
     }
@@ -170,15 +174,11 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
     with open(output_path, "w") as f:
         json.dump(test_set, f, indent=2)
     
-    # Also save as latest
-    with open(test_sets_dir / "latest_test_set.json", "w") as f:
-        json.dump(test_set, f, indent=2)
-    
     print(f"Test set saved to {output_path}")
-    print(f"Also saved as latest_test_set.json")
 
 if __name__ == "__main__":
-    print("Generating comprehensive test set...")
-    test_cases = generate_test_set(cases_per_type=5)
+    print("Generating test set v2...")
+    # Generate fewer cases initially for testing
+    test_cases = generate_test_set(cases_per_type=2)
     save_test_set(test_cases)
-    print(f"Generated total of {len(test_cases)} test cases")
+    print(f"Generated total of {len(test_cases)} test cases") 

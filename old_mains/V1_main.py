@@ -1,12 +1,13 @@
 """
-main_v2.py
+main.py
 PURPOSE: This script generates a safety plan for a given neighbourhood and crime concerns, using a LLM and a vector database.
-CHANGES: Enhanced LangSmith tracing to show complete formatted safety plan in traces, will be used to make evaluation sets.
 
-Last Updated: 2024-11-15
-Version: 2.1
+Last Updated: 2024-11-14
+Version: 2.0
 Written by: Christine Tang
 """
+
+# -----------------
 
 # Import statements
 import os
@@ -16,6 +17,7 @@ from typing import List, Dict
 from langchain_openai import OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from langchain_core.prompts import PromptTemplate
+from langchain_core.runnables import RunnablePassthrough
 from langchain_core.output_parsers import StrOutputParser
 from langchain_openai import ChatOpenAI
 from langchain.chains.combine_documents import create_stuff_documents_chain
@@ -26,6 +28,7 @@ from operator import itemgetter
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
 
+# -----------------
 # Functions - Safety Plan Generation
 
 def generate_safety_plan(
@@ -80,6 +83,7 @@ def generate_safety_plan(
   
     """
     
+    
     # Define the prompt template
     FIRST_SAFETY_PROMPT = PromptTemplate.from_template("""
     You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
@@ -116,6 +120,7 @@ def generate_safety_plan(
     </analysis>
     
     Based on the provided information, create a detailed safety plan that includes:
+
 
     1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
     - Current safety landscape of the specified neighbourhood
@@ -156,8 +161,10 @@ def generate_safety_plan(
     Remember: Focus on prevention and awareness without causing undue alarm. Empower the user with knowledge and practical steps they can take to enhance their safety.
     """)
     
-    # Format the crime concerns for the prompt
-    formatted_crime_concerns = ", ".join(crime_type)
+    # Format the crime concerns for the prompt - remove any trailing semicolons
+    formatted_crime_concerns = ", ".join(crime_type).rstrip(';')
+    
+    # Convert the list of Q&A strings into a formatted string
     formatted_context = "\n".join(user_context)
     
     # Initialize components
@@ -169,7 +176,7 @@ def generate_safety_plan(
     
     # Initialize the LLM and the VectorStore retriever
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
+    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4o")
     
     # Create the analysis chain
     analysis_chain = create_retrieval_chain(
@@ -184,7 +191,7 @@ def generate_safety_plan(
     plan_prompt = SECOND_SAFETY_PROMPT
     plan_chain = plan_prompt | chat | StrOutputParser()
     
-    # Create a chain using LCEL syntax with complete plan formatting
+    # Create a chain using LCEL syntax
     safety_plan_chain = (
         analysis_chain | 
         {
@@ -197,7 +204,7 @@ def generate_safety_plan(
             "plan": plan_chain,
             "context": itemgetter("context")
         } |
-        # Add final transformation step to create the complete plan_string
+        # Add a final transformation step to create the complete plan_string
         (lambda x: {
             "final_plan": f"""
             CITY OF TORONTO SERVICE SAFETY PLAN
@@ -207,10 +214,8 @@ def generate_safety_plan(
             {x["plan"]}
 
             Sources Consulted:
-            {chr(10).join([f"- {title} ({source})" for title, source in {
-                (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
-                for doc in x["context"]
-            }])}
+            {chr(10).join([f"- {doc.metadata.get('title', 'Untitled')} ({doc.metadata['source']})" 
+                          for doc in x["context"]])}
             
             ----
             
@@ -237,12 +242,10 @@ def generate_safety_plan(
     # Run the chain
     chain_result = safety_plan_chain.invoke(formatted_user_input)
     
-    # Put it into a plan_string.
-    # This new format should allow us to see the full plan in LangSmith traces.
-    plan_string = chain_result["final_plan"]
-    
     # Return the final formatted plan
-    return plan_string
+    return chain_result["final_plan"]
+
+# -----------------
 
 # Main Control to run function:
 if __name__ == "__main__":
@@ -268,4 +271,4 @@ if __name__ == "__main__":
     )
 
     # Print the result
-    print(result) 
+    print(result)
