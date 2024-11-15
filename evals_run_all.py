@@ -17,6 +17,12 @@ time_stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # --------------------------------
 
+# Run the generate test set code:
+subprocess.run(["python", "evals_generate_test_set.py"])
+
+print("--------------------------------")
+print("--------------------------------")
+
 # Run this first to create the generate answers json file
 subprocess.run(["python", "evals_LLMOutput_V3.py"])
 
@@ -47,3 +53,5 @@ new_df = pd.concat([rag_results, updated_precision_recall_results], axis=1)
 
 # Export to CSV, with time_stamp
 new_df.to_csv(f'evaluation_results_{time_stamp}.csv', index=False)
+
+print("Evaluation Results completed!")

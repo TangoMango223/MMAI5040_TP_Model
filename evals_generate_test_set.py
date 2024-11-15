@@ -17,12 +17,174 @@ from dotenv import load_dotenv
 from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from typing import List, Dict
+import random
 
 # Load environment variables
 load_dotenv(".env", override=True)
 
-# Update the categories to focus on safety plan scenarios
 
+# Toronto Neighbourhoods:
+neighbourhoods = [
+    "Agincourt North (129)",
+    "Agincourt South-Malvern West (128)",
+    "Alderwood (20)",
+    "Annex (95)",
+    "Avondale (153)",
+    "Banbury-Don Mills (42)",
+    "Bathurst Manor (34)",
+    "Bay-Cloverhill (169)",
+    "Bayview Village (52)",
+    "Bayview Woods-Steeles (49)",
+    "Bedford Park-Nortown (39)",
+    "Beechborough-Greenbrook (112)",
+    "Bendale South (157)",
+    "Bendale-Glen Andrew (156)",
+    "Birchcliffe-Cliffside (122)",
+    "Black Creek (24)",
+    "Blake-Jones (69)",
+    "Briar Hill-Belgravia (108)",
+    "Bridle Path-Sunnybrook-York Mills (41)",
+    "Broadview North (57)",
+    "Brookhaven-Amesbury (30)",
+    "Cabbagetown-South St.James Town (71)",
+    "Caledonia-Fairbank (109)",
+    "Casa Loma (96)",
+    "Centennial Scarborough (133)",
+    "Church-Wellesley (167)",
+    "Clairlea-Birchmount (120)",
+    "Clanton Park (33)",
+    "Cliffcrest (123)",
+    "Corso Italia-Davenport (92)",
+    "Danforth (66)",
+    "Danforth East York (59)",
+    "Don Valley Village (47)",
+    "Dorset Park (126)",
+    "Dovercourt Village (172)",
+    "Downsview (155)",
+    "Downtown Yonge East (168)",
+    "Dufferin Grove (83)",
+    "East End-Danforth (62)",
+    "East L'Amoreaux (148)",
+    "East Willowdale (152)",
+    "Edenbridge-Humber Valley (9)",
+    "Eglinton East (138)",
+    "Elms-Old Rexdale (5)",
+    "Englemount-Lawrence (32)",
+    "Eringate-Centennial-West Deane (11)",
+    "Etobicoke City Centre (159)",
+    "Etobicoke West Mall (13)",
+    "Fenside-Parkwoods (150)",
+    "Flemingdon Park (44)",
+    "Forest Hill North (102)",
+    "Forest Hill South (101)",
+    "Fort York-Liberty Village (163)",
+    "Glenfield-Jane Heights (25)",
+    "Golfdale-Cedarbrae-Woburn (141)",
+    "Greenwood-Coxwell (65)",
+    "Guildwood (140)",
+    "Harbourfront-CityPlace (165)",
+    "Henry Farm (53)",
+    "High Park North (88)",
+    "High Park-Swansea (87)",
+    "Highland Creek (134)",
+    "Hillcrest Village (48)",
+    "Humber Bay Shores (161)",
+    "Humber Heights-Westmount (8)",
+    "Humber Summit (21)",
+    "Humbermede (22)",
+    "Humewood-Cedarvale (106)",
+    "Ionview (125)",
+    "Islington (158)",
+    "Junction Area (90)",
+    "Junction-Wallace Emerson (171)",
+    "Keelesdale-Eglinton West (110)",
+    "Kennedy Park (124)",
+    "Kensington-Chinatown (78)",
+    "Kingsview Village-The Westway (6)",
+    "Kingsway South (15)",
+    "Lambton Baby Point (114)",
+    "L'Amoreaux West (147)",
+    "Lansing-Westgate (38)",
+    "Lawrence Park North (105)",
+    "Lawrence Park South (103)",
+    "Leaside-Bennington (56)",
+    "Little Portugal (84)",
+    "Long Branch (19)",
+    "Malvern East (146)",
+    "Malvern West (145)",
+    "Maple Leaf (29)",
+    "Markland Wood (12)",
+    "Milliken (130)",
+    "Mimico-Queensway (160)",
+    "Morningside (135)",
+    "Morningside Heights (144)",
+    "Moss Park (73)",
+    "Mount Dennis (115)",
+    "Mount Olive-Silverstone-Jamestown (2)",
+    "Mount Pleasant East (99)",
+    "New Toronto (18)",
+    "Newtonbrook East (50)",
+    "Newtonbrook West (36)",
+    "North Riverdale (68)",
+    "North St.James Town (74)",
+    "North Toronto (173)",
+    "Oakdale-Beverley Heights (154)",
+    "Oakridge (121)",
+    "Oakwood Village (107)",
+    "O'Connor-Parkview (54)",
+    "Old East York (58)",
+    "Palmerston-Little Italy (80)",
+    "Parkwoods-O'Connor Hills (149)",
+    "Pelmo Park-Humberlea (23)",
+    "Playter Estates-Danforth (67)",
+    "Pleasant View (46)",
+    "Princess-Rosethorn (10)",
+    "Regent Park (72)",
+    "Rexdale-Kipling (4)",
+    "Rockcliffe-Smythe (111)",
+    "Roncesvalles (86)",
+    "Rosedale-Moore Park (98)",
+    "Runnymede-Bloor West Village (89)",
+    "Rustic (28)",
+    "Scarborough Village (139)",
+    "South Eglinton-Davisville (174)",
+    "South Parkdale (85)",
+    "South Riverdale (70)",
+    "St.Andrew-Windfields (40)",
+    "Steeles (116)",
+    "Stonegate-Queensway (16)",
+    "Tam O'Shanter-Sullivan (118)",
+    "Taylor-Massey (61)",
+    "The Beaches (63)",
+    "Thistletown-Beaumond Heights (3)",
+    "Thorncliffe Park (55)",
+    "Trinity-Bellwoods (81)",
+    "University (79)",
+    "Victoria Village (43)",
+    "Wellington Place (164)",
+    "West Hill (136)",
+    "West Humber-Clairville (1)",
+    "West Queen West (162)",
+    "West Rouge (143)",
+    "Westminster-Branson (35)",
+    "Weston (113)",
+    "Weston-Pelham Park (91)",
+    "Wexford/Maryvale (119)",
+    "Willowdale West (37)",
+    "Willowridge-Martingrove-Richview (7)",
+    "Woburn North (142)",
+    "Woodbine Corridor (64)",
+    "Woodbine-Lumsden (60)",
+    "Wychwood (94)",
+    "Yonge-Bay Corridor (170)",
+    "Yonge-Doris (151)",
+    "Yonge-Eglinton (100)",
+    "Yonge-St.Clair (97)",
+    "York University Heights (27)",
+    "Yorkdale-Glen Park (31)"
+]
+
+# Update the categories to focus on safety plan scenarios
 SCENARIO_TYPES = [
     "residential_safety",      # Home security, break-ins, neighborhood safety
     "vehicle_security",        # Auto theft, parking safety, carjacking prevention
@@ -30,6 +192,9 @@ SCENARIO_TYPES = [
     "personal_public_safety",         # Individual safety in public spaces, robbery prevention
     "night_safety",           # Evening/night-specific concerns, dark hours safety
 ] 
+
+# Add this constant after SCENARIO_TYPES
+RISK_LEVELS = ["low", "medium", "high"]
 
 def generate_test_case(scenario_type: str) -> Dict:
     """Generate a single test case that works with both RAGAS and the safety plan generator"""
@@ -65,15 +230,21 @@ def generate_test_case(scenario_type: str) -> Dict:
     # Extract contexts
     contexts = [doc.page_content for doc in retrieved_docs]
     
-    # Generate structured components first
+    # Randomly select 1-4 crime types and assign random risk levels
+    selected_crimes = random.sample(["Assault", "Auto Theft", "Break and Enter", "Robbery"], k=random.randint(1, 4))
+    crime_types_with_risk = [f"{crime}: {random.choice(RISK_LEVELS)}" for crime in selected_crimes]
+    
+    # Randomly select a neighborhood
+    selected_neighborhood = random.choice(neighbourhoods)
+    
     structure_prompt = f"""Generate a safety plan request with these specific components:
-    1. A specific Toronto neighborhood - pick from the 158 Divisions Neighbourhoods in Toronto.
-    2. Pick between 1-4 crime types: Assault, Auto Theft, Break and Enter, Robbery
+    1. Use this specific Toronto neighborhood: {selected_neighborhood}
+    2. Use these specific crime types with their severity levels: {crime_types_with_risk}
     3. Three Q&A pairs about user context
 
     Return in this exact format (do not include any other text or indentation):
-    NEIGHBOURHOOD: [name]
-    CRIME_TYPES: ["Crime1: Severity", "Crime2: Severity"]
+    NEIGHBOURHOOD: {selected_neighborhood}
+    CRIME_TYPES: {crime_types_with_risk}
     CONTEXT: [
     "Q: [specific question]",
     "A: [specific answer]",
