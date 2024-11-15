@@ -1,5 +1,5 @@
 """
-evals_LLM_Output_NEW.py
+evals_LLM_Output_V3.py
 Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics.
 Make sure to use RAGAS Version 0.2.5 to run this code.
 

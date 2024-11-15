@@ -1,5 +1,5 @@
 """
-evals_precision_recall_NEW.py
+evals_precision_recall_V3.py
 Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics
 
 This script will focus on calculating context precision and context recall using RAGAS.

@@ -17,16 +17,14 @@ time_stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # --------------------------------
 
-# Run the script as a separate process
+# Run this first to create the generate answers json file
+subprocess.run(["python", "evals_LLMOutput_V3.py"])
 
-# # Run this first tocreate the generate answers json file
-# subprocess.run(["python", "evals_LLMOutput_V3.py"])
+print("--------------------------------")
+print("--------------------------------")
 
-# print("--------------------------------")
-# print("--------------------------------")
-
-# # Run LLM_Output_NEW.py:
-# subprocess.run(["python", "evals_precision_recall_V3.py"])
+# Run LLM_Output_NEW.py:
+subprocess.run(["python", "evals_precision_recall_V3.py"])
 
 # --------------------------------
 
@@ -49,4 +47,3 @@ new_df = pd.concat([rag_results, updated_precision_recall_results], axis=1)
 
 # Export to CSV, with time_stamp
 new_df.to_csv(f'evaluation_results_{time_stamp}.csv', index=False)
-# new_df.to_csv('evaluation_results.csv', index=False)
