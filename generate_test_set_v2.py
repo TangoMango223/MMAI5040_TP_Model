@@ -21,11 +21,11 @@ load_dotenv(".env", override=True)
 
 # Update the categories to focus on safety plan scenarios
 SCENARIO_TYPES = [
-    "property_theft",
+    # "property_theft",
     "personal_safety",      # Individual safety concerns
-    "transit_safety",       # Public transportation & commuting
-    "neighborhood_watch",   # Community safety and awareness
-    "emergency_preparation"        # Emergency preparedness
+    # "transit_safety",       # Public transportation & commuting
+    # "neighborhood_watch",   # Community safety and awareness
+    # "emergency_preparation"        # Emergency preparedness
 ]
 
 def generate_test_case(scenario_type: str) -> Dict:

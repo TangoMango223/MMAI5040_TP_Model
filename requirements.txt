@@ -93,7 +93,6 @@ python-dotenv
 pdfminer.six
 
 # Add these to your existing requirements
-ragas
 datasets
 pandas
 matplotlib

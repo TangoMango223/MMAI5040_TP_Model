@@ -1,0 +1,46 @@
+{
+  "metadata": {
+    "generated_at": "2024-11-15T13:16:13.111458",
+    "model": "gpt-4",
+    "total_cases": 1,
+    "scenario_types": [
+      "personal_safety"
+    ],
+    "version": "v2"
+  },
+  "questions": [
+    {
+      "question": "LOCATION: Willowdale East\n    \n    SAFETY CONCERNS:\n    - Assault: High, Auto Theft: Moderate, Robbery: Low\n    \n    ADDITIONAL USER CONTEXT:\n    Q: What is your relationship with this neighbourhood?\",\nA: I have recently moved here for work.\",\nQ: Have you witnessed or been a victim of these crimes before?\",\nA: No, I have not but I have heard about them from neighbours.\",\nQ: Are there specific times or places where you feel more at risk?\",\nA: I feel more at risk during late hours and in the park nearby.",
+      "ground_truth_context": [
+        "![City of Toronto](https://www.toronto.ca/wp-content/themes/cot/img/logo-print.svg)\n\n# Your Personal Safety Checklist\n\nHere are some questions to help you explore your personal safety. Just to make it easy, you should be answering yes to all of the following questions. If you answer no, have a closer look at the item to see if that is really how you wish to handle the situation.\n\nAt Home",
+        "![City of Toronto](https://www.toronto.ca/wp-content/themes/cot/img/logo-print.svg)\n\n# Your Personal Safety Checklist\n\nHere are some questions to help you explore your personal safety. Just to make it easy, you should be answering yes to all of the following questions. If you answer no, have a closer look at the item to see if that is really how you wish to handle the situation.\n\nAt Home",
+        "- Create gathering areas at locations with natural surveillance and access control\n\n- Re-designate the use of space to provide natural barriers to conflicting activities\n\n- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)\n\n- Overcome distance and isolation through improved communications\n\n- Place safe activities in vulnerable areas, e.g. community garden in vacant land\n\n- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard\n\n- Increase the perception of natural surveillance, especially around access control points\n\n\nTo report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)\n\nIn An Emergency: Call 9-1-1.\n\nTo report a crime to the Toronto Police that is not an emergency call\u00a0416-808-2222.\n\n## More Updates\n\n* * *",
+        "## Home Safety Starts With You\n\n**Detection in Your Neighbourhood**\n\n* * *\n\n- Keep your ears and eyes open for suspicious vehicles and people around your home\n- Do not confront possible suspects\n- Record the license plate numbers and description of suspicious vehicles\n- Record detailed descriptions of occupants of suspicious vehicles\n- Report your concerns and observations immediately to the Police\n\n**Reducing Your Risk**\n\n* * *",
+        "* * *\n\n- Give the babysitter a tour of your home and be sure to review your escape plan, pointing out marked exits, any potential hazards and areas that are off limits.\n\n- Make it clear to the babysitter that if there is smoke or fire, your only concern is that everyone is out of the house quickly and safely.\n\n- Emergency telephone numbers to the babysitter and provide them with an emergency contact sheet.\n\n- Ensure you have an emergency first aid kit and show the babysitter where it\u2019s stored.\n\n\nTo report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)\n\nIn An Emergency: Call 9-1-1.\n\nTo report a crime to the Toronto Police that is not an emergency call\u00a0416-808-2222.\n\n## More Updates\n\n* * *\n\n[![](/media/filer_public_thumbnails/filer_public/f8/ce/f8ced020-9f7b-4059-8d7e-6220d7e9d97a/c248844b-cd1e-431c-8ff9-5bced8e3cb62.jpg__630x300_q85_crop_subsampling-2_upscale.jpg)](/crime-prevention/frauds-against-seniors/)"
+      ],
+      "ground_truth": [
+        "1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:\n\n- Willowdale East, Toronto: The neighbourhood has reported a high incidence of assault, moderate auto thefts, and low robberies as per user's understanding. It has been observed that crime rates tend to increase during late hours, particularly in park areas.\n\n2. TARGETED SAFETY RECOMMENDATIONS: \n\n- Assault: Adopt personal safety habits such as avoiding isolated areas, especially during late hours. Be aware of your surroundings and keep your personal belongings secure. If confronted, try to stay calm, remember the attacker's physical attributes and clothing, and report the incident immediately to the police. Community resources such as the Toronto Police Service offer programs for personal safety and self-defence.\n\n- Auto Theft: Ensure your vehicle is always locked, even when parked at home. Avoid leaving valuable items visible in your car. Install an anti-theft system if possible. If your car is stolen, report it immediately to the police and provide them with all necessary details (make, model, plate number). The Toronto Police Service offers various resources on auto theft prevention.\n\n- Robbery: Stay vigilant of your surroundings, especially in the park during late hours. Avoid displaying valuable items publicly. If you become a victim of robbery, ensure your safety first, then report the incident to the police. The Toronto Police Service provides resources on robbery prevention.\n\n3. PERSONAL SAFETY PROTOCOL:\n\n- Daily safety habits: Avoid walking alone during late hours, especially in isolated areas. Always keep your phone charged and accessible. \n\n- Essential safety tools: Consider carrying a personal alarm or installing a safety app on your phone that can alert authorities in case of an emergency. \n\n- Emergency contact information: Save the Toronto Police Service's non-emergency number (416-808-2222) and the anonymous Crime Stoppers number (1-800-222-8477) in your phone. In an emergency, dial 9-1-1.\n\n- Community support services: Utilize resources provided by the Toronto Police Service for personal safety and crime prevention.\n\n4. PREVENTIVE MEASURES:\n\n- Home/property security: Install good quality locks on doors and windows. Consider investing in a home security system. Refer to the \"Home Safety Starts With You\" guide provided by the Toronto Police Service for more recommendations.\n\n- Personal safety technology: Install safety apps on your phone that can immediately alert authorities in case of an emergency. Consider investing in a personal safety alarm.\n\n- Community engagement opportunities: Participate in local neighbourhood watch groups or start one if it doesn't exist. \n\n- Reporting procedures and important contacts: To report a crime or suspicious behaviour, call the Toronto Police Service's non-emergency line (416-808-2222) or Crime Stoppers (1-800-222-8477) for anonymous reporting. Always call 9-1-1 in an emergency.\n\nRemember, your safety is important. By staying vigilant and adopting these preventive measures, you can contribute to the safety and security of your neighbourhood."
+      ],
+      "episode_done": false,
+      "metadata": {
+        "structured_input": {
+          "neighbourhood": "Willowdale East",
+          "crime_type": [
+            "Assault: High",
+            "Auto Theft: Moderate",
+            "Robbery: Low"
+          ],
+          "user_context": [
+            "Q: What is your relationship with this neighbourhood?\",",
+            "A: I have recently moved here for work.\",",
+            "Q: Have you witnessed or been a victim of these crimes before?\",",
+            "A: No, I have not but I have heard about them from neighbours.\",",
+            "Q: Are there specific times or places where you feel more at risk?\",",
+            "A: I feel more at risk during late hours and in the park nearby."
+          ]
+        },
+        "question_type": "personal_safety"
+      }
+    }
+  ]
+}
