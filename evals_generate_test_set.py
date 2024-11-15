@@ -27,7 +27,7 @@ SCENARIO_TYPES = [
     "residential_safety",      # Home security, break-ins, neighborhood safety
     "vehicle_security",        # Auto theft, parking safety, carjacking prevention
     "transit_safety",        # Public transit, walking to/from stations, commuting
-    "personal_safety",         # Individual safety in public spaces, robbery prevention
+    "personal_public_safety",         # Individual safety in public spaces, robbery prevention
     "night_safety",           # Evening/night-specific concerns, dark hours safety
 ] 
 
@@ -35,7 +35,7 @@ def generate_test_case(scenario_type: str) -> Dict:
     """Generate a single test case that works with both RAGAS and the safety plan generator"""
     
     # Initialize OpenAI with higher temperature for more variety
-    chat = ChatOpenAI(model="gpt-4", temperature=0.7)
+    chat = ChatOpenAI(model="gpt-4o", temperature=0.7)
     
     # Initialize Pinecone components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
@@ -72,16 +72,16 @@ def generate_test_case(scenario_type: str) -> Dict:
     3. Three Q&A pairs about user context
 
     Return in this exact format (do not include any other text or indentation):
-NEIGHBOURHOOD: [name]
-CRIME_TYPES: ["Crime1: Severity", "Crime2: Severity"]
-CONTEXT: [
-"Q: [specific question]",
-"A: [specific answer]",
-"Q: [specific question]",
-"A: [specific answer]",
-"Q: [specific question]",
-"A: [specific answer]"
-]"""
+    NEIGHBOURHOOD: [name]
+    CRIME_TYPES: ["Crime1: Severity", "Crime2: Severity"]
+    CONTEXT: [
+    "Q: [specific question]",
+    "A: [specific answer]",
+    "Q: [specific question]",
+    "A: [specific answer]",
+    "Q: [specific question]",
+    "A: [specific answer]"
+    ]"""
     
     structured_response = chat.invoke([{"role": "user", "content": structure_prompt}]).content
     
@@ -236,7 +236,7 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
     test_set = {
         "metadata": {
             "generated_at": datetime.now().isoformat(),
-            "model": "gpt-4",
+            "model": "gpt-4o",
             "total_cases": len(test_cases),
             "scenario_types": SCENARIO_TYPES,
             "version": "v2"
