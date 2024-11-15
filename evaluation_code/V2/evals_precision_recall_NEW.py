@@ -10,7 +10,6 @@ Uses Ragas Version 0.1.21, we will need to handle dependencies carefully.
 Last Updated: 2024-11-15
 """
 
-
 import sys
 import subprocess
 import pandas as pd
@@ -28,9 +27,15 @@ load_dotenv(".env", override=True)
 #--------------------------------
 
 def install_old_ragas():
-    subprocess.check_call([sys.executable, "-m", "pip", "install", "ragas==0.1.21"])
+    subprocess.check_call(
+        [sys.executable, "-m", "pip", "install", "ragas==0.1.21"],
+        stdout=subprocess.DEVNULL,  # Suppresses standard output
+        stderr=subprocess.DEVNULL   # Suppresses error messages
+    )
 
 install_old_ragas()
+
+#--------------------------------
 
 def load_test_set(filename: str = None):
     test_sets_dir = Path("test_sets")
