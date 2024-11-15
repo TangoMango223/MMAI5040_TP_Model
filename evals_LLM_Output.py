@@ -1,5 +1,5 @@
 """
-main_evals.py
+evals_LLM_Output.py
 Goal: Evaluate both RAG pipeline and LLM output using RAGAS and custom metrics.
 Make sure to use RAGAS Version 0.2.5 to run this code.
 
@@ -195,4 +195,3 @@ if __name__ == "__main__":
     print(rag_results)
     
     print("\nEvaluation complete!")
-    
