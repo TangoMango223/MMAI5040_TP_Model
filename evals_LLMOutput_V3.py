@@ -75,6 +75,7 @@ def run_rag_evaluation():
     
     # Load test cases
     test_cases = load_test_set()
+    total_cases = len(test_cases)
     
     # Prepare results in RAGAS format
     results = {
@@ -89,10 +90,11 @@ def run_rag_evaluation():
     generated_answers = {}
     
     for i, test_case in enumerate(test_cases, 1):
-        print(f"\nProcessing question {i}/{len(test_cases)}")
+        print(f"\nProcessing question {i}/{total_cases}")
         try:
             structured_input = test_case["metadata"]["structured_input"]
             
+            print(f"Generating safety plan for {structured_input['neighbourhood']}...")
             # Generate answer using the safety plan generator
             result = generate_safety_plan(
                 neighbourhood=structured_input["neighbourhood"],
@@ -100,6 +102,7 @@ def run_rag_evaluation():
                 user_context=structured_input["user_context"]
             )
             
+            print(f"Safety plan generated, formatting results...")
             # Store the generated answer with question as key
             generated_answers[test_case["question"]] = result
             
@@ -110,19 +113,24 @@ def run_rag_evaluation():
             results["ground_truths"].append(test_case["ground_truth"])
             results["reference"].append(" ".join(test_case["ground_truth_context"]))
             
+            print(f"Question {i} completed successfully")
+            
         except Exception as e:
             print(f"Error processing question {i}: {str(e)}")
+            print(f"Structured input was: {structured_input}")
             continue
     
+    print("\nSaving generated answers...")
     # Save generated answers to file
     with open('generated_answers.json', 'w') as f:
         json.dump(generated_answers, f, indent=2)
     
-    print("\nCreating dataset...")
+    print("\nCreating RAGAS dataset...")
     eval_data = Dataset.from_dict(results)
     
-    print("\nRunning RAGAS evaluation...")
+    print("\nStarting RAGAS evaluation...")
     try:
+        print("Evaluating faithfulness...")
         scores = evaluate(
             eval_data,
             metrics=[
@@ -130,10 +138,12 @@ def run_rag_evaluation():
                 answer_relevancy
             ]
         )
+        print("RAGAS evaluation completed successfully")
         return scores.to_pandas()
     
     except Exception as e:
         print(f"Error during RAGAS evaluation: {str(e)}")
+        print(f"Results data shape: {[len(v) for k,v in results.items()]}")
         raise
 
 if __name__ == "__main__":

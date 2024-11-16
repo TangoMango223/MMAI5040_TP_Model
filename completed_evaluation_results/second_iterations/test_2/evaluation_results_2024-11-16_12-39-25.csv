@@ -1,4 +1,4 @@
-user_input,retrieved_contexts,response,reference,faithfulness,answer_relevancy
+user_input,retrieved_contexts,response,faithfulness,answer_relevancy,Context Precision,Context Recall
 "LOCATION: Willowridge-Martingrove-Richview (7)
     
     SAFETY CONCERNS:
@@ -55,44 +55,7 @@ Remember, your safety is paramount. By staying vigilant, aware, and prepared, yo
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","#### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas. #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-SafeTO Goals and Priority Actions",0.8837209302325582,0.9099758509262835
+            ",0.8837209302325582,0.9099758509262836,0.8874999999778125,0.0909090909090909
 "LOCATION: Oakwood Village (107)
     
     SAFETY CONCERNS:
@@ -160,93 +123,7 @@ Remember, your safety is paramount. Stay vigilant, stay informed, and don't hesi
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention - [Skip to sitemap](#menu-toggle)
-- [Skip to main menu](#main-nav)
-- 
-
-## High-Rise Security
-
-# Apartment, Condo Security
-
-### Is Your Apartment Secure?
-
-Apartment and Condo security can be as effective as you make it. Do not leave the responsibility for your safety and security solely in the hands of others. Reduce your risk by protecting the personal safety and crime prevention strategies outlined below.
-
-### Safety Starts With You
-
-**Helpful Safety Hints**
-
-* * *
-
-- Keep a record of your valuables, storing only what you need or regularly use in your residence
-- Identify your property by using a Trace Identified pen (www.traceidentified.com)
-- If you notice burnt out lights on the property, report them to the building superintendent or management immediately
-- Be a good neighbour - report suspicious activity to the police and advise the building Superintendent or Management. If you see a stranger carrying items out of a neighbour’s unit Call 9-1-1
-
-**If A Crime Has Occurred**
-
-* * * ## Home Safety Starts With You
-
-**Detection in Your Neighbourhood**
-
-* * *
-
-- Keep your ears and eyes open for suspicious vehicles and people around your home
-- Do not confront possible suspects
-- Record the license plate numbers and description of suspicious vehicles
-- Record detailed descriptions of occupants of suspicious vehicles
-- Report your concerns and observations immediately to the Police
-
-**Reducing Your Risk**
-
-* * *",0.9344262295081968,0.8779907625677122
+            ",0.9344262295081968,0.8779907625677122,0.6999999999766667,0.2142857142857142
 "LOCATION: Willowridge-Martingrove-Richview (7)
     
     SAFETY CONCERNS:
@@ -303,52 +180,7 @@ Remember, your safety is paramount. Always trust your instincts and take proacti
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas.",0.8863636363636364,0.8758889359143943
+            ",0.8863636363636364,0.8758889359143943,0.99999999998,0.5
 "LOCATION: L'Amoreaux West (147)
     
     SAFETY CONCERNS:
@@ -412,93 +244,7 @@ Remember, your safety is paramount. Always prioritize your well-being and don't 
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * - [Skip to sitemap](#menu-toggle)
-- [Skip to main menu](#main-nav)
-- 
-
-## High-Rise Security
-
-# Apartment, Condo Security
-
-### Is Your Apartment Secure?
-
-Apartment and Condo security can be as effective as you make it. Do not leave the responsibility for your safety and security solely in the hands of others. Reduce your risk by protecting the personal safety and crime prevention strategies outlined below.
-
-### Safety Starts With You
-
-**Helpful Safety Hints**
-
-* * *
-
-- Keep a record of your valuables, storing only what you need or regularly use in your residence
-- Identify your property by using a Trace Identified pen (www.traceidentified.com)
-- If you notice burnt out lights on the property, report them to the building superintendent or management immediately
-- Be a good neighbour - report suspicious activity to the police and advise the building Superintendent or Management. If you see a stranger carrying items out of a neighbour’s unit Call 9-1-1
-
-**If A Crime Has Occurred**
-
-* * * ## Home Safety Starts With You
-
-**Detection in Your Neighbourhood**
-
-* * *
-
-- Keep your ears and eyes open for suspicious vehicles and people around your home
-- Do not confront possible suspects
-- Record the license plate numbers and description of suspicious vehicles
-- Record detailed descriptions of occupants of suspicious vehicles
-- Report your concerns and observations immediately to the Police
-
-**Reducing Your Risk**
-
-* * * ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention",0.6666666666666666,0.903176610086658
+            ",0.6666666666666666,0.903176610086658,0.99999999998,1.0
 "LOCATION: O'Connor-Parkview (54)
     
     SAFETY CONCERNS:
@@ -554,77 +300,7 @@ Please note that while these measures can significantly enhance your safety, the
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * By taking simple precautions, you can dramatically reduce the risk of vehicle theft or the loss of property from your vehicle.
-
-### Auto Safety Starts with You
-
-**Why Vehicles Are Stolen**
-
-* * *
-
-- To sell the vehicle or parts - Often thieves will take your car out of the province or country. Identification numbers may be altered or removed, ownership certificates forged, parts sold or the vehicle repainted
-- For transportation - Thieves will use your vehicle to get where they want to go and later abandon the vehicle. They may just drive it around to gain ‘status’ with their friends
-- To commit other crimes - Vehicles are stolen and used in other crimes such as robberies, break and enters, drug dealing or drive-by shootings
-- For vehicle cloning - Vehicles are stolen, given a fraudulent identification number and then sold to unsuspecting persons who are defrauded of their money. Fraudulent vehicles will be located and seized by the Police
-
-**How to Reduce the Risk of Vehicle Theft** **Underground Security**
-
-* * *
-
-- Look around before entering the garage - be AWARE if someone follows you into the underground garage
-- If you encounter a suspicious situation or person, while in the garage, get out as soon as possible
-- If you are inside of your vehicle and unable to leave, ensure that your doors are locked and “HONK” your horn to attract attention
-- Lock your vehicle and remember to remove/hide any valuables
-- Have your keys ready when walking to your vehicle and always check inside prior to entering, including the back seat
-
-**Going on Vacation**
-
-* * *
-
-- Inform a trusted neighbour of your departure and return dates
-- Where possible, cancel or redirect your mail and deliveries or have a neighbour collect any items
-- Set your lights to come on and off at various intervals
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1. &lt;/ul&gt;</description><pubDate>Thu, 08 Nov 2018 19:16:14 +0000</pubDate><guid>https://www.tps.ca/crime-prevention/transit-safety/</guid></item><item><title>Home Security</title><link>https://www.tps.ca/crime-prevention/home-security/</link><description>&lt;p&gt;Home security can be as effective as you make it. Do not leave the responsibility for your safety and security to others. REDUCE YOUR RISK by practicing the crime prevention strategies outlined in this pamphlet. Together, you and your neighbours can work towards reducing crime in your area.&lt;/p&gt;</description><pubDate>Fri, 30 Nov 2018 01:06:02 +0000</pubDate><guid>https://www.tps.ca/crime-prevention/home-security/</guid></item><item><title>Auto Crimes</title><link>https://www.tps.ca/crime-prevention/auto-crimes-1/</link><description>&lt;p&gt;By taking simple precautions, you can dramatically reduce the risk of vehicle theft or the loss of property from your vehicle.&lt;/p&gt;</description><pubDate>Thu, 08 Nov 2018 ## Home Safety Starts With You
-
-**Detection in Your Neighbourhood**
-
-* * *
-
-- Keep your ears and eyes open for suspicious vehicles and people around your home
-- Do not confront possible suspects
-- Record the license plate numbers and description of suspicious vehicles
-- Record detailed descriptions of occupants of suspicious vehicles
-- Report your concerns and observations immediately to the Police
-
-**Reducing Your Risk**
-
-* * *",0.8863636363636364,0.8958615068221509
+            ",0.8863636363636364,0.8958615068221509,0.8041666666465626,1.0
 "LOCATION: Regent Park (72)
     
     SAFETY CONCERNS:
@@ -689,87 +365,7 @@ Remember, your safety is paramount. By implementing these strategies and staying
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","**Underground Security**
-
-* * *
-
-- Look around before entering the garage - be AWARE if someone follows you into the underground garage
-- If you encounter a suspicious situation or person, while in the garage, get out as soon as possible
-- If you are inside of your vehicle and unable to leave, ensure that your doors are locked and “HONK” your horn to attract attention
-- Lock your vehicle and remember to remove/hide any valuables
-- Have your keys ready when walking to your vehicle and always check inside prior to entering, including the back seat
-
-**Going on Vacation**
-
-* * *
-
-- Inform a trusted neighbour of your departure and return dates
-- Where possible, cancel or redirect your mail and deliveries or have a neighbour collect any items
-- Set your lights to come on and off at various intervals
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1. - Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * - [Skip to sitemap](https://www.tps.ca/services/online-reporting/theft-vehicle-under-5000/#menu-toggle)
-- [Skip to main menu](https://www.tps.ca/services/online-reporting/theft-vehicle-under-5000/#main-nav)
-- [Skip to content](https://www.tps.ca/services/online-reporting/theft-vehicle-under-5000/#main)
-
-# Report on Theft from Vehicle Under $5,000
-
-Property, not exceeding the value of  $5,000, was taken from your vehicle without your permission.
-
-Please provide a detailed description of what happened in the incident description section, with the approximate date and time you discovered the theft from your vehicle, and the last date and time you saw your property in your vehicle.
-
-#### Please also provide the following information:
-
-- Where your vehicle was parked ( i.e. parking/underground garage, driveway or garage attached to house)
-- Was a security camera present at the scene?
-- Point of entry to your vehicle, i.e. front passenger window, rear driver’s door, etc. By taking simple precautions, you can dramatically reduce the risk of vehicle theft or the loss of property from your vehicle.
-
-### Auto Safety Starts with You
-
-**Why Vehicles Are Stolen**
-
-* * *
-
-- To sell the vehicle or parts - Often thieves will take your car out of the province or country. Identification numbers may be altered or removed, ownership certificates forged, parts sold or the vehicle repainted
-- For transportation - Thieves will use your vehicle to get where they want to go and later abandon the vehicle. They may just drive it around to gain ‘status’ with their friends
-- To commit other crimes - Vehicles are stolen and used in other crimes such as robberies, break and enters, drug dealing or drive-by shootings
-- For vehicle cloning - Vehicles are stolen, given a fraudulent identification number and then sold to unsuspecting persons who are defrauded of their money. Fraudulent vehicles will be located and seized by the Police
-
-**How to Reduce the Risk of Vehicle Theft** - [Skip to sitemap](https://www.tps.ca/services/online-reporting/local-neighbourhood-traffic-issue-concern/#menu-toggle)
-- [Skip to main menu](https://www.tps.ca/services/online-reporting/local-neighbourhood-traffic-issue-concern/#main-nav)
-- [Skip to content](https://www.tps.ca/services/online-reporting/local-neighbourhood-traffic-issue-concern/#main)
-
-# Report on Local Neighbourhood Traffic Issue or Concern
-
-Ongoing traffic concerns in your neighbourhood, such as street racing, motorists ignoring a stop sign, speeding by motorists on a specific roadway.
-
-This report is meant to provide Toronto Police with information about ongoing traffic concerns in their neighbourhood, such as street racing on certain nights and times, motorists ignoring a stop sign or speeding by motorists on a specific street.
-
-A specific location, day(s) and time(s) of the issues must be supplied to ensure there can be follow-up action by police.",0.7045454545454546,0.8957298915053595
+            ",0.7045454545454546,0.8957298915053595,0.94999999997625,0.4285714285714285
 "LOCATION: Humber Bay Shores (161)
     
     SAFETY CONCERNS:
@@ -826,79 +422,7 @@ Remember, your safety is paramount. Always trust your instincts and take proacti
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * By taking simple precautions, you can dramatically reduce the risk of vehicle theft or the loss of property from your vehicle.
-
-### Auto Safety Starts with You
-
-**Why Vehicles Are Stolen**
-
-* * *
-
-- To sell the vehicle or parts - Often thieves will take your car out of the province or country. Identification numbers may be altered or removed, ownership certificates forged, parts sold or the vehicle repainted
-- For transportation - Thieves will use your vehicle to get where they want to go and later abandon the vehicle. They may just drive it around to gain ‘status’ with their friends
-- To commit other crimes - Vehicles are stolen and used in other crimes such as robberies, break and enters, drug dealing or drive-by shootings
-- For vehicle cloning - Vehicles are stolen, given a fraudulent identification number and then sold to unsuspecting persons who are defrauded of their money. Fraudulent vehicles will be located and seized by the Police
-
-**How to Reduce the Risk of Vehicle Theft** **Underground Security**
-
-* * *
-
-- Look around before entering the garage - be AWARE if someone follows you into the underground garage
-- If you encounter a suspicious situation or person, while in the garage, get out as soon as possible
-- If you are inside of your vehicle and unable to leave, ensure that your doors are locked and “HONK” your horn to attract attention
-- Lock your vehicle and remember to remove/hide any valuables
-- Have your keys ready when walking to your vehicle and always check inside prior to entering, including the back seat
-
-**Going on Vacation**
-
-* * *
-
-- Inform a trusted neighbour of your departure and return dates
-- Where possible, cancel or redirect your mail and deliveries or have a neighbour collect any items
-- Set your lights to come on and off at various intervals
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1. ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.7291666666666666,0.9116008128723653
+            ",0.7291666666666666,0.9116008128723652,0.9999999999666668,0.9615384615384616
 "LOCATION: Taylor-Massey (61)
     
     SAFETY CONCERNS:
@@ -975,62 +499,7 @@ Remember, your safety is paramount. Stay vigilant, be aware of your surroundings
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.9148936170212766,0.8916151359898699
+            ",0.9148936170212766,0.8916151359898699,0.99999999998,0.5555555555555556
 "LOCATION: Annex (95)
     
     SAFETY CONCERNS:
@@ -1095,115 +564,7 @@ Remember, these recommendations are based on general best practices. For more sp
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","**OTHER HELPFUL TRANSIT SAFETY TIPS**
-
-* * *
-
-- Never step in front of or out from behind a transit vehicle
-
-- Do not walk across streetcar right-of-ways
-
-- Never purchase transit tickets, tokens or passes from any place other than an authorized TTC agent - they may be counterfeit
-
-- TRUST YOUR INSTINCTS - Trusting your own instincts that a situation seems “wrong” can be the best personal safety tool you have
-
-- Pay attention to it and don’t be afraid to act on it. A moment of embarrassment, if you are incorrect, is far less important than your overall safety
-
-
-For further information about public transit safety, check out the [TTC website](http://ttc.ca)
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * - Try to remember distinctive points of identification about the suspect and, if possible, write this down while it is still fresh in your memory
-
-- If someone demands your property and displays (or implies) that they have a weapon, DON’T RESIST. You have a greater chance of getting hurt if you do
-
-- If someone tries to assault you, ATTRACT ATTENTION. Activate the Emergency Alarm - Yellow Stripe Alarm, scream, run - do whatever you can to get away - ONLY YOU can decide how to respond to an attack
-
-
-If you see trouble, ask yourself what are my options - can you cross the street or go into a nearby store? If you are heading to an unfamiliar area, did you get directions prior to departing or do you have the capability to look this up while enroute?
-
-**OTHER HELPFUL TRANSIT SAFETY TIPS**
-
-* * *
-
-- Never step in front of or out from behind a transit vehicle
-
-- Do not walk across streetcar right-of-ways - [Skip to sitemap](#menu-toggle)
-- [Skip to main menu](#main-nav)
-- 
-
-## Transit Safety
-
-# Transit Safety
-
-#### You Are in the Driver's Seat
-
-PLAN AHEAD – use common sense and good judgment. Think about where you are going and plan your route before you leave. Consider:
-
-• The time of day
-
-• When the next bus/streetcar/train is scheduled, is the route delayed or out of service?
-
-• How can you avoid walking through uninhabited or badly lit areas
-
-#### **Crime Prevention on Public Transit**
-
-**Safety Tips on the Street**
-
-* * *
-
-- Let others know where you’re going and when you’re expected to arrive/ return. Arrange to check in with them if possible
-
-- Know where you are going and walk with confidence
-
-- Avoid shortcuts (e.g. isolated areas/laneways/garages) and stick to well-lit/high-traffic areas to get to your destination. - Do not allow yourself to be targeted, when waiting in a transit shelter. Exit the shelter if you feel threatened or uncomfortable
-
-- Limit the use of electronic devices - this may target you
-
-
-**Safety Tips When Using Public Transit**
-
-* * *
-
-- Sit near the bus or streetcar driver, use the lead car or sit in a Designated Waiting Area (DWA) while using the subway
-
-- Be alert for people watching or following you
-
-- If someone is bothering you, change seats or alert the bus driver
-
-- Keep your personal belongings close to you (on your arm, between your feet, or on your lap). Avoid placing them under the seat where they can be easily stolen or forgotten
-
-- Remain vigilant. Thieves will often use distraction or trick you to take out your device. (For example, asking you to give them directions or the time)
-
-- Avoid using devices near the doors as it makes it easy for thieves to grab your property and run through the closing doors ### [Transit Safety](/crime-prevention/transit-safety/)
-
-
-
-
-PLAN AHEAD – use common sense and good judgment. Think about where you are going and plan your route before you leave. Consider:
-
-- The time of day
-- When
-
-[View More](/crime-prevention/)
-
-### Share
-
-Share
-(opens in new window) Tweet
-(opens in new window) Email
-(opens in new window)
-
-LinkedIn
-(opens in new window) Reddit
-(opens in new window) Copy URL",0.9464285714285714,0.8897192941558466
+            ",0.9464285714285714,0.8897192941558466,0.99999999998,1.0
 "LOCATION: Oakridge (121)
     
     SAFETY CONCERNS:
@@ -1262,68 +623,7 @@ Remember, your safety is paramount. While we aim to provide comprehensive safety
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","As part of [City council’s mandate](https://secure.toronto.ca/council/agenda-item.do?item=2021.EX25.4) SCALE is a priority action in the SafeTO Community Safety and Well-Being Plan to develop a comprehensive strategy to share, integrate and analyze data across multiple institutions for the purpose of informing real-time policy development and service planning.
-
-In 2023, SCALE launched the Community Safety and Wellbeing on Transit Dashboard [Community Safety & Wellbeing on Transit.](https://www.toronto.ca/city-government/data-research-maps/transit-community-safety-data/)
-
-![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
-
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-[iframe](https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LeN_XIUAAAAAEd8X21vFtkJ3_c7uA0xpUGcrGpe&co=aHR0cHM6Ly93d3cudG9yb250by5jYTo0NDM.&hl=en&v=-ZG7BC9TxCVEbzIO2m429usb&size=invisible&cb=vvv6o0yibvvv) As part of [City council’s mandate](https://secure.toronto.ca/council/agenda-item.do?item=2021.EX25.4) SCALE is a priority action in the SafeTO Community Safety and Well-Being Plan to develop a comprehensive strategy to share, integrate and analyze data across multiple institutions for the purpose of informing real-time policy development and service planning.
-
-In 2023, SCALE launched the Community Safety and Wellbeing on Transit Dashboard [Community Safety & Wellbeing on Transit.](https://www.toronto.ca/city-government/data-research-maps/transit-community-safety-data/)
-
-![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
-
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-[iframe](https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LeN_XIUAAAAAEd8X21vFtkJ3_c7uA0xpUGcrGpe&co=aHR0cHM6Ly93d3cudG9yb250by5jYTo0NDM.&hl=en&v=-ZG7BC9TxCVEbzIO2m429usb&size=invisible&cb=19znhoe8u3ao) As part of [City council’s mandate](https://secure.toronto.ca/council/agenda-item.do?item=2021.EX25.4) SCALE is a priority action in the SafeTO Community Safety and Well-Being Plan to develop a comprehensive strategy to share, integrate and analyze data across multiple institutions for the purpose of informing real-time policy development and service planning.
-
-In 2023, SCALE launched the Community Safety and Wellbeing on Transit Dashboard [Community Safety & Wellbeing on Transit.](https://www.toronto.ca/city-government/data-research-maps/transit-community-safety-data/)
-
-![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
-
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-[iframe](https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LeN_XIUAAAAAEd8X21vFtkJ3_c7uA0xpUGcrGpe&co=aHR0cHM6Ly93d3cudG9yb250by5jYTo0NDM.&hl=en&v=-ZG7BC9TxCVEbzIO2m429usb&size=invisible&cb=uk47l28prtfh) As part of [City council’s mandate](https://secure.toronto.ca/council/agenda-item.do?item=2021.EX25.4) SCALE is a priority action in the SafeTO Community Safety and Well-Being Plan to develop a comprehensive strategy to share, integrate and analyze data across multiple institutions for the purpose of informing real-time policy development and service planning.
-
-In 2023, SCALE launched the Community Safety and Wellbeing on Transit Dashboard [Community Safety & Wellbeing on Transit.](https://www.toronto.ca/city-government/data-research-maps/transit-community-safety-data/)
-
-![](https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg)
-
-Original text
-
-Rate this translation
-
-Your feedback will be used to help improve Google Translate
-
-[iframe](https://www.google.com/recaptcha/api2/anchor?ar=1&k=6LeN_XIUAAAAAEd8X21vFtkJ3_c7uA0xpUGcrGpe&co=aHR0cHM6Ly93d3cudG9yb250by5jYTo0NDM.&hl=en&v=-ZG7BC9TxCVEbzIO2m429usb&size=invisible&cb=mex8hc3hejgi) ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas.",0.0,0.9023418922529981
+            ",0.0,0.902341892252998,0.99999999998,0.0
 "LOCATION: Rexdale-Kipling (4)
     
     SAFETY CONCERNS:
@@ -1393,61 +693,7 @@ Remember, these are general recommendations based on the information provided. F
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas. #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions #### Example
-
-- Nearly one out of every 15 young Black men in Ontario experienced jail time, compared to one out of about every 70 young white men, and incarcerated Black people were more likely to live in low-income neighbourhoods. A siloed approach to community safety that results in an over-emphasis on enforcement has been shown to perpetuate the over-representation of Indigenous, Black and equity-deserving communities in the criminal justice system.
-- Between September 2018 and October 2019, Toronto’s Metro West Court­house received approximately 306 youth cases from 23 Division and 312 from 31 Division. Taken together, 23 and 31 Divisions account for more than 40 per cent of all youth cases seen at the Metro West Courthouse.
-- Despite making up only 4.1 per cent of the population in Ontario under age 15, Indigenous children represent approximately 30 per cent of foster children.
-
-## SafeTO Goals and Priority Actions",0.0,0.915848804291846
+            ",0.0,0.915848804291846,0.99999999998,1.0
 "LOCATION: Beechborough-Greenbrook (112)
     
     SAFETY CONCERNS:
@@ -1514,102 +760,7 @@ Beechborough-Greenbrook is currently experiencing medium levels of auto theft an
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * - Try to remember distinctive points of identification about the suspect and, if possible, write this down while it is still fresh in your memory
-
-- If someone demands your property and displays (or implies) that they have a weapon, DON’T RESIST. You have a greater chance of getting hurt if you do
-
-- If someone tries to assault you, ATTRACT ATTENTION. Activate the Emergency Alarm - Yellow Stripe Alarm, scream, run - do whatever you can to get away - ONLY YOU can decide how to respond to an attack
-
-
-If you see trouble, ask yourself what are my options - can you cross the street or go into a nearby store? If you are heading to an unfamiliar area, did you get directions prior to departing or do you have the capability to look this up while enroute?
-
-**OTHER HELPFUL TRANSIT SAFETY TIPS**
-
-* * *
-
-- Never step in front of or out from behind a transit vehicle
-
-- Do not walk across streetcar right-of-ways - Do not allow yourself to be targeted, when waiting in a transit shelter. Exit the shelter if you feel threatened or uncomfortable
-
-- Limit the use of electronic devices - this may target you
-
-
-**Safety Tips When Using Public Transit**
-
-* * *
-
-- Sit near the bus or streetcar driver, use the lead car or sit in a Designated Waiting Area (DWA) while using the subway
-
-- Be alert for people watching or following you
-
-- If someone is bothering you, change seats or alert the bus driver
-
-- Keep your personal belongings close to you (on your arm, between your feet, or on your lap). Avoid placing them under the seat where they can be easily stolen or forgotten
-
-- Remain vigilant. Thieves will often use distraction or trick you to take out your device. (For example, asking you to give them directions or the time)
-
-- Avoid using devices near the doors as it makes it easy for thieves to grab your property and run through the closing doors ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas. **OTHER HELPFUL TRANSIT SAFETY TIPS**
-
-* * *
-
-- Never step in front of or out from behind a transit vehicle
-
-- Do not walk across streetcar right-of-ways
-
-- Never purchase transit tickets, tokens or passes from any place other than an authorized TTC agent - they may be counterfeit
-
-- TRUST YOUR INSTINCTS - Trusting your own instincts that a situation seems “wrong” can be the best personal safety tool you have
-
-- Pay attention to it and don’t be afraid to act on it. A moment of embarrassment, if you are incorrect, is far less important than your overall safety
-
-
-For further information about public transit safety, check out the [TTC website](http://ttc.ca)
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * *",0.8409090909090909,0.9210982947804963
+            ",0.8409090909090909,0.9210982947804964,0.94999999997625,0.7777777777777778
 "LOCATION: Eglinton East (138)
     
     SAFETY CONCERNS:
@@ -1682,43 +833,7 @@ Remember, your safety is a priority. Stay vigilant, stay informed, and don't hes
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples Community consultations were targeted to stakeholders providing services related to or directly experiencing challenges related to community safety and well-being. This was complemented by engagement with subject matter experts, residents and community thought-leaders. In total, more than 2,500 stakeholders were engaged, with written submissions also accepted.
-
-A public survey was available from March 1 to 15, 2021 that received an additional 1,500 responses. A [summary of the SafeTO consultation findings ![(opens in new window)](/wp-content/themes/cot/img/icon-link-external.svg)](https://www.toronto.ca/legdocs/mmis/2021/ex/bgrd/backgroundfile-168553.pdf ""PDF Document"") is available online.
-
-## SafeTO Collaborative Analytics and Learning Environment (SCALE)",0.0,0.9202383185677862
+            ",0.0,0.9202383185677862,0.99999999998,0.0
 "LOCATION: Humbermede (22)
     
     SAFETY CONCERNS:
@@ -1776,52 +891,7 @@ Remember, these recommendations are based on general best practices and may not 
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","By taking simple precautions, you can dramatically reduce the risk of vehicle theft or the loss of property from your vehicle.
-
-### Auto Safety Starts with You
-
-**Why Vehicles Are Stolen**
-
-* * *
-
-- To sell the vehicle or parts - Often thieves will take your car out of the province or country. Identification numbers may be altered or removed, ownership certificates forged, parts sold or the vehicle repainted
-- For transportation - Thieves will use your vehicle to get where they want to go and later abandon the vehicle. They may just drive it around to gain ‘status’ with their friends
-- To commit other crimes - Vehicles are stolen and used in other crimes such as robberies, break and enters, drug dealing or drive-by shootings
-- For vehicle cloning - Vehicles are stolen, given a fraudulent identification number and then sold to unsuspecting persons who are defrauded of their money. Fraudulent vehicles will be located and seized by the Police
-
-**How to Reduce the Risk of Vehicle Theft** ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.8809523809523809,0.8720242810197932
+            ",0.8809523809523809,0.8720242810197932,0.99999999998,0.0
 "LOCATION: Moss Park (73)
     
     SAFETY CONCERNS:
@@ -1884,62 +954,7 @@ Remember, your safety is paramount. Stay vigilant, stay informed, and don't hesi
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.22916666666666666,0.8919557806185492
+            ",0.2291666666666666,0.8919557806185492,0.99999999998,1.0
 "LOCATION: North Riverdale (68)
     
     SAFETY CONCERNS:
@@ -2003,62 +1018,7 @@ Remember, your safety is paramount. By being proactive and vigilant, you can con
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.8,0.8851099504807088
+            ",0.8,0.8851099504807088,0.99999999998,0.2222222222222222
 "LOCATION: Kingsway South (15)
     
     SAFETY CONCERNS:
@@ -2125,67 +1085,7 @@ Remember, your safety is paramount. Always trust your instincts and take proacti
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas. ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.06896551724137931,0.8979951824057203
+            ",0.0689655172413793,0.8979951824057203,0.99999999998,0.6923076923076923
 "LOCATION: Wexford/Maryvale (119)
     
     SAFETY CONCERNS:
@@ -2255,71 +1155,7 @@ Remember, your safety is paramount. Always prioritize your personal safety over 
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ### Risk Intervention (Downstream)
-
-- Risk intervention involves multiple sectors working together to address and/or interrupt escalating situations where there is an elevated risk of harm
-- What is learned by mobilizing risk intervention can inform how investments and strategies are deployed in the prevention and social development areas.
-
-### Incident Response
-
-- Immediate and reactionary responses that may involve a sense of urgency in response to crime or safety.
-- Initiatives in this area alone cannot be relied upon to increase community safety and well-being.
-
-Prioritized Challenges
-
-
-The following areas have emerged from staff review of existing engagement and consultation data and reflect key principles in our approach to the SafeTO work – build on the existing community and institutional wisdom. It is important to note that, all of the prioritized challenges are interrelated and that there will be overlap in how the City responds to these areas. Programs and services that address community violence and support youth vulnerable to the involvement in serious violence and crime.
-
-## [SafeTO: A Community Safety & Wellbeing Plan](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-well-being-plan/)
-
-A plan aimed at addressing the root causes of conditions that negatively impact community safety and well-being in Toronto.
-
-## [TO Wards Peace Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/to-wards-peace-model/)
-
-TO Wards Peace (TWP) aims to increase effective innovative interventions to mitigate gun violence in Toronto.
-
-## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/) Programs and services that address community violence and support youth vulnerable to the involvement in serious violence and crime.
-
-## [SafeTO: A Community Safety & Wellbeing Plan](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-well-being-plan/)
-
-A plan aimed at addressing the root causes of conditions that negatively impact community safety and well-being in Toronto.
-
-## [TO Wards Peace Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/to-wards-peace-model/)
-
-TO Wards Peace (TWP) aims to increase effective innovative interventions to mitigate gun violence in Toronto.
-
-## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/) ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples",0.8484848484848485,0.8978366990765919
+            ",0.8484848484848485,0.8978366990765919,0.99999999998,0.4
 "LOCATION: Oakwood Village (107)
     
     SAFETY CONCERNS:
@@ -2384,62 +1220,7 @@ Remember, safety is a shared responsibility. By staying aware, taking preventive
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples ### Prioritized Challenge \#2 – Community Violence
-
-#### Rationale
-
-- Community violence — including gun violence, gender-based and intimate partner violence — has been on the rise in Toronto and was declared a public health issue by the Toronto Board of Health in 2019.
-- The traumatic impact of gun violence in communities is not only experienced by individuals, it is experienced by communities which can contribute to negative long-term health outcomes and can be a contributing factor to the propensity to commit violence.
-- There have been calls to strategically mobilize short-term and long-term actions in coordination with multi-sector partners, community leaders, and residents to interrupt the immediate risks of community violence and continuously work to prevent it.
-
-#### Examples - Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * *",0.2727272727272727,0.8932323256054341
+            ",0.2727272727272727,0.8932323256054341,0.99999999998,0.5833333333333334
 "LOCATION: Bridle Path-Sunnybrook-York Mills (41)
     
     SAFETY CONCERNS:
@@ -2498,67 +1279,4 @@ Remember, your safety is paramount. Always be vigilant and aware of your surroun
             Note: This safety plan is generated based on Toronto Police Service resources and general 
             safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
             call 416-808-2222.
-            ","- Create gathering areas at locations with natural surveillance and access control
-
-- Re-designate the use of space to provide natural barriers to conflicting activities
-
-- Improve scheduling of space to allow for effective use(parking for night shift workers closest to the building)
-
-- Overcome distance and isolation through improved communications
-
-- Place safe activities in vulnerable areas, e.g. community garden in vacant land
-
-- Place vulnerable activities in a safe place, e.g. kindergarten play area in school courtyard
-
-- Increase the perception of natural surveillance, especially around access control points
-
-
-To report a crime anonymously, call Crime Stoppers at: 1-800-222-8477(TIPS) or online at: [www.222tips.com](http://222tips.com)
-
-In An Emergency: Call 9-1-1.
-
-To report a crime to the Toronto Police that is not an emergency call 416-808-2222.
-
-## More Updates
-
-* * * ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention ## [Community Paramedicine Program](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-paramedicine-program/)
-
-Community based medical care, referrals and system navigation to seniors and vulnerable individuals through home visits, remote consultations and wellness clinics.
-
-## [Mayor's Community Safety Awards](https://www.toronto.ca/city-government/awards-tributes/awards/the-mayors-community-safety-awards/)
-
-Celebrate innovative Toronto-based senior(s)-led, youth-led and resident-led projects that help build safe communities and reduce violence.
-
-## [Community Safety Unit Review](https://www.toronto.ca/community-people/public-safety-alerts/community-safety-programs/community-safety-unit-review/)
-
-An independent review into the Community Safety Unit's operations, approaches and growth paths.
-
-## Canadian Municipal Network on Crime Prevention Manager, FOCUS Toronto
-
-**City of Toronto**
-
-Lead contact:
-
-[Scerena Officer](/cdn-cgi/l/email-protection#386b5b5d4a5d565916575e5e515b5d4a784c574a57564c57165b59)
-
-Manager, Community Safety & Wellbeing Unit
-
-Social Development, Finance & Administration
-
-![Location of the contact address on the map](/static/images/maps/blank.jpg) [SafeTO ![PDF](/wp-content/themes/cot/img/icon-link-pdf.svg)](https://www.toronto.ca/legdocs/mmis/2021/ex/bgrd/backgroundfile-168551.pdf ""PDF Document"") will drive 26 priority actions across seven strategic goals: reduce vulnerability; reduce violence; advance truth and reconciliation; promote healing and justice; invest in people; invest in neighbourhoods, and drive collaboration and accountability. It provides a roadmap for how the City and social systems that serve Torontonians, such as community services, healthcare systems, education systems, justice systems, police and businesses, can work collaboratively across different sectors and across governments to support community safety and well-being.
-
-Expand All SafeTO: A Community Safety & Well-Being Plan accordion panelsCollapse All SafeTO: A Community Safety & Well-Being Plan accordion panels
-
-## Community Safety and Policing Act",0.7142857142857143,0.925176634565218
+            ",0.7142857142857143,0.925176634565218,0.99999999998,0.7058823529411765

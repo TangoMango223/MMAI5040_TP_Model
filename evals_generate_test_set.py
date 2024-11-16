@@ -214,7 +214,7 @@ def generate_test_case(scenario_type: str) -> Dict:
     selected_crimes = random.sample(["Assault", "Auto Theft", "Break and Enter", "Robbery"], k=random.randint(1, 4))
     crime_types_with_risk = [f"{crime}: {random.choice(RISK_LEVELS)}" for crime in selected_crimes]
     
-    # Update the base query prompt to use the selected values
+    # Base query uses these same selections
     base_query_prompt = f"""Generate a complex safety-related query for the city of Toronto focusing on {scenario_type}.
     Use exactly these parameters:
     - Neighborhood: {selected_neighborhood}
