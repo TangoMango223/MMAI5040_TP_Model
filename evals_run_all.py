@@ -17,11 +17,11 @@ time_stamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
 
 # --------------------------------
 
-# Run the generate test set code:
-subprocess.run(["python", "evals_generate_test_set.py"])
+# # Run the generate test set code:
+# subprocess.run(["python", "evals_generate_test_set.py"])
 
-print("--------------------------------")
-print("--------------------------------")
+# print("--------------------------------")
+# print("--------------------------------")
 
 # Run this first to create the generate answers json file
 subprocess.run(["python", "evals_LLMOutput_V3.py"])
