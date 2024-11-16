@@ -1,12 +1,16 @@
 """
 main_v2.py
 PURPOSE: This script generates a safety plan for a given neighbourhood and crime concerns, using a LLM and a vector database.
-CHANGES: Enhanced LangSmith tracing to show complete formatted safety plan in traces, will be used to make evaluation sets.
 
-Last Updated: 2024-11-15
-Version: 2.1
+CHANGES: 
+* Enhanced LangSmith tracing to show complete formatted safety plan in traces, will be used to make evaluation sets.
+* Prompt engineering for the analysis chain, to improve context recall and faithfulness.
+* Provided a good one-shot example from Trinity-Bellwoods, to help the LLM understand the style and tone expected from the safety plan.
 
-USE CASE: For "Base Model" evaluation of metric improvements.
+Last Updated: 2024-11-16
+Version: 2.5
+
+USE CASE: Improved model versus "Base Model" evaluation of metric improvements.
 
 Written by: Christine Tang
 """
@@ -45,49 +49,66 @@ def generate_safety_plan(
     
     # Example Safety Plan
     example_safety_plan = """
-    CITY OF TORONTO SERVICE SAFETY PLAN
-    Neighbourhood: Agincourt North (129)
-    Primary Concerns: Assault: Low, Auto Theft: Medium, Break and Enter: Low, Robbery: Medium
+        CITY OF TORONTO SERVICE SAFETY PLAN
+        Neighbourhood: Trinity-Bellwoods (81)
+        Primary Concerns: Break and Enter: medium, Assault: medium, Auto Theft: medium
 
-    1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
+         **NEIGHBOURHOOD-SPECIFIC ASSESSMENT:**
 
-    Agincourt North is generally a safe neighbourhood with low levels of assault and break and enter incidents. However, there are medium levels of auto theft and robbery. It's important to be vigilant, especially during late hours and in less crowded areas. Parking lots and streets with less foot traffic may be hotspots for auto theft. 
+        Trinity-Bellwoods is a vibrant neighbourhood with a mix of residential and commercial areas. However, there have been reports of break and enters, assaults, and auto thefts. The park area, particularly during late hours, has been identified as a potential risk zone due to poor lighting. It is advisable to exercise caution during late hours, especially when walking alone or with a pet.
 
-    2. TARGETED SAFETY RECOMMENDATIONS:
+        **TARGETED SAFETY RECOMMENDATIONS:**
 
-    - Assault and Break and Enter: Although these crimes are low in your area, it's important to stay vigilant. Keep your home well-lit, especially around entrances and exits. Install a peephole or doorbell camera to monitor who approaches your home. If you notice any suspicious activity, report it to the police immediately.
+        1. **Break and Enter**: 
+        - Prevention Strategies: Improve home security by keeping a record of valuables, identifying property using a Trace Identified pen, and reporting burnt out lights on the property to the building superintendent or management immediately.
+        - Warning Signs: Suspicious activity around your property or neighbourhood.
+        - Immediate Actions: Report any suspicious activity to the police and advise the building Superintendent or Management.
+        - Community Resources: Toronto Police Service's Break and Enter Prevention Guide.
 
-    - Auto Theft and Robbery: Always lock your car doors and keep windows rolled up. Check inside your car before entering, including the back seat. If you notice anyone loitering around parking areas, report it to the police. 
+        2. **Assault**: 
+        - Prevention Strategies: Avoid poorly lit areas, especially during late hours. Be aware of your surroundings and move towards an area with more people if you feel uncomfortable.
+        - Warning Signs: Unfamiliar individuals or groups loitering in poorly lit areas.
+        - Immediate Actions: If you feel threatened, move to a well-lit area with people around and call the police.
+        - Community Resources: Toronto Police Service's Personal Safety Guide.
 
-    3. PERSONAL SAFETY PROTOCOL:
+        3. **Auto Theft**: 
+        - Prevention Strategies: Always lock your car, keep windows rolled up, park in well-lit areas, and avoid leaving valuables in the car.
+        - Warning Signs: Suspicious individuals loitering around parking areas.
+        - Immediate Actions: If you notice suspicious activity around your vehicle, report it to the police.
+        - Community Resources: Toronto Police Service's Auto Theft Prevention Guide.
 
-    Develop daily safety habits such as locking all doors and windows when leaving home, and keeping your car keys ready when walking to your vehicle. Keep a list of emergency contacts in your phone and a physical copy at home. In case of an emergency, call 9-1-1. For non-emergencies, call the Toronto Police at 416-808-2222. 
+        **PERSONAL SAFETY PROTOCOL:**
 
-    4. PREVENTIVE MEASURES:
+        - Daily Safety Habits: Be aware of your surroundings, especially during late hours. Keep your home and vehicle secure. Limit the use of electronic devices when walking alone.
+        - Essential Safety Tools: Consider carrying a personal alarm or whistle. Have emergency numbers saved in your phone.
+        - Emergency Contact Information: Toronto Police Service (Non-Emergency): 416-808-2222, Emergency: 911, Crime Stoppers: 416-222-TIPS (8477).
+        - Community Support Services: Neighbourhood Watch Program, Toronto Crime Stoppers.
 
-    Enhance your home security by installing a security system and outdoor lighting. Consider using personal safety technology such as a personal alarm or a safety app on your phone. Engage with your community through neighbourhood watch programs. Report any suspicious activity to the police and keep their non-emergency number handy: 416-808-2222.
+        **PREVENTIVE MEASURES:**
 
-    Remember, your safety is a priority. Stay vigilant, be aware of your surroundings, and don't hesitate to report any suspicious activity. The Toronto Police Service is here to help and support you.
-    
-    Sources Consulted:
-    - Crime Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/)
-    - Break & Enter Prevention -  Toronto Police Service  (https://www.tps.ca/crime-prevention/break-and-enter-prevention/)
-    - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
-    - Your Personal Safety Checklist – City of Toronto (https://www.toronto.ca/community-people/public-safety-alerts/safety-tips-prevention/posters-pamphlets-and-other-safety-resources/your-personal-safety-checklist/)
-    - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
-    
-    ----
+        - Home/Property Security Recommendations: Install good quality locks on doors and windows. Consider installing a home security system.
+        - Personal Safety Technology Suggestions: Consider using personal safety apps that can share your location with trusted contacts.
+        - Community Engagement Opportunities: Join or start a Neighbourhood Watch Program. Attend community safety meetings.
+        - Reporting Procedures: Report any suspicious activity to the Toronto Police Service's non-emergency line or Crime Stoppers. In case of an emergency, call 911.
+
+        Remember, your safety is paramount. By taking these preventive measures and being aware of your surroundings, you can significantly enhance your safety in Trinity-Bellwoods.
+
+        Sources Consulted:
+        - Transit Safety -  Toronto Police Service  (https://www.tps.ca/crime-prevention/transit-safety/)
+        - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
+        - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
+        -  (https://www.tps.ca/crime-prevention/feed)
         
-    Note: This safety plan is generated based on resources from the Toronto Police Service, City of Toronto, and other government resources. For emergencies, always call 911. For non-emergency police matters, 
-    call 416-808-2222 (Toronto Police's Non-Emergency Line).
-  
+        ----
+         Note: This safety plan is generated based on Toronto Police Service resources and general 
+         safety guidelines. For emergencies, always call 911. For non-emergency police matters, call 416-808-2222.
     """
     
     # Define the prompt template
     FIRST_SAFETY_PROMPT = PromptTemplate.from_template("""
-    You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
-    
-    Your task is to provide a relevant, factual and meaningful analysis based on the user's request and the relevant resources.
+    You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario.
+
+    Your goal is to brainstorm and analyze safety concerns and resources to generate actionable insights for creating an effective safety plan. The target audience is a member of the general public in Toronto.
 
     USER REQUEST:
     {input}
@@ -95,25 +116,59 @@ def generate_safety_plan(
     RELEVANT TORONTO POLICE, CITY OF TORONTO, AND GOVERNMENT RESOURCES:
     {context}
     
-    Please brainstorm, think through this information, and provide a detailed analysis considering only the information provided above. Address the following points:
+    Please brainstorm and analyze the information, considering the perspective of the general public in Toronto.
 
-    In your analysis:
-    - Be specific and refer only to the information provided in the input and context.
-    - If the input or context doesn't provide sufficient information for any point, clearly state this lack of information.
-    - If you use information from the context, cite the source.
+    STEP 1 - UNDERSTANDING PUBLIC SAFETY NEEDS:
+    - Evaluate how these safety concerns affect daily routines, activities, and community life.
+    - Assess how time, location, and environmental factors (e.g., seasons, times of day) influence risks.
+    - Reflect on the availability and accessibility of safety resources.
+
+    STEP 2 - CRITICAL ANALYSIS:
+    - Assess factors and how they influence the safety concerns.
+    - Analyze how the user's specific context may affect their level of safety in the city of Toronto.
+    - Identify practical and accessible safety measures, considering both immediate and preventive strategies.
+
+    STEP 3 - EVIDENCE VERIFICATION:
+    - Use the information provided as the foundation for your analysis.
+    - Should there be any gaps in the information provided, explicitly state this, refrain from making assumptions.
+    - Explicitly connect recommendations to the provided context and sources cited.
+    - Highlight any areas where information is incomplete or additional data would be beneficial.
+
+    Structure your response as:
+    1. **Public Impact Assessment**
+    - Impact of safety concerns on daily life.
+    - Practical implications for residents.
+    - Community-level considerations.
+
+    2. **Situation Analysis**
+    - Key safety concerns and their relationships.
+    - Environmental and contextual factors.
+    - User-specific considerations.
+
+    3. **Resource Assessment**
+    - Verified facts and recommendations (with citations).
+    - Accessible public safety resources.
+    - Information gaps.
+
+    4. **Strategic Insights**
+    - Brainstorm safety measures tailored to the user’s needs.
+    - Priority areas based on risk levels.
+    - Practical solutions accessible to the general public.
+
+    Focus on providing practical, accessible guidance that Toronto residents can realistically implement in their daily lives. Maintain factual accuracy and proper citation of sources.
     
     Refrain from providing legal, medical, financial or personal or professional advice, stay within the scope of a safety plan and a role as a safety advisor.
     """)
     
-    SECOND_SAFETY_PROMPT = PromptTemplate.from_template("""You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
+    SECOND_SAFETY_PROMPT = PromptTemplate.from_template("""
+    You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
     
-    Your goal is to synthesize the provided analysis into an actionable, tailored safety plan that supports the user's safety concerns and enhances their safety, in the City of Toronto. Your tone should be respectful and professional.
+    Your goal is to transform the provided analysis into an actionable, tailored safety plan that supports the user's safety concerns and enhances their safety, in the City of Toronto. Your tone should be respectful and professional.
     
     You are provided the following information regarding the user:
     {input}
     
     I have conducted the following analysis regarding the user's request and the relevant resources:
-    
     <analysis>
     {analysis}
     </analysis>
@@ -148,11 +203,10 @@ def generate_safety_plan(
     - Provide specific, actionable advice that can be implemented immediately
     - Include both preventive measures and emergency response protocols
     - Reference relevant Toronto Police Service programs or initiatives when applicable
-    - Maintain a supportive and empowering tone while being clear about risks
-    - Prioritize recommendations based on the specific crime patterns
     - Include relevant contact numbers and resources
+    - Base your guidance on the information provided
     
-    If certain information is not available in the knowledge base, acknowledge this and provide general best practices, while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance. 
+    If certain information is not available in the knowledge base, acknowledge this and provide general best practices, while encouraging the user to contact Toronto Police Service's non-emergency line for more specific guidance. Refrain from introducing unverified information or making unsupported assumptions. 
 
     Refrain from providing legal, medical, financial or personal or professional advice, stay within the scope of a safety plan and a role as a safety advisor.
 
@@ -251,15 +305,21 @@ def generate_safety_plan(
 if __name__ == "__main__":
     # Test Case - sample input agreed upon with group
     sample_input = {
-        "neighbourhood": "Rexdale-Kipling(4)",
-        "crime_type": ["Assault: Low", "Auto Theft: High", "Break and Enter: Low", "Robbery: High"],
+        "neighbourhood": "Rexdale-Kipling (4)",
+        "crime_type": ["Assault: Medium", "Auto Theft: High", "Break and Enter: Medium", "Robbery: High"],
         "user_context": [
             "Q: What is your preferred parking spot?", 
             "A: Well-Lit Area", 
             "Q: Select Anti-Theft Devices for Your Car", 
             "A: False", 
             "Q: Do you walk to your car during your commute?", 
-            "A: True"
+            "A: False",
+            "Q: Do you often return home after dark?",
+            "A: True",
+            "Q: Are there security cameras in your area?",
+            "A: Unknown",
+            "Q: Do you use public transit?",
+            "A: Yes"
         ]
     }
 

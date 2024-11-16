@@ -44,7 +44,7 @@ import pandas as pd
 from langchain_openai import OpenAIEmbeddings, ChatOpenAI
 
 # Other imports
-from MMAI5040_TP_Model.main import generate_safety_plan
+from MMAI5040_TP_Model.prompt_engineering_main.old_main import generate_safety_plan
 from datetime import datetime
 import os
 from dotenv import load_dotenv
