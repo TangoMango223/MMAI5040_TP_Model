@@ -209,16 +209,23 @@ def generate_test_case(scenario_type: str) -> Dict:
         embedding=embeddings
     )
     
-    # First, generate a basic query to retrieve relevant contexts
-    # We will have one LLM agent make the questions.
-    base_query_prompt = f"""Generate a complex safety-related query for the city of Toronto focusing on {scenario_type}.
-    Include:
-    - A specific Toronto neighborhood - pick from the 158 Divisions Neighbourhoods in Toronto.
-    - Pick between 1-4 crime types: Assault, Auto Theft, Break and Enter, Robbery
-    - Make the scenario challenging and realistic to the general public in the city of Toronto
-    - Include specific details that would require precise recommendations
+    # Randomly select neighborhood and crimes first
+    selected_neighborhood = random.choice(neighbourhoods)
+    selected_crimes = random.sample(["Assault", "Auto Theft", "Break and Enter", "Robbery"], k=random.randint(1, 4))
+    crime_types_with_risk = [f"{crime}: {random.choice(RISK_LEVELS)}" for crime in selected_crimes]
     
+    # Update the base query prompt to use the selected values
+    base_query_prompt = f"""Generate a complex safety-related query for the city of Toronto focusing on {scenario_type}.
+    Use exactly these parameters:
+    - Neighborhood: {selected_neighborhood}
+    - Crime types: {', '.join(selected_crimes)}
+    
+    Make the scenario:
+    - Challenging and realistic to the general public in the city of Toronto
+    - Include specific details that would require precise recommendations
     """
+    
+    # Generate the actual base query
     base_query = chat.invoke([{"role": "user", "content": base_query_prompt}]).content
     
     # Retrieve relevant contexts using the base query
@@ -229,13 +236,8 @@ def generate_test_case(scenario_type: str) -> Dict:
     
     # Extract contexts
     contexts = [doc.page_content for doc in retrieved_docs]
-    
-    # Randomly select 1-4 crime types and assign random risk levels
-    selected_crimes = random.sample(["Assault", "Auto Theft", "Break and Enter", "Robbery"], k=random.randint(1, 4))
-    crime_types_with_risk = [f"{crime}: {random.choice(RISK_LEVELS)}" for crime in selected_crimes]
-    
-    # Randomly select a neighborhood
-    selected_neighborhood = random.choice(neighbourhoods)
+        
+    # Structured Prompt:
     
     structure_prompt = f"""Generate a safety plan request with these specific components:
     1. Use this specific Toronto neighborhood: {selected_neighborhood}

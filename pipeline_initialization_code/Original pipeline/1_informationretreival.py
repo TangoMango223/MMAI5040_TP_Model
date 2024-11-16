@@ -140,7 +140,7 @@ def crawl_with_retry(app, link, max_retries=3):
                     wait_time = extract_wait_time(str(e))
                     print(f"Rate limit hit. Waiting {wait_time} seconds before retry {attempt + 1}/{max_retries}")
                     print(f"Error details: {str(e)}")
-                    time.sleep(wait_time + 5)  # Add 5 seconds buffer to be safe
+                    time.sleep(wait_time + 60)  # Add 60 seconds buffer to be safe before retrying to avoid burning API credits
                 else:
                     print(f"Failed to crawl {link} after {max_retries} attempts")
                     return None
