@@ -18,6 +18,7 @@ from langchain_openai import ChatOpenAI, OpenAIEmbeddings
 from langchain_pinecone import PineconeVectorStore
 from typing import List, Dict
 import random
+from langsmith import Client
 
 # Load environment variables
 load_dotenv(".env", override=True)
@@ -199,8 +200,12 @@ RISK_LEVELS = ["low", "medium", "high"]
 def generate_test_case(scenario_type: str) -> Dict:
     """Generate a single test case that works with both RAGAS and the safety plan generator"""
     
-    # Initialize OpenAI with higher temperature for more variety
-    chat = ChatOpenAI(model="gpt-4o", temperature=0.7)
+    # Initialize OpenAI with higher temperature for more variety and add tags
+    chat = ChatOpenAI(
+        model="gpt-4o", 
+        temperature=0.7,
+        tags=["test_generation", scenario_type]  # Just use tags parameter directly
+    )
     
     # Initialize Pinecone components
     embeddings = OpenAIEmbeddings(model="text-embedding-3-large")
@@ -424,7 +429,6 @@ def save_test_set(test_cases: List[Dict], filename: str = None):
 
 if __name__ == "__main__":
     print("Generating test set v2...")
-    # Generate fewer cases initially for testing
     test_cases = generate_test_set(cases_per_type=4)
     save_test_set(test_cases)
-    print(f"Generated total of {len(test_cases)} test cases") 
+    print(f"Generated total of {len(test_cases)} test cases")

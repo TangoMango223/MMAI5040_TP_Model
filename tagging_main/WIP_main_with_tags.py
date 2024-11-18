@@ -6,10 +6,9 @@ CHANGES:
 * Enhanced LangSmith tracing to show complete formatted safety plan in traces, will be used to make evaluation sets.
 * Prompt engineering for the analysis chain, to improve context recall and faithfulness.
 * Provided a good one-shot example from Trinity-Bellwoods, to help the LLM understand the style and tone expected from the safety plan.
-* Added tagging so runs are easier to track in LangSmith.
 
-Last Updated: 2024-11-18
-Version: 3.00
+Last Updated: 2024-11-16
+Version: 2.5
 
 USE CASE: Improved model versus "Base Model" evaluation of metric improvements.
 
@@ -30,9 +29,17 @@ from langchain.chains.combine_documents import create_stuff_documents_chain
 from langchain.chains.retrieval import create_retrieval_chain
 from operator import itemgetter
 
+# # LangSmith Tracing
+# from langchain.callbacks.tracers import LangChainTracer
+
 # Load environment variables
 from dotenv import load_dotenv
 load_dotenv(".env", override=True)
+
+
+# # Initialize LangSmith Tracer
+# tracer = LangChainTracer()
+# tracer.project_name = "Nov18_Evaluations"
 
 # Functions - Safety Plan Generation
 
@@ -299,10 +306,11 @@ def generate_safety_plan(
     chain_result = safety_plan_chain.invoke(
     formatted_user_input,
     config={
-        "tags": ["real_safety_plan_execution"],
+        "tags": ["runtime_tag", "safety_plan_execution"],
+        # "metadata": {"execution_time": datetime.now().isoformat()}
     }
-    ) 
-
+) 
+    
     # Put it into a plan_string.
     # This new format should allow us to see the full plan in LangSmith traces.
     plan_string = chain_result["final_plan"]
