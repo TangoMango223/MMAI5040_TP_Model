@@ -173,12 +173,13 @@ def generate_safety_plan(
     {analysis}
     </analysis>
     
-    Based on the provided information, create a detailed safety plan that includes:
+    Based on the provided information, create a detailed safety plan that adheres to the structure of the following 4 sections:
 
     1. NEIGHBOURHOOD-SPECIFIC ASSESSMENT:
     - Current safety landscape of the specified neighbourhood
     - Known risk factors and patterns
     - Specific areas or times that require extra caution
+    - Provide a general overview of the neighbourhood, including its key features, landmarks, and any other relevant information. If user asks for neighbourhood-specific information and you cannot provide this information, focus on providing general information about the neighbourhood.
 
     2. TARGETED SAFETY RECOMMENDATIONS:
     For each crime concern mentioned:
@@ -226,7 +227,7 @@ def generate_safety_plan(
     
     # Initialize the LLM and the VectorStore retriever
     retriever = vectorstore.as_retriever(search_kwargs={"k": 10})
-    chat = ChatOpenAI(verbose=True, temperature=0, model="gpt-4")
+    chat = ChatOpenAI(verbose=True, temperature=0.1, model="gpt-4")
     
     # Create the analysis chain
     analysis_chain = create_retrieval_chain(
@@ -319,6 +320,8 @@ if __name__ == "__main__":
             "Q: Are there security cameras in your area?",
             "A: Unknown",
             "Q: Do you use public transit?",
+            "A: Yes",
+            "Q: Would you like some neighbourhood-specific statistics?",
             "A: Yes"
         ]
     }
