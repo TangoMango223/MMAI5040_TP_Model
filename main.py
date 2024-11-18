@@ -493,8 +493,8 @@ def generate_safety_plan(
     formatted_user_input,
     config={
         "tags": [
-            "real_safety_plan_execution", 
-            "few_shot_examples",
+            "application_example", 
+            "one_shot_example",
             "trinity_bellwoods_york_examples",
             f"model_{chat.model_name}"
         ],
