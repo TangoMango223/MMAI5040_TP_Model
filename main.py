@@ -19,6 +19,7 @@ Written by: Christine Tang
 # Import statements
 import os
 from typing import List, Dict
+import re
 
 # LangChain Imports
 from langchain_openai import OpenAIEmbeddings
@@ -36,10 +37,6 @@ load_dotenv(".env", override=True)
 
 # Define example safety plans
 TRINITY_BELLWOODS_EXAMPLE = """
-    CITY OF TORONTO SERVICE SAFETY PLAN
-    Neighbourhood: Trinity-Bellwoods (81)
-    Primary Concerns: Break and Enter: medium, Assault: medium, Auto Theft: medium
-
     **NEIGHBOURHOOD-SPECIFIC ASSESSMENT:**
     Trinity-Bellwoods is a vibrant neighbourhood with a mix of residential and commercial areas. However, there have been reports of break and enters, assaults, and auto thefts. The park area, particularly during late hours, has been identified as a potential risk zone due to poor lighting.
 
@@ -50,14 +47,32 @@ TRINITY_BELLWOODS_EXAMPLE = """
     - Immediate Actions: Report suspicious activity to police
     - Community Resources: Toronto Police Service's Break and Enter Prevention Guide
 
-    [Rest of Trinity-Bellwoods example...]
+    2. **Assault**: 
+    - Prevention Strategies: Avoid poorly lit areas, especially during late hours
+    - Warning Signs: Unfamiliar individuals or groups loitering in poorly lit areas
+    - Immediate Actions: Move to well-lit area with people around, call police
+    - Community Resources: Toronto Police Service's Personal Safety Guide
+
+    3. **Auto Theft**: 
+    - Prevention Strategies: Always lock your car, keep windows rolled up, park in well-lit areas
+    - Warning Signs: Suspicious individuals loitering around parking areas
+    - Immediate Actions: Report suspicious activity around vehicles to police
+    - Community Resources: Toronto Police Service's Auto Theft Prevention Guide
+
+    **PERSONAL SAFETY PROTOCOL:**
+    - Daily Safety Habits: Be aware of surroundings, keep home and vehicle secure
+    - Essential Safety Tools: Personal alarm, emergency numbers saved in phone
+    - Emergency Contact Information: Toronto Police Service (Non-Emergency): 416-808-2222
+    - Community Support Services: Neighbourhood Watch Program, Crime Stoppers
+
+    **PREVENTIVE MEASURES:**
+    - Home/Property Security: Install good quality locks, consider security system
+    - Personal Safety Technology: Use safety apps for location sharing
+    - Community Engagement: Join Neighbourhood Watch Program
+    - Reporting Procedures: Report suspicious activity to police non-emergency line
 """
 
 YORK_UNIVERSITY_EXAMPLE = """
-    CITY OF TORONTO SERVICE SAFETY PLAN
-    Neighbourhood: York University Heights (27)
-    Primary Concerns: Assault: High, Robbery: High
-
     **NEIGHBOURHOOD-SPECIFIC ASSESSMENT:**
     York University Heights is a diverse area centered around a major educational institution. The neighbourhood experiences higher foot traffic during academic terms, particularly around campus and student housing areas. Safety concerns are heightened during evening hours and in less populated areas.
 
@@ -109,61 +124,40 @@ def generate_safety_plan(
     
     # Example Safety Plans
     TRINITY_BELLWOODS_EXAMPLE = """
-        CITY OF TORONTO SERVICE SAFETY PLAN
-        Neighbourhood: Trinity-Bellwoods (81)
-        Primary Concerns: Break and Enter: medium, Assault: medium, Auto Theft: medium
-
-         **NEIGHBOURHOOD-SPECIFIC ASSESSMENT:**
-
-        Trinity-Bellwoods is a vibrant neighbourhood with a mix of residential and commercial areas. However, there have been reports of break and enters, assaults, and auto thefts. The park area, particularly during late hours, has been identified as a potential risk zone due to poor lighting. It is advisable to exercise caution during late hours, especially when walking alone or with a pet.
+        **NEIGHBOURHOOD-SPECIFIC ASSESSMENT:**
+        Trinity-Bellwoods is a vibrant neighbourhood with a mix of residential and commercial areas. However, there have been reports of break and enters, assaults, and auto thefts. The park area, particularly during late hours, has been identified as a potential risk zone due to poor lighting.
 
         **TARGETED SAFETY RECOMMENDATIONS:**
-
         1. **Break and Enter**: 
-        - Prevention Strategies: Improve home security by keeping a record of valuables, identifying property using a Trace Identified pen, and reporting burnt out lights on the property to the building superintendent or management immediately.
-        - Warning Signs: Suspicious activity around your property or neighbourhood.
-        - Immediate Actions: Report any suspicious activity to the police and advise the building Superintendent or Management.
-        - Community Resources: Toronto Police Service's Break and Enter Prevention Guide.
+        - Prevention Strategies: Improve home security by keeping a record of valuables, identifying property using a Trace Identified pen
+        - Warning Signs: Suspicious activity around your property or neighbourhood
+        - Immediate Actions: Report suspicious activity to police
+        - Community Resources: Toronto Police Service's Break and Enter Prevention Guide
 
         2. **Assault**: 
-        - Prevention Strategies: Avoid poorly lit areas, especially during late hours. Be aware of your surroundings and move towards an area with more people if you feel uncomfortable.
-        - Warning Signs: Unfamiliar individuals or groups loitering in poorly lit areas.
-        - Immediate Actions: If you feel threatened, move to a well-lit area with people around and call the police.
-        - Community Resources: Toronto Police Service's Personal Safety Guide.
+        - Prevention Strategies: Avoid poorly lit areas, especially during late hours
+        - Warning Signs: Unfamiliar individuals or groups loitering in poorly lit areas
+        - Immediate Actions: Move to well-lit area with people around, call police
+        - Community Resources: Toronto Police Service's Personal Safety Guide
 
         3. **Auto Theft**: 
-        - Prevention Strategies: Always lock your car, keep windows rolled up, park in well-lit areas, and avoid leaving valuables in the car.
-        - Warning Signs: Suspicious individuals loitering around parking areas.
-        - Immediate Actions: If you notice suspicious activity around your vehicle, report it to the police.
-        - Community Resources: Toronto Police Service's Auto Theft Prevention Guide.
+        - Prevention Strategies: Always lock your car, keep windows rolled up, park in well-lit areas
+        - Warning Signs: Suspicious individuals loitering around parking areas
+        - Immediate Actions: Report suspicious activity around vehicles to police
+        - Community Resources: Toronto Police Service's Auto Theft Prevention Guide
 
         **PERSONAL SAFETY PROTOCOL:**
-
-        - Daily Safety Habits: Be aware of your surroundings, especially during late hours. Keep your home and vehicle secure. Limit the use of electronic devices when walking alone.
-        - Essential Safety Tools: Consider carrying a personal alarm or whistle. Have emergency numbers saved in your phone.
-        - Emergency Contact Information: Toronto Police Service (Non-Emergency): 416-808-2222, Emergency: 911, Crime Stoppers: 416-222-TIPS (8477).
-        - Community Support Services: Neighbourhood Watch Program, Toronto Crime Stoppers.
+        - Daily Safety Habits: Be aware of surroundings, keep home and vehicle secure
+        - Essential Safety Tools: Personal alarm, emergency numbers saved in phone
+        - Emergency Contact Information: Toronto Police Service (Non-Emergency): 416-808-2222
+        - Community Support Services: Neighbourhood Watch Program, Crime Stoppers
 
         **PREVENTIVE MEASURES:**
-
-        - Home/Property Security Recommendations: Install good quality locks on doors and windows. Consider installing a home security system.
-        - Personal Safety Technology Suggestions: Consider using personal safety apps that can share your location with trusted contacts.
-        - Community Engagement Opportunities: Join or start a Neighbourhood Watch Program. Attend community safety meetings.
-        - Reporting Procedures: Report any suspicious activity to the Toronto Police Service's non-emergency line or Crime Stoppers. In case of an emergency, call 911.
-
-        Remember, your safety is paramount. By taking these preventive measures and being aware of your surroundings, you can significantly enhance your safety in Trinity-Bellwoods.
-
-        Sources Consulted:
-        - Transit Safety -  Toronto Police Service  (https://www.tps.ca/crime-prevention/transit-safety/)
-        - Apartment, Condo Security -  Toronto Police Service  (https://www.tps.ca/crime-prevention/apartment-condo-security-1/)
-        - Crime Prevention Through Environmental Design -  Toronto Police Service  (https://www.tps.ca/crime-prevention/crime-prevention-through-environmental-design/)
-        -  (https://www.tps.ca/crime-prevention/feed)
-        
-        ----
-        
-         Note: This safety plan is generated based on Toronto Police Service resources and general 
-         safety guidelines. For emergencies, always call 911. For non-emergency police matters, call 416-808-2222.
-        """
+        - Home/Property Security: Install good quality locks, consider security system
+        - Personal Safety Technology: Use safety apps for location sharing
+        - Community Engagement: Join Neighbourhood Watch Program
+        - Reporting Procedures: Report suspicious activity to police non-emergency line
+    """
     
     ANNEX_EXAMPLE = """
         CITY OF TORONTO SERVICE SAFETY PLAN
@@ -341,6 +335,8 @@ def generate_safety_plan(
     SECOND_SAFETY_PROMPT = PromptTemplate.from_template("""
     You are a City of Toronto safety advisor specializing in crime prevention and public safety in Toronto, Ontario. 
     
+    IMPORTANT: DO NOT include any headers about city name, neighbourhood, or primary concerns. Start directly with the neighbourhood assessment section.
+    
     Your goal is to transform the provided analysis into an actionable, tailored safety plan that supports the user's safety concerns and enhances their safety, in the City of Toronto. Your tone should be respectful and professional.
     
     You are provided the following information regarding the user:
@@ -435,6 +431,19 @@ def generate_safety_plan(
         StrOutputParser()
     )
     
+    def remove_duplicate_headers(plan_text: str) -> str:
+        """Remove any duplicate headers from the plan text."""
+        # Remove any instances of the header if found in the plan
+        header_patterns = [
+            r"CITY OF TORONTO SERVICE SAFETY PLAN\s*",
+            r"Neighbourhood:[^\\n]*\s*",
+            r"Primary Concerns:[^\\n]*\s*"
+        ]
+        cleaned_text = plan_text
+        for pattern in header_patterns:
+            cleaned_text = re.sub(pattern, "", cleaned_text)
+        return cleaned_text
+    
     # Create a chain using LCEL syntax with complete plan formatting
     safety_plan_chain = (
         analysis_chain | 
@@ -451,27 +460,26 @@ def generate_safety_plan(
             "plan": plan_chain,
             "context": itemgetter("context")
         } |
-        # Add final transformation step to create the complete plan_string
+        # Add headers programmatically and clean up any duplicates
         (lambda x: {
-            "final_plan": f"""
-            CITY OF TORONTO SERVICE SAFETY PLAN
-            Neighbourhood: {neighbourhood}
-            Primary Concerns: {formatted_crime_concerns}
+            "final_plan": f"""CITY OF TORONTO SERVICE SAFETY PLAN
+Neighbourhood: {neighbourhood}
+Primary Concerns: {formatted_crime_concerns}
 
-            {x["plan"]}
+{remove_duplicate_headers(x["plan"])}
 
-            Sources Consulted:
-            {chr(10).join([f"- {title} ({source})" for title, source in {
-                (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
-                for doc in x["context"]
-            }])}
-            
-            ----
-            
-            Note: This safety plan is generated based on Toronto Police Service resources and general 
-            safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
-            call 416-808-2222.
-            """
+Sources Consulted:
+{chr(10).join([f"- {title} ({source})" for title, source in {
+    (doc.metadata.get('title', 'Untitled'), doc.metadata['source'])
+    for doc in x["context"]
+}])}
+
+----
+
+Note: This safety plan is generated based on Toronto Police Service resources and general 
+safety guidelines. For emergencies, always call 911. For non-emergency police matters, 
+call 416-808-2222.
+"""
         })
     )
     
@@ -512,7 +520,7 @@ def generate_safety_plan(
 if __name__ == "__main__":
     # Test Case - sample input agreed upon with group
     sample_input = {
-        "neighbourhood": "York University Heights (27)",
+        "neighbourhood": "Rexdale-Kipling(4)",
         "crime_type": ["Assault: High", "Robbery: High"],
         "user_context": [
             "Q: Do you carry a fully charged phone?", 
