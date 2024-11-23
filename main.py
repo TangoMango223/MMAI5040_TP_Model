@@ -520,8 +520,8 @@ call 416-808-2222.
 if __name__ == "__main__":
     # Test Case - sample input agreed upon with group
     sample_input = {
-        "neighbourhood": "Rexdale-Kipling(4)",
-        "crime_type": ["Assault: High", "Robbery: High"],
+        "neighbourhood": "York University Heights (27)",
+        "crime_type": ["Assault: Low", "Robbery: Low"],
         "user_context": [
             "Q: Do you carry a fully charged phone?", 
             "A: Yes", 
